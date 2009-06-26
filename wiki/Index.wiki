@@ -6,5 +6,6 @@
 
 [http://code.google.com/p/erlbattle/wiki/ErlBattleFieldDesign 2.战场程序算法]:  战场主程序是游戏规则的载体。负责启动战场，并按照游戏规则判断战斗结果
 
----- 
+----
+
 [http://code.google.com/p/erlbattle/wiki/ErlBattleTasks 9.开发工作安排]
