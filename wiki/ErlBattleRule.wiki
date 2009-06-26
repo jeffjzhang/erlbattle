@@ -19,7 +19,9 @@
 <wiki:comment>
 战场应该可以定制，如果日后支持多战队的话，10*10 就不够了 ~ ZoomQuiet
 </wiki:comment>
-
+<wiki:comment>
+计划就是1对1的战场，多方混战就容易大家都不动，等别人两败俱伤后再动的情况 ~ 老范
+</wiki:comment>
 
 时间规则:
 
@@ -78,4 +80,3 @@ ZoomQuiet:
 
     * 最好尽快给出一个可运行的本地原型来
     
-
