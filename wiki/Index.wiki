@@ -1,0 +1,10 @@
+#summary ~ 恶狼战役 欢迎页 （Read Me First)
+
+恶狼战役是一个用于学习ERLANG 编程的项目。欢迎各位新手参加。 
+
+世界规则[http://code.google.com/p/erlbattle/wiki/ErlBattleRule] ： 游戏规则的描述
+
+战场程序算法:  战场主程序是游戏规则的载体。负责启动战场，并按照游戏规则判断战斗结果
+
+
+
