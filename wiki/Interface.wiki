@@ -1,0 +1,36 @@
+#summary 指挥程序和战场主程序之间的接口规范
+
+1.消息传递机制
+
+  主程序在spawn 指挥程序：
+           spawn(feardFarmers, start, [self(), "Blue"])
+  传入了self() 和 属于哪一方的消息
+
+2.战场状态
+
+  使用命名的 ETS 表： BlueArmy, RedArmy; 
+  结构：
+         
+    * 战士编号   1 - 10   (死亡后，从表中删除）
+    * 位置 （x, y）   
+    * 血量  1 - 100
+    * 面朝的方向  （N, S, W, E）  ---北南西东---或者说上下左右
+    * 当前动作 (无动作 wait,  前进 forward, 后退 back, 转向左边 turnLeft,转向右边 turnRight, 转向后面 turnBack, 攻击 attack)
+    * 当前动作生效时间
+    * 行动次序 
+
+其中：
+    位置按照坐标第一向限的方式描述。 左下为 0，0 ，  右上为 （14，14）
+    考虑到未来图形化显示的问题，部队为左右进攻。 
+    因此左边部队（蓝）为：0，3 - 0，12
+        右边部队（红）为：14，3 - 14，12
+
+3. 战场时间钟
+    
+    * 当前时间
+
+4. 命令消息
+
+    {command , 发动时间}
+
+    前进 forward, 后退 back, 转向左边 turnLeft,转向右边 turnRight, 转向后面 turnBack, 攻击 attack
