@@ -8,11 +8,11 @@ start(BattleField, Side) ->
 	
 run(BattleField, Side) ->
 	
-	BattleField!{command, "Side: dont kill us, we are poor farmers"},
+	BattleField!{command, Side ++ " Side: dont kill us, we are poor farmers"},
 
 	receive
 		finish ->  % 退出消息，以便让主进程能够结束战斗
-			BattleField!{command, "Side: finish battle"}
+			BattleField!{command, Side ++ " Side: finish battle"}
 	after 1 -> 
 			run(BattleField, Side)
 	end.
