@@ -8,7 +8,6 @@
 *这个世界是由一个非常简单的规则构成的，规则越简单，组合越丰富*
  * 缘起:[http://groups.google.com/group/erlang-china/browse_thread/thread/aa49891cf89d2cf2 打算启动一个ERLANG 学习项目： 有人感兴趣吗？ - Erlang China | Google 网上论坛]
 
-== 主战场算法： ==
 
 == 主战场规则： ==
 
@@ -16,14 +15,6 @@
 
     战场由一个 10 × 10 的格子构成  （1，1）  - （10，10）
 
-
-
-<wiki:comment>
-战场应该可以定制，如果日后支持多战队的话，10*10 就不够了 ~ ZoomQuiet
-</wiki:comment>
-<wiki:comment>
-开发计划就是1对1的战场，多方混战就容易大家都不动，等别人两败俱伤后再动的情况 ~ 老范
-</wiki:comment>
 
 时间规则:
 
@@ -81,4 +72,6 @@
 ZoomQuiet:
 
     * 最好尽快给出一个可运行的本地原型来
+
+
     
