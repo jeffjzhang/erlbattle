@@ -5,21 +5,21 @@
 start() ->
     io:format("Server Starting ....~n", []),
 	
-	%%  TODO: 这段主要是后面用于让每台机器都能够以相同的结果运行的作用
-	%%  io:format("Testing Computer Speed....~n", [])
-	Sleep = 10,
-	
     %%  TODO: 创建两方部队的初始状态
 	io:format("Army matching into the battle fileds....~n", []),
 	
+	%%  TODO: 这段主要是后面用于让每台机器都能够以相同的结果运行的作用
+	%%  io:format("Testing Computer Speed....~n", [])
+	Sleep = 10,
+
 	%% 启动一个计时器, 作为战场节拍
 	spawn(erlbattle, timer, [self(),1,Sleep]),
 	
 	%% 启动红方和蓝方的决策程序
 	%% TODO:  为了避免某一方通过狂发消息，影响对方， 未来要有独立的通讯程序负责每方的信息
 	io:format("Command Please, Generel....~n", []),
-	BlueSide = spawn(feardFarmers, start, [self(), blue]),
-	RedSide = spawn(englandArmy, start, [self(), red]),
+	BlueSide = spawn(feardFarmers, start, [self(), "Blue"]),
+	RedSide = spawn(englandArmy, start, [self(), "Red"]),
 	
 	%% 开始战场循环
 	run(BlueSide, RedSide).
@@ -52,7 +52,7 @@ timer(Pid, Time,Sleep) ->
 	sleep(Sleep),
 	
 	%% 战场最多运行的次数 
-	MaxTurn = 20,
+	MaxTurn = 5,
 	if 
 		Time == MaxTurn ->
 			Pid!finish;
