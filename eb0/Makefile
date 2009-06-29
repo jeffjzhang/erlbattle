@@ -8,7 +8,7 @@ ERL = erl -boot start_clean
 MODS = erlbattle englandArmy feardFarmers
  
 all: compile
-	${ERL} -pa '/root/erlang/erlbattle/eb0' -noshell -s erlbattle start 
+	${ERL} -noshell -s erlbattle start 
  
 compile: ${MODS:%=%.beam}
  
