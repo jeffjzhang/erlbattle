@@ -3,13 +3,13 @@
 
 start(BattleField, Side) ->
     
-	io:format("~p begin to run on ~p army....~n", ["FeardFarmers", Side]),
+	io:format("FeardFarmers begin to run on ~p army....~n", [Side]),
 	run(BattleField,Side).
 	
 run(BattleField, Side) ->
 	
-	BattleField!{command, Side ++ " Side: dont kill us, we are poor farmers"},
-
+	io:format("don't kill us , we are poor farmers ~n",[]),
+	
 	receive
 		finish ->  % 退出消息，以便让主进程能够结束战斗
 			BattleField!{command, Side ++ " Side: finish battle"}
