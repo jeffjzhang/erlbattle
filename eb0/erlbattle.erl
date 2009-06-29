@@ -14,6 +14,10 @@ start() ->
 
 	%% 启动一个计时器, 作为战场节拍
 	spawn(erlbattle, timer, [self(),1,Sleep]),
+
+	%% 创建两个指令队列， 这两个队列只能由各自看到
+	BlueQueue = ets:new(blueQueue, []),
+	RedQueue = ets:new(redQueue, []),
 	
 	%% 启动红方和蓝方的决策程序
 	%% TODO:  为了避免某一方通过狂发消息，影响对方， 未来要有独立的通讯程序负责每方的信息
@@ -21,12 +25,13 @@ start() ->
 	BlueSide = spawn(feardFarmers, start, [self(), "Blue"]),
 	RedSide = spawn(englandArmy, start, [self(), "Red"]),
 	
+
 	%% 开始战场循环
-	run(BlueSide, RedSide).
+	run(BlueSide, RedSide,BlueQueue, RedQueue).
 		
 
 %% 战场逻辑主程序	
-run(BlueSide, RedSide) ->
+run(BlueSide, RedSide,BlueQueue, RedQueue) ->
 	
 	receive 
 		finish ->
@@ -39,11 +44,12 @@ run(BlueSide, RedSide) ->
 				%% TODO 战场逻辑
 				%% do something
 				io:format("Time: ~p s ....~n", [Time]),
-				run(BlueSide, RedSide);
-		{command,Command} ->
+				run(BlueSide, RedSide,BlueQueue, RedQueue);
+		{command,Command,Warrior,Time} ->
 				%% Todo 接受消息
-				io:format("~p ~n", [Command]),
-				run(BlueSide, RedSide)
+				io:format("~p warrior want ~p at ~p ~n", [Warrior, Command, Time]),
+				
+				run(BlueSide, RedSide,BlueQueue, RedQueue)
 	end.
 
 %% Todo: Sleep 小程序,休息若干毫秒
