@@ -1,0 +1,22 @@
+#summary EB 掺合成员列表
+#labels Phase-QA
+SEE:
+
+ * [EbJoinnig EB:成员总表]
+  * [EbRoles EB:角色说明]
+  * [EbContribute EB:贡献榜]
+
+= 2009 =
+
+
+`革命不分先后，排名只是历史 ;-)`
+ # 老范
+ # [http://code.google.com/p/ecug/wiki/ZoomQuiet ZoomQuiet]
+ # 郎咸武 
+ # 苏勇
+ # Fung Max
+ # Suger China
+ # Karl　Ma
+ # Ken Zhao
+ # 张杰
+ # wolfgang amadeus
