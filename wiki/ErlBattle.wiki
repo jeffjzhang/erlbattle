@@ -16,9 +16,10 @@ so we fighting in erlbattle
  
 == thinking ==
  * EbGoal ~ EB的目标
- * EbArchitecture ~ EB的架构
- * EbStory ~ EB的传说
-
+  * EbFigure ~ EB的形象
+  * EbStory ~ EB的传说
+* EbArchitecture ~ EB的架构
+ 
 === doc. ===
  * [ErlBattleRule EB:世界规则] ： 游戏规则的描述
   * [ErlBattleFieldDesign EB:战场程序算法]:  战场主程序是游戏规则的载体。负责启动战场，并按照游戏规则判断战斗结果
