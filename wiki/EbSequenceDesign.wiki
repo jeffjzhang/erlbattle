@@ -1,0 +1,42 @@
+#summary 如何控制战场时间节拍和指令顺序
+
+昨天Max 提出了一个非常有意思的问题 （针对branches/eb0-1.0 标签的代码），如何控制战场时序。
+Max做了个实验。 他把clock 的延时提高到了 5000 毫秒，同时修改了feardFarmer 的消息发送程序。 运行代码：
+
+
+Time: 3 s ....
+"Blue Side: dont kill us, we are poor farmers" 
+"Red Side: marching forword" 
+"Blue Side: dont kill us, we are poor farmers" 
+"Blue Side: dont kill us, we are poor farmers" 
+"Red Side: marching forword" 
+"Blue Side: dont kill us, we are poor farmers" 
+"Blue Side: dont kill us, we are poor farmers" 
+Time: 4 s ....
+
+
+大家可以看到， BlueSide 在一个时间节拍中发出了5个消息。 而Red Side 发出了 2 个消息。 这是否会带来不公平呢？  另外我们的时钟程序是否完全在战斗中没有用呢？ 
+
+现在的代码是未完成的中间阶段。 现在确实看起来是这样的。战场程序一个非常重要的功能就是要控制好来自双方的时序。下一步的工作就是要编写对于消息的处理机制。 解决Max提出的疑问，也就是编写命令消息处理程序的算法。 
+
+== 算法 ==
+大家看   http://erlbattle.googlecode.com/files/theWorld.png  结构图中上方有两个 none-named protected ets 表。 这两表是双方私有的指令队列。 也就是下一步动作。 
+
+当我们主程序收到决策程序发来的指令后，其实我们并不真的去执行那个动作，而是将其放到队列中。 每个战士的队列长度只有 1， 也就是说如果一个指令发过来进入队列后，没有及时被战场程序取走，又发来一个指令的话，后面的指令冲掉前面的指令。 
+
+然后正好clock 发出的时间节拍指令来的时候， 对于时间消息的处理程序才是真正执行指令的代码入口。这个程序做几个动作：
+1。 首先去找战场状态表，将其中所有动作生效时间是当前的
+
+
+
+
+
+
+
+
+
+
+
+
+
+
