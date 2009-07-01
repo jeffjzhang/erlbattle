@@ -7,7 +7,7 @@
 昨天Max 提出了一个非常有意思的问题 （针对branches/eb0-1.0 标签的代码），如何控制战场时序。
 Max做了个实验。 他把clock 的延时提高到了 5000 毫秒，同时修改了feardFarmer 的消息发送程序。 运行代码：
 
-
+{{{
 Time: 3 s ....
 "Blue Side: dont kill us, we are poor farmers" 
 "Red Side: marching forword" 
@@ -17,7 +17,7 @@ Time: 3 s ....
 "Blue Side: dont kill us, we are poor farmers" 
 "Blue Side: dont kill us, we are poor farmers" 
 Time: 4 s ....
-
+}}}
 
 大家可以看到， BlueSide 在一个时间节拍中发出了5个消息。 而Red Side 发出了 2 个消息。 这是否会带来不公平呢？  另外我们的时钟程序是否完全在战斗中没有用呢？ 
 
@@ -48,8 +48,6 @@ http://erlbattle.googlecode.com/files/theWorld.png
 
 
 == Discuss ==
-
-
 
 
 
