@@ -1,25 +1,34 @@
-= OBP ~ OpenBookProject 开放图书计划 =
-== 简述 ==
-计划进行中
-请到 http://wiki.woodpecker.org.cn/moin/OpenBookProject 查看详细信息
+= ErlBattle =
+恶狼战役 ~ Erlang 学玩游戏平台工程
 
-== 约定 ==
+ 版本::
+  * 090624 ZoomQuiet 增补掺合新目录结构
 
- * 统一翻译关键词:
-    * SVN：http://openbookproject.googlecode.com/svn/trunk/zh_terms.txt
-    * 是以往所有翻译工程积累下来的关键词建议译文以及讨论,请所有掺合的行者注意更新
- * 统一文本组织:
-    * 尽力使用纯文本进行组织,方便进行版本追踪
-    * 使用 UTF-8 编码,以便所有平台的行者统一使用
-    * 使用单字节,ASCII标点符号
-    
-    
-== Historic ==
-'''OBP 计划 历史简述'''
+== 工程约定 ==
+`约定这一中文版文档工程的相关协同事务`
+
+=== 工程环境 ===
+ SVN: http://erlbattle.googlecode.com/svn/ 目录结构
+{{{
+/
+    +-- branches  分支版本
+    +-- release   发布版本
+    +-- tangle    自由分支
+    +-- tasks     任务分支
+    +-- trunk     主干代码
+    +-- wiki      工程维基
+    +-- svn.ignore  SVN属性忽略文件类型聲明
+    \-- readme.txt  本文
+}}}
 
 = Others =
- 文件类型过滤 ::
- 文件类型限制声明: source:/trunk/svn.ignore
+文件类型过滤 ::
+ 文件类型限制声明: source:/svn.ignore
   * 对想进行文件提交类型过滤的目录进行应用此文件！
-      $ svn propset svn:ignore -R -F svn.ignore path/to/dir
+{{{
+$ svn propset svn:ignore -F svn.ignore -R path/to/dir
+递归设置属性 “svn:ignore” 于 “.”
+}}}
+ * 参考:忽略未版本控制的条目
+  * http://www.subversion.org.cn/svnbook/1.4/svn.advanced.props.special.ignore.html
 
