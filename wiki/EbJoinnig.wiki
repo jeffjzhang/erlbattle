@@ -1,5 +1,5 @@
 #summary EB 掺合成员列表
-#labels Phase-QA
+#labels Phase-QA,member
 SEE:
 
  * [EbJoinnig EB:成员总表]
@@ -10,8 +10,8 @@ SEE:
 
 
 `革命不分先后，排名只是历史 ;-)`
- # 老范
- # [http://code.google.com/p/ecug/wiki/ZoomQuiet ZoomQuiet]
+ # 老范 ^主创^
+ # ZoomQuiet
  # 郎咸武 
  # 苏勇
  # Fung Max
