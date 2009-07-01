@@ -1,5 +1,9 @@
 #summary 如何控制战场时间节拍和指令顺序
+#labels Phase-QA,Phase-Support
 
+<wiki:toc>
+
+= 问题根源 =
 昨天Max 提出了一个非常有意思的问题 （针对branches/eb0-1.0 标签的代码），如何控制战场时序。
 Max做了个实验。 他把clock 的延时提高到了 5000 毫秒，同时修改了feardFarmer 的消息发送程序。 运行代码：
 
@@ -43,7 +47,7 @@ http://erlbattle.googlecode.com/files/theWorld.png
 系统就是这样来控制节拍的。 
 
 
-
+== Discuss ==
 
 
 
