@@ -72,8 +72,6 @@ timer(Pid, Time,Sleep) ->
 
 	if    
 		Time == MaxTurn ->
-			%% É¾³ýbattle_timer±í
-			ets:delete(battle_timer),
 			Pid!finish;
 		Time < MaxTurn ->
 			Pid !{time, Time},
