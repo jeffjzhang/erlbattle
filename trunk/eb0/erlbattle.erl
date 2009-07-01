@@ -44,6 +44,8 @@ run(BlueSide, RedSide,BlueQueue, RedQueue) ->
 				%% TODO 战场逻辑
 				%% do something
 				io:format("Time: ~p s ....~n", [Time]),
+				%% For Test, 从ETS表中读取并显示战场时钟
+				io:format("Battle Clock: ~p ...~n", [ets:lookup(battle_timer, clock)]),
 				run(BlueSide, RedSide,BlueQueue, RedQueue);
 		{command,Command,Warrior,Time} ->
 				%% Todo 接受消息
@@ -54,13 +56,24 @@ run(BlueSide, RedSide,BlueQueue, RedQueue) ->
 
 %% Todo: Sleep 小程序,休息若干毫秒
 timer(Pid, Time,Sleep) -> 
-	
 	sleep(Sleep),
 	
 	%% 战场最多运行的次数 
 	MaxTurn = 5,
+	%% 第一次启动，初始化battle_timer表
 	if 
+		Time == 1 ->
+			ets:new(battle_timer, [set, protected, named_table]);
+		true -> ok
+	end,
+
+	%% 更新clock值
+	ets:insert(battle_timer, {clock, Time}),
+
+	if    
 		Time == MaxTurn ->
+			%% 删除battle_timer表
+			ets:delete(battle_timer),
 			Pid!finish;
 		Time < MaxTurn ->
 			Pid !{time, Time},
