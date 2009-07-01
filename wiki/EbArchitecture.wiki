@@ -9,6 +9,7 @@
 
 
 = current =
+http://groups.google.com/group/ecug/web/theWorld.png
 
 = new age =
 
