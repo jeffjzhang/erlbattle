@@ -1,14 +1,79 @@
 #summary EB 各种团队角色的约定和职责
 #labels Phase-QA,Featured,member
 
-= Introduction =
+<wiki:toc/>
 
-Add your content here.
+ SEE::
+  * [http://share.xmind.net/zoomquiet/xmind-950304/ ErlBattle thinking]^ - XMind - Social Brainstorming and Mind Mapping^
 
+= 阶层 =
+`根据中毒程度进行排序`
 
-= Details =
+== 巫师 ==
+ * 特质:发起者，初版开发团队
+ * 使命:确立/维护/发展/挖掘/宣传...EB
+ * 义务:
+  * 维护 EA 核心价值
+{{{
+    EB世界观
+    EB核心引擎
+    EB服务器
+    EB对战数据
+    EB历史版本
+    ...
+}}}
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+== 法师 ==
+ * 特质:资深开发者
+ * 使命:维护EB代码质量
+ * 义务:
+  * 推动EB健康发展
+{{{
+    开发EB扩展组件
+    开发EB周边插件
+    开发EB培训课件
+    运维EB相关主机
+    ...
+}}}
+
+== 狼群 ==
+ * 特质:活跃开发团队
+ * 使命:贡献EB战狼实例
+ * 义务:
+  * 丰富EB 应用
+{{{
+    参与公开对战
+    测试EB接口
+    试用EB插件
+    宣传EB游戏
+    ...
+}}}
+
+== 孤狼 ==
+ * 特质:渐入佳境新人
+ * 使命:学习EB
+ * 义务:
+  * 贡献创意,分享 EB 乐趣
+{{{
+    参与EB列表/Blog/IRC 讨论
+    开发EB战狼实例
+    赏玩知名战狼代码
+    分享EB体验
+    宣传EB游戏
+    ...
+}}}
+
+== 狼仔 ==
+ * 特质:小白
+ * 使命:体验EB
+ * 义务:
+  * 享受 erl 
+{{{
+    使用EB文档
+    试玩EB对战
+    掺合列表讨论
+    自学Erlang 编程 ~ 核心义务!
+}}}				
+				
+				
+				
