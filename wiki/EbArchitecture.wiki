@@ -1,14 +1,21 @@
 #summary EB 架构分析设计进化综述
 #labels Phase-QA,Phase-Support,Featured
 
-= Introduction =
+<wiki:toc/>
 
-Add your content here.
+ SEE::
+  * [http://share.xmind.net/zoomquiet/xmind-950304/ ErlBattle thinking]^ - XMind - Social Brainstorming and Mind Mapping^
+  * [EbRoadMap EB:路线图]
 
 
-= Details =
+= current =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+= new age =
+
+= future =
+
+
+
+
+
+

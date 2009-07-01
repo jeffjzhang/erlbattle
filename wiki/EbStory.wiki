@@ -1,14 +1,28 @@
 #summary EA 游戏的背景设计
 #labels Featured,Phase-Design
 
-= Introduction =
+<wiki:toc/>
 
-Add your content here.
+ SEE::
+  * [http://share.xmind.net/zoomquiet/xmind-950304/ ErlBattle thinking]^ - XMind - Social Brainstorming and Mind Mapping^
+  * [EbRoadMap EB:路线图]
+
+{{{
+for learnning Erl,
+so we fighting in erlbattle
+}}}
+
+= 设定 =
+
+== 历史 ==
+
+== 角色 ==
+
+== 事件 ==
 
 
-= Details =
+= 故事 =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+== 冰与火的传说 ==
+
+

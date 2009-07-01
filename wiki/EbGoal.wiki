@@ -1,14 +1,21 @@
 #summary EA 的宗旨分析,口号设计
 #labels Featured,Phase-Design
 
-= Introduction =
 
-Add your content here.
+<wiki:toc/>
+
+ SEE::
+  * [http://share.xmind.net/zoomquiet/xmind-950304/ ErlBattle thinking]^ - XMind - Social Brainstorming and Mind Mapping^
+  * [EbRoadMap EB:路线图]
+
+= 原点 =
+{{{
+for learnning Erl,
+so we fighting in erlbattle
+}}}
+
+= 分析 =
+
+= 畅想 =
 
 
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
