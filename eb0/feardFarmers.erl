@@ -12,7 +12,7 @@ run(BattleField, Side) ->
 	
 	receive
 		finish ->  % 退出消息，以便让主进程能够结束战斗
-			BattleField!{command, Side ++ " Side: finish battle"}
+			BattleField!{self(), command, Side ++ " Side: finish battle"}
 	after 1 -> 
 			run(BattleField, Side)
 	end.
