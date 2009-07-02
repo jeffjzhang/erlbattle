@@ -21,8 +21,9 @@
 start() ->
     io:format("Server Starting ....~n", []),
 	
-    %%  TODO: 创建两方部队的初始状态
+    %% 创建两方部队的初始状态
 	io:format("Army matching into the battle fileds....~n", []),
+	battlefield:create(),
 	
 	%%  TODO: 这段主要是后面用于让每台机器都能够以相同的结果运行的作用
 	%%  io:format("Testing Computer Speed....~n", [])
@@ -75,7 +76,7 @@ run(Timer, BlueSide, RedSide, BlueQueue, RedQueue) ->
                                 case Side of
                                     %% 蓝方发来的命令
                                     BlueSide ->
-                                        io:format("BlueSide: ~p warrior want ~p at ~p ~n", [Warrior, Command, Time]),
+                                        io:format("BlueSide: warrior ~p want ~p at ~p ~n", [Warrior, Command, Time]),
                                         ets:insert(BlueQueue, CmdRec),
                                         ?debug_print(info, ets:tab2list(BlueQueue)),
                                         run(Timer, BlueSide, RedSide,BlueQueue, RedQueue);
@@ -97,7 +98,7 @@ timer(Pid, Time,Sleep) ->
 	sleep(Sleep),
 	
 	%% 战场最多运行的次数 
-	MaxTurn = 25,
+	MaxTurn = 5,
 	%% 第一次启动，初始化battle_timer表
 	if 
 		Time == 1 ->
