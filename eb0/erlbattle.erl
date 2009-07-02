@@ -1,5 +1,5 @@
 -module(erlbattle).
--export([start/0,timer/3]).
+-export([start/0,timer/3,getTime/0,testGetTime/0]).
 
 %% 定义了一个打印调试信息的宏
 -define(debug_print(Level, Str),
@@ -66,6 +66,14 @@ run(Timer, BlueSide, RedSide, BlueQueue, RedQueue) ->
                                 %% 在这里打印战场时钟时，有时程序为崩溃
                                 %% 我在windows下测试的。
                                 ?debug_print(info, ets:lookup(battle_timer, clock)),
+				
+				%% 计算所有生效的动作
+				%% do something
+				
+				%% 从队列拿到处于wait 状态的战士的新的动作，并将该动作删除
+				%% do something
+				
+				
 				run(Timer, BlueSide, RedSide,BlueQueue, RedQueue);
 		{Side, command,Command,Warrior,Time} ->
 				%% 生成一个command 记录
@@ -78,13 +86,13 @@ run(Timer, BlueSide, RedSide, BlueQueue, RedQueue) ->
                                     BlueSide ->
                                         io:format("BlueSide: warrior ~p want ~p at ~p ~n", [Warrior, Command, Time]),
                                         ets:insert(BlueQueue, CmdRec),
-                                        ?debug_print(info, ets:tab2list(BlueQueue)),
+                                        ?debug_print(true, ets:tab2list(BlueQueue)),
                                         run(Timer, BlueSide, RedSide,BlueQueue, RedQueue);
                                     %% 红方发来的命令
                                     RedSide ->
                                         io:format("RedSide: ~p warrior want ~p at ~p ~n", [Warrior, Command, Time]),
                                         ets:insert(RedQueue, CmdRec),
-                                        ?debug_print(info, ets:tab2list(RedQueue)),
+                                        ?debug_print(true, ets:tab2list(RedQueue)),
                                         run(Timer, BlueSide, RedSide,BlueQueue, RedQueue);
                                     %% 不知道是那一方发来的命令
                                     _ ->
@@ -125,4 +133,30 @@ sleep(Sleep) ->
 	after Sleep -> true
     
 	end.
+
+%% create a faked timer
+createFakeTime() ->
+	ets:new(battle_timer, [set, protected, named_table]),
+	ets:insert(battle_timer, {clock, 23}).
+	
+%% 取时间函数
+getTime() ->
+	case ets:lookup(battle_timer, clock) of
+		[{clock, Time}] ->
+			Time;
+		_ -> 
+			0
+	end.
+
+%% 测试getTime()
+testGetTime() ->
+	createFakeTime(),
+	case getTime() of 
+		23 ->
+			"time correct";
+		_ ->
+			erlang:error("time not correct")
+	end.
+	
+
 
