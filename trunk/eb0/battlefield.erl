@@ -35,6 +35,7 @@
 	    act_sequence	
 	}).
 
+
 create() ->
 	%%创建战场信息表，用于查找战士信息，及某坐标点信息
 	ets:new(battle_field,[named_table,protected,{keypos,#soldier.id}]),
