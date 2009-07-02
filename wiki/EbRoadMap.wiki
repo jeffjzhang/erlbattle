@@ -7,7 +7,6 @@
 
 
 = 路线图:Road Map =
-SEE:[KspegIndx KSPEG] / [http://trac.rdev.kingsoft.net/kspeg/roadmap KSEPG's路线图] / [EndKpiRule KPI结项规约]
 
 == 概述 ==
 路线图`包含`作品/项目各个阶段的核心目标简述, `为`开发人员 `在`配置管理/发布管理/变更管理等等各种软件工程关键过程中 `提供` 了最基础的命名和开发方向指导作用;
@@ -22,7 +21,7 @@ SEE:[KspegIndx KSPEG] / [http://trac.rdev.kingsoft.net/kspeg/roadmap KSEPG's路�
 
 `Road Map ~ 就是当前作品/项目/计划变化趋势的脉络图`;必须每个阶段有个贴切和简单的名字对应!作为配置中核心的概念和统一使用的工作对照引述标识！
 
-== EB:RoadMap ==
+== EB:Road Map ==
 === eb0 ===
  * 代号: germ
  * 含义: 细菌
