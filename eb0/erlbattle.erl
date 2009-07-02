@@ -64,7 +64,7 @@ run(Timer, BlueSide, RedSide, BlueQueue, RedQueue) ->
                                 %% 这里好像有一个问题，当我把timer的最大值调到25时，
                                 %% 在这里打印战场时钟时，有时程序为崩溃
                                 %% 我在windows下测试的。
-                                %%?debug_print(info, ets:lookup(battle_timer, clock)),
+                                ?debug_print(info, ets:lookup(battle_timer, clock)),
 				run(Timer, BlueSide, RedSide,BlueQueue, RedQueue);
 		{Side, command,Command,Warrior,Time} ->
 				%% 生成一个command 记录
