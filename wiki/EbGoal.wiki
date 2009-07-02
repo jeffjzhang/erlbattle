@@ -5,8 +5,7 @@
 <wiki:toc/>
 
  SEE::
-  * [http://share.xmind.net/zoomquiet/xmind-950304/ ErlBattle thinking]^ - XMind - Social Brainstorming and Mind Mapping^
-  * [EbRoadMap EB:路线图]
+   * [EbRoadMap EB:路线图]
 
 = 原点 =
 {{{
