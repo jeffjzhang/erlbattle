@@ -5,7 +5,7 @@
  
 ERL = erl -boot start_clean
  
-MODS = erlbattle englandArmy feardFarmers
+MODS = erlbattle englandArmy feardFarmers battlefield
  
 all: compile
 	${ERL} -noshell -s erlbattle start 
@@ -13,4 +13,4 @@ all: compile
 compile: ${MODS:%=%.beam}
  
 clean: 
-	rm -rf *.beam
+	rm -rf *.beam erl_crash.dump
