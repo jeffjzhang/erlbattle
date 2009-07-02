@@ -8,9 +8,6 @@ for learnning Erl,
 so we fighting in erlbattle
 }}}
 
-= EB:VI?! =
-[http://groups.google.com/group/ecug/browse_thread/thread/1c2f1d860946300e 关于恶狼战役的一个形象的比喻] ^： 帮助大家更好理解恶狼战役 - ECUG~erlang中文用户组 | Google 网上论坛^
-
 == 老范 ==
 
 大家都知道当年 IBM 的深蓝 和世界国际象棋冠军下棋的事情吧。  在那个例子里有三方参与：
