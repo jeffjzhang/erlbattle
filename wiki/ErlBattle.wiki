@@ -1,0 +1,16 @@
+#summary 释名
+#labels Phase-Design
+
+SEE::[EbWhatItIs EB:是什么?]
+
+= ErlBattle =
+ * 正名: 恶狼战役
+ * E名: ErlBattle
+ * 缩写: EB
+ * 含义: 
+  * 基于Erlang语言的实时技术学习平台
+  * *Erlang Base actual time technic learnning environment*
+
+
+== abt. ==
+ * [EbRoadMap EB:路线] ~ 发展规划命名
