@@ -1,5 +1,5 @@
 -module(erlbattle).
--export([start/0,timer/3,getTime/0,testGetTime/0]).
+-export([start/0,timer/3,getTime/0]).
 -include("schema.hrl").
 -include("test.hrl").
 
@@ -121,10 +121,7 @@ sleep(Sleep) ->
     
 	end.
 
-%% create a faked timer
-createFakeTime() ->
-	ets:new(battle_timer, [set, protected, named_table]),
-	ets:insert(battle_timer, {clock, 23}).
+
 	
 %% 取时间函数
 getTime() ->
@@ -135,15 +132,5 @@ getTime() ->
 			0
 	end.
 
-%% 测试getTime()
-testGetTime() ->
-	createFakeTime(),
-	case getTime() of 
-		23 ->
-			"time correct";
-		_ ->
-			erlang:error("time not correct")
-	end.
-	
 
 
