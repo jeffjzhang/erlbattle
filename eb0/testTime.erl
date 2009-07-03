@@ -1,5 +1,4 @@
 -module(testTime).
--include("test.hrl").
 -export([testGetTime/0]).
 
 %% create a faked timer
