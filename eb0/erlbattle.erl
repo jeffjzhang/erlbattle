@@ -16,7 +16,7 @@ start() ->
 	Sleep = 10,
 
 	%% 启动一个计时器, 作为战场节拍
-	Timer = spawn(timer, timer, [self(),0,Sleep]),
+	Timer = spawn(worldclock, start, [self(),0,Sleep]),
 
 	%% 创建两个指令队列， 这两个队列只能由各自看到
 	BlueQueue = ets:new(blueQueue, [{keypos, #command.warrior_id}]),
