@@ -1,15 +1,22 @@
 #summary 一步步来玩 EB
 #labels Phase-Support,FAQ
-<wiki:toc/>
+
+最快的开始。。。。
 
 假设你已经安装了erl 环境，并且会用svn, 使用M$ 环境
+
 1. 用svn下载代码到你的机器上。 
+
 2. 在cmd 环境下， 运行winmake.bat
+
 3. 进入erl shell
+
 4. erlbattle:start().
+
 5. 系统就启动了. 并且在你反应过来之前就结束了。 这是你观看的第一场战斗，发生在feardFarmers【恐惧的农民】 和englandArmy【英格兰卫兵】 之间的战斗。如何战斗的，需要仔细看屏幕输出的天书。 以后会有专门的图形化回放程序来帮你看战斗。
 
 
+<wiki:toc/>
 
 == 预习 ==
 EB 不是一个单纯的对战游戏，而是为了引导大家在游戏中学习 Erlang 这门面向未来的奇妙语言;
