@@ -1,4 +1,4 @@
--module(timer).
+-module(worldclock).
 -include("schema.hrl").
 -export([start/3,getTime/0]).
 
