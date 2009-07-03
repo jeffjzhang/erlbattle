@@ -1,8 +1,7 @@
 -module(erlbattle).
--export([start/0,timer/3,getTime/0]).
+-export([start/0]).
 -include("schema.hrl").
 -include("test.hrl").
-
 
 %% 战场初始化启动程序
 start() ->
@@ -52,7 +51,7 @@ run(Timer, BlueSide, RedSide, BlueQueue, RedQueue) ->
                                 %% 这里好像有一个问题，当我把timer的最大值调到25时，
                                 %% 在这里打印战场时钟时，有时程序为崩溃
                                 %% 我在windows下测试的。
-				?debug_print(info, getTime()),
+				?debug_print(info, timer:getTime()),
 				
 				%% 计算所有生效的动作
 				%% do something
@@ -86,50 +85,6 @@ run(Timer, BlueSide, RedSide, BlueQueue, RedQueue) ->
                                         io:format("UnknowSide: ~p warrior want ~p at ~p ~n", [Warrior, Command, Time]),
                                         run(Timer, BlueSide, RedSide,BlueQueue, RedQueue)
                                 end
-	end.
-
-%% Todo: Sleep 小程序,休息若干毫秒
-timer(Pid, 0, Sleep) ->
-	%% 第一次启动，初始化battle_timer表
-	ets:new(battle_timer, [set, protected, named_table]),
-	ets:insert(battle_timer, {clock, 0}),
-	timer(Pid, Sleep).
-
-timer(Pid, Sleep) -> 
-	sleep(Sleep),
-	
-	%% 战场最多运行的次数 
-	MaxTurn = 5,
-
-	%% 更新clock值
-	Time = ets:update_counter(battle_timer, clock, 1),
-
-	if    
-		Time == MaxTurn ->
-			Pid!{self(), finish};
-		Time < MaxTurn ->
-			Pid !{self(), time, Time},
-			timer(Pid, Sleep)
-	end.
-
-	
-%% Sleep 工具函数
-sleep(Sleep) ->
-	receive
-	
-	after Sleep -> true
-    
-	end.
-
-
-	
-%% 取时间函数
-getTime() ->
-	case ets:lookup(battle_timer, clock) of
-		[{clock, Time}] ->
-			Time;
-		_ -> 
-			0
 	end.
 
 
