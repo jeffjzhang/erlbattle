@@ -1,5 +1,5 @@
--module(testTime).
--export([testGetTime/0]).
+-module(testWorldClockGetTime).
+-export([test/0]).
 
 %% create a faked timer
 createFakeTime() ->
@@ -7,9 +7,9 @@ createFakeTime() ->
 	ets:insert(battle_timer, {clock, 23}).
 	
 %% ²âÊÔgetTime()
-testGetTime() ->
+test() ->
 	createFakeTime(),
-	case erlbattle:getTime() of 
+	case worldclock:getTime() of 
 		23 ->
 			true;
 		_ ->
