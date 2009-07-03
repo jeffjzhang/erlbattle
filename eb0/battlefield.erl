@@ -32,7 +32,7 @@
 		%%动作生效时间
 		act_effect_time,
 		%%行动次序(目前未理解其作用)
-	    act_sequenc e	
+	    act_sequence	
 	}).
 
 
