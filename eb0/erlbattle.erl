@@ -36,12 +36,15 @@ start() ->
 %% 战场逻辑主程序
 run(Timer, BlueSide, RedSide, BlueQueue, RedQueue) ->
 	receive 
+		
 		{Timer, finish} ->
-			BlueSide!finish,
-			RedSide!finish,
-			io:format("Sun goes down, battle finished!~n", []),
-			%% 输出战斗结果
-			io:format("The winner is blue army ....~n", []);			
+				BlueSide!finish,
+				RedSide!finish,
+				io:format("Sun goes down, battle finished!~n", []),
+				%% 输出战斗结果
+				io:format("The winner is blue army ....~n", []),
+				ets:delete(battle_field);		
+				
 		{Timer, time, Time} ->
 				%% TODO 战场逻辑
 				%% do something
@@ -58,33 +61,30 @@ run(Timer, BlueSide, RedSide, BlueQueue, RedQueue) ->
 				
 				%% 从队列拿到处于wait 状态的战士的新的动作，并将该动作删除
 				%% do something
-				
-				
 				run(Timer, BlueSide, RedSide,BlueQueue, RedQueue);
+
 		{Side, command,Command,Warrior,Time} ->
 				%% 生成一个command 记录
-                                CmdRec = #command{
-                                        warrior_id = Warrior,
-                                        command_name = Command,
-                                        execute_time = Time},
-                                case Side of
-                                    %% 蓝方发来的命令
-                                    BlueSide ->
-                                        %% io:format("BlueSide: warrior ~p want ~p at ~p ~n", [Warrior, Command, Time]),
-                                        ets:insert(BlueQueue, CmdRec),
-                                        %% ?debug_print(true, ets:tab2list(BlueQueue)),
-                                        run(Timer, BlueSide, RedSide,BlueQueue, RedQueue);
-                                    %% 红方发来的命令
-                                    RedSide ->
-                                        %% io:format("RedSide: ~p warrior want ~p at ~p ~n", [Warrior, Command, Time]),
-                                        ets:insert(RedQueue, CmdRec),
-                                        %% ?debug_print(true, ets:tab2list(RedQueue)),
-                                        run(Timer, BlueSide, RedSide,BlueQueue, RedQueue);
-                                    %% 不知道是那一方发来的命令
-                                    _ ->
-                                        io:format("UnknowSide: ~p warrior want ~p at ~p ~n", [Warrior, Command, Time]),
-                                        run(Timer, BlueSide, RedSide,BlueQueue, RedQueue)
-                                end
+				CmdRec = #command{
+						warrior_id = Warrior,
+						command_name = Command,
+						execute_time = Time},
+				case Side of
+					%% 蓝方发来的命令
+					BlueSide ->
+						io:format("BlueSide: warrior ~p want ~p at ~p ~n", [Warrior, Command, Time]),
+						ets:insert(BlueQueue, CmdRec),
+						?debug_print(true, ets:tab2list(BlueQueue));
+					%% 红方发来的命令
+					RedSide ->
+						io:format("RedSide: ~p warrior want ~p at ~p ~n", [Warrior, Command, Time]),
+						ets:insert(RedQueue, CmdRec),
+						?debug_print(true, ets:tab2list(RedQueue));
+					%% 不知道是那一方发来的命令
+					_ ->
+						io:format("UnknowSide: ~p warrior want ~p at ~p ~n", [Warrior, Command, Time])
+				end,
+				run(Timer, BlueSide, RedSide,BlueQueue, RedQueue)
 	end.
 
 
