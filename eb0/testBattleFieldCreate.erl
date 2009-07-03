@@ -7,7 +7,8 @@
 test()->
 	battlefield:create(),
 	test10(),
-	test20().
+	test20(),
+	ets:delete(battle_field).
 	
 %%测试根据ID查找战士属性
 test10()->
