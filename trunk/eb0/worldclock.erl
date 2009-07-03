@@ -20,7 +20,7 @@ loop(Pid, Sleep) ->
 	
 	if    
 		Time == MaxTurn ->
-			Pid!{self(), finish};
+			Pid!{self(), finish},
 		Time < MaxTurn ->
 			Pid !{self(), time, Time},
 			loop(Pid, Sleep)
