@@ -16,7 +16,7 @@ start() ->
 	Sleep = 10,
 
 	%% 启动一个计时器, 作为战场节拍
-	Timer = spawn(erlbattle, timer, [self(),0,Sleep]),
+	Timer = spawn(timer, timer, [self(),0,Sleep]),
 
 	%% 创建两个指令队列， 这两个队列只能由各自看到
 	BlueQueue = ets:new(blueQueue, [{keypos, #command.warrior_id}]),
@@ -70,15 +70,15 @@ run(Timer, BlueSide, RedSide, BlueQueue, RedQueue) ->
                                 case Side of
                                     %% 蓝方发来的命令
                                     BlueSide ->
-                                        io:format("BlueSide: warrior ~p want ~p at ~p ~n", [Warrior, Command, Time]),
+                                        %% io:format("BlueSide: warrior ~p want ~p at ~p ~n", [Warrior, Command, Time]),
                                         ets:insert(BlueQueue, CmdRec),
-                                        ?debug_print(true, ets:tab2list(BlueQueue)),
+                                        %% ?debug_print(true, ets:tab2list(BlueQueue)),
                                         run(Timer, BlueSide, RedSide,BlueQueue, RedQueue);
                                     %% 红方发来的命令
                                     RedSide ->
-                                        io:format("RedSide: ~p warrior want ~p at ~p ~n", [Warrior, Command, Time]),
+                                        %% io:format("RedSide: ~p warrior want ~p at ~p ~n", [Warrior, Command, Time]),
                                         ets:insert(RedQueue, CmdRec),
-                                        ?debug_print(true, ets:tab2list(RedQueue)),
+                                        %% ?debug_print(true, ets:tab2list(RedQueue)),
                                         run(Timer, BlueSide, RedSide,BlueQueue, RedQueue);
                                     %% 不知道是那一方发来的命令
                                     _ ->

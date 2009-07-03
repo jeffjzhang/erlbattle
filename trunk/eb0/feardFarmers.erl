@@ -8,7 +8,7 @@ start(BattleField, Side) ->
 	
 run(BattleField, Side) ->
 	
-	io:format("don't kill us , we are poor farmers ~n",[]),
+	%% io:format("don't kill us , we are poor farmers ~n",[]),
 	
 	receive
 		finish ->  % 退出消息，以便让主进程能够结束战斗
