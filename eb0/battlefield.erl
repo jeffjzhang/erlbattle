@@ -1,40 +1,8 @@
 -module(battlefield).
 -author("swingbach@gmail.com").
 -export([create/0,get_soldier/2,get_soldier_inbattle/1,test/0]).
-
--define(error1(Expr, Expected, Actual),
-	io:format("~s is ~w instead of ~w at ~w:~w~n",
-		  [??Expr, Actual, Expected, ?MODULE, ?LINE])).
-
--define(match(Expected, Expr),
-        fun() ->
-		Actual = (catch (Expr)),
-		case Actual of
-		    Expected ->
-			{success, Actual};
-		    _ ->
-			?error1(Expr, Expected, Actual),
-			erlang:error("match failed", Actual)
-		end
-	end()).
-
--record(soldier,{
-		%%战士编号, tuple形式{编号,所属战队}
-		id, 
-		%%位置
-		position,
-		%%血量
-		hp,
-		%%面朝方向
-		direction,
-		%%当前动作,
-		action,
-		%%动作生效时间
-		act_effect_time,
-		%%行动次序(目前未理解其作用)
-	    act_sequence	
-	}).
-
+-include("test.hrl").
+-include("schema.hrl").
 
 create() ->
 	%%创建战场信息表，用于查找战士信息，及某坐标点信息
