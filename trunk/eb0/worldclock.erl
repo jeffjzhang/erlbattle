@@ -21,6 +21,7 @@ loop(Pid, Sleep) ->
 	if    
 		Time == MaxTurn ->
 			Pid!{self(), finish},
+			ets:delete(battle_timer);
 		Time < MaxTurn ->
 			Pid !{self(), time, Time},
 			loop(Pid, Sleep)
