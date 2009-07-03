@@ -54,7 +54,7 @@ run(Timer, BlueSide, RedSide, BlueQueue, RedQueue) ->
                                 %% 这里好像有一个问题，当我把timer的最大值调到25时，
                                 %% 在这里打印战场时钟时，有时程序为崩溃
                                 %% 我在windows下测试的。
-				?debug_print(info, timer:getTime()),
+				?debug_print(info, worldclock:getTime()),
 				
 				%% 计算所有生效的动作
 				%% do something

@@ -1,1 +1,1 @@
-erlc -W battlefield.erl erlbattle.erl englandArmy.erl feardFarmers.erl tools.erl timer.erl
+erlc -W erlbattle.erl battlefield.erl tools.erl worldclock.erl englandArmy.erl feardFarmers.erl 
