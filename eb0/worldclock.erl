@@ -29,9 +29,12 @@ loop(Pid, Sleep) ->
 
 %% 取时间函数
 getTime() ->
-	case ets:lookup(battle_timer, clock) of
+	
+	try ets:lookup(battle_timer, clock) of
+	
 		[{clock, Time}] ->
 			Time;
-		_ -> 
-			0
+		_ -> 0		
+	catch
+		_:_ -> -1			
 	end.
