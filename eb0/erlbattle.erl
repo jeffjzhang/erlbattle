@@ -51,10 +51,12 @@ run(Timer, BlueSide, RedSide, BlueQueue, RedQueue) ->
 				io:format("Time: ~p s ....~n", [Time]),
 				
 				%% 计算所有生效的动作
+				takeAction(Time),
+				
+				%% 从队列拿到处于wait 状态的战士的新的动作，并将该指令从队列中删除
 				%% do something
 				
-				%% 从队列拿到处于wait 状态的战士的新的动作，并将该动作删除
-				%% do something
+				%% 等待下一个节拍
 				run(Timer, BlueSide, RedSide,BlueQueue, RedQueue);
 
 		{Side, command,Command,Warrior,Time} ->
@@ -81,5 +83,54 @@ run(Timer, BlueSide, RedSide, BlueQueue, RedQueue) ->
 				run(Timer, BlueSide, RedSide,BlueQueue, RedQueue)
 	end.
 
+	
+%% 计算当前节拍，所有需要生效的动作
+takeAction(Time) ->
+	
+	%% 首先从战场状态表中取出本节拍生效的动作，取其中一个开始处理
+	case getActingWorriar(Time) of
+	
+		{Worriar} ->
+				
+			%% 处理Worria 的动作，更新世界表，如果有人被杀，就将该人从世界中移走
+			act(Worriar),
+			
+			%% 再读下一个需要执行的战士
+			takeAction(Time);
+		_ ->
+			none
+	end.
+			
+	
+	
+%% 执行一个战士的动作
+act(Worriar) ->
 
+	%% do something
+	Worriar.
+	
+%% 获得一个当前节拍需要执行任务的战士信息
+getActingWorriar(Time) ->
+
+	%% TODO: 根据sequence 取，以及随机挑选红方，蓝方谁先动
+	Pattern=#soldier{
+				id='_',
+				position={'_','_'},
+				hp='_',
+				direction='_',
+				action='_',
+				act_effect_time = Time
+			},
+	case ets:match_object(battle_field,Pattern) of
+		[Soldier|_] ->
+			Soldier;
+		[]->
+			none
+	end.
+	
+	
+	
+	
+	
+	
 
