@@ -1,4 +1,5 @@
 #summary 对于eb世界消息机制的形象比喻
+#labels Phase-Design,Phase-Support
 
 <wiki:toc/>
 
@@ -19,7 +20,7 @@ _ ~ 现实世界中的eb0 对战_
 || max || EB时钟 || 统一战斗节拍 ||
 || karlcpp || EB战场守护 || 接受指令/核算胜利/发布战报 ||
 || 老范 || EB战队红方 || 决策程序 ||
-|| zoomq || EB战队兰方 || 同上 ||
+|| ZoomQuiet || EB战队兰方 || 同上 ||
 || 代言人 || eb0^对象^ || 备注 ||
 
 === k道具:: ===
