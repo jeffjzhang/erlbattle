@@ -6,6 +6,17 @@
 用故事的方式来解释 eb0 的世界原则
 _ ~ 现实世界中的eb0 对战_
 
+`参考::`
+ # [EbGlossary EB:专用词语表]
+ # [ErlBattleRule EB:世界法则]
+ # [ErlBattleFieldDesign EB:战场程序算法]:  战场主程序是游戏规则的载体。负责启动战场，并按照游戏规则判断战斗结果
+ #  [EbInterface EB:指挥程序和战场程序之间的接口规范]
+ # [EbSequenceDesign EB:如何控制战场时间节拍和指令时序]
+  * [EbSameResult EB:为什么战场时钟节拍不能使用固定的自然时间?]
+  * [EbClockNotTokonRing EB:worldClock 和令牌 的差别?]
+
+
+
 == 设定 ==
 {{{
 () => 场景说明;舞美设定;
@@ -180,3 +191,5 @@ max躺在床上，睡觉ing（做这种移动棋子的体力活，太累了！�
  # 一个播放 karlcpp 在天安门那儿主持进行的战场说明
  # 一个运行自个儿写的程序，根据 karlcpp 通报的棋盘和棋子的行动，不断输入自个儿的程序，
  # 并将结果（自个儿棋子的行动）通过邮件发送给 karlcpp
+ 
+ 
