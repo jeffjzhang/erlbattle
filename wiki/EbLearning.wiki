@@ -1,0 +1,31 @@
+#summary 学习日记
+
+
+* erlang 的 if  *
+
+{{{
+if 
+   a ->  do a
+   b ->  do b
+   true -> do c
+end.
+}}}
+
+如果转换为其他语言的代码：
+
+{{{
+if a {
+   do a
+   }  
+else {
+   if b {
+      do b 
+   } 
+   else {
+      do c
+   }
+}}}
+   
+在最简单的if 语法上就有巨大区别。不知道为什么这么多主流语言都用后面的模式， 而erlang 选择了一个极其简单的模式。 
+
+
