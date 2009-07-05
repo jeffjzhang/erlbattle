@@ -15,7 +15,7 @@
     * 位置 （x, y）   
     * 血量  1 - 100
     * 面朝的方向  （N, S, W, E）  ---北南西东---或者说上下左右
-    * 当前动作 (无动作 wait,  前进 forward, 后退 back, 转向左边 turnLeft,转向右边 turnRight, 转向后面 turnBack, 攻击 attack)
+    * 当前动作 (无动作 wait,  前进 forward, 后退 back, 转向（turnSouth, turnNorth, turnWest,turnEast）, 攻击 attack)
     * 当前动作生效时间
     * 行动次序 
 
