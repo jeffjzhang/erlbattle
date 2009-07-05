@@ -91,12 +91,12 @@ takeAction(Time) ->
 	%% 首先从战场状态表中取出本节拍生效的动作，取其中一个开始处理
 	case getActingWorriar(Time) of
 	
-		{Worriar} ->
-				
+		[Worriar] ->
+			
 			%% 处理Worria 的动作，更新世界表，如果有人被杀，就将该人从世界中移走
 			act(Worriar),
 			
-			%% 再读下一个需要执行的战士
+			%% 再读下一个需要执行的战士			
 			takeAction(Time);
 		_ ->
 			none
@@ -114,24 +114,21 @@ act(WorriarInfo) ->
 	
 	{_, _, _, Action} = WorriarInfo,
 	
-	case Action of 
-		
-		forward -> actMove(WorriarInfo, 1);
-		back -> actMove(WorriarInfo, -1);
-		turnSouth ->actTurn(WorriarInfo,"south");
-		turnWest ->actTurn(WorriarInfo,"west");
-		turnEast ->actTurn(WorriarInfo,"east");
-		turnNorth ->actTurn(WorriarInfo,"north");
-		attack -> actAttack(WorriarInfo);		
-		_ -> none
+	if 		
+		Action == "forward"  -> actMove(WorriarInfo, 1);
+		Action == "back" -> actMove(WorriarInfo, -1);
+		Action == "turnSouth" ->actTurn(WorriarInfo,"south");
+		Action == "turnWest" ->actTurn(WorriarInfo,"west");
+		Action == "turnEast" ->actTurn(WorriarInfo,"east");
+		Action == "turnNorth" ->actTurn(WorriarInfo,"north");
+		Action == "attack" -> actAttack(WorriarInfo);
+		true -> none
 	end.
 	
 	
 %% 获得一个当前节拍需要执行任务的战士信息
 getActingWorriar(Time) ->
 
-	io:format("Time = ~p , begin fetch acting worriar ~n", [Time]),
-	
 	%% TODO: 根据sequence 取，以及随机挑选红方，蓝方谁先动
 	%% 取出非wait 状态，且动作生效时间 小于等于当前时间的 一个战士
 	MS = ets:fun2ms(fun({Soldier, Id, Position,Hp,Facing,Action,Act_effect_time,Act_sequence}) 
@@ -150,21 +147,22 @@ getActingWorriar(Time) ->
 %%转向动作, 不受别人影响
 actTurn(WorriarInfo,Direction) ->
 	{Id, _Position, _Facting, _Action} = WorriarInfo,
-	ets:update_element(battle_field, Id, [{5, "wait"},{4, Direction}]).
+	ets:update_element(battle_field, Id, [{6, "wait"},{4, Direction}]).
 
 %% 移动动作，需要看目标格中是否有对手
 %% 1 向前走， -1 向后走	
 actMove(WorriarInfo, Direction) ->
 	
-	{Id, Position, Facting, _Action} = WorriarInfo,
-	DestPosition = calcDestination(Position, Facting, Direction),
+	{Id, Position, Facing, _Action} = WorriarInfo,
+	
+	DestPosition = calcDestination(Position, Facing, Direction),
 	
 	%% 如果目标位置是合法的，就移动，否则就放弃该动作,原地不动
 	case positionValid(DestPosition) of
 		true ->
-			ets:update_element(battle_field, Id, [{5, "wait"},{2, DestPosition}]);
+			ets:update_element(battle_field, Id, [{6, "wait"},{3, DestPosition}]);
 		_ ->
-			ets:update_element(battle_field, Id, [{5, "wait"}])
+			ets:update_element(battle_field, Id, [{6, "wait"}])
 	end.
 
 %%计算目标移动位置
@@ -172,12 +170,12 @@ calcDestination(Position, Facing, Direction) ->
 	
 	{Px, Py} = Position,
 	
-	case Facing of 
-		west -> {Px - Direction, Py};
-		east -> {Px + Direction, Py};
-		north -> {Px, Py + Direction};
-		south -> {Px, Py - Direction};
-		_ -> {Px,Py}
+	if  
+		Facing == "west" -> {Px - Direction, Py};
+		Facing == "east" -> {Px + Direction, Py};
+		Facing == "north" -> {Px, Py + Direction};
+		Facing == "south" -> {Px, Py - Direction};
+		true -> {Px,Py}
 	end.
 
 %% 判定是否属于合法的目的地
