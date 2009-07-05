@@ -130,15 +130,21 @@ act(WorriarInfo) ->
 %% 获得一个当前节拍需要执行任务的战士信息
 getActingWorriar(Time) ->
 
+	io:format("Time = ~p , begin fetch acting worriar ~n", [Time]),
+	
 	%% TODO: 根据sequence 取，以及随机挑选红方，蓝方谁先动
 	%% 取出非wait 状态，且动作生效时间 小于等于当前时间的 一个战士
-	MS = ets:fun2ms(fun({id, position, direction,action,act_effect_time})when act_effect_time =< Time andalso action /= "wait" ->
-							[id,position,direction,action] end),
-	case ets:select(battle_field,MS,1) of
-		[ActingSoldier] ->
+	MS = ets:fun2ms(fun({Soldier, Id, Position,Hp,Facing,Action,Act_effect_time,Act_sequence}) 
+			when (Action /= "wait" andalso Act_effect_time =< Time)  ->  
+							{Id,Position,Facing,Action} end),
+	
+	try ets:select(battle_field,MS,1) of
+		{ActingSoldier, _Other} ->
 			ActingSoldier;
 		_->
 			none
+	catch
+		_:_ -> none
 	end.
 
 %%转向动作, 不受别人影响
