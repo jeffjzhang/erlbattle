@@ -19,7 +19,6 @@ init_soldier(Army,X,Y,Direction)->
 				position={X,Y+Id},
 				hp=100,
 				facing = Direction,
-				%%TODO action以及direction改成整数枚举类型
 				action="wait",
 				act_effect_time = 0,
 				act_sequence =0
