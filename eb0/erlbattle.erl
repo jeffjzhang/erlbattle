@@ -2,6 +2,7 @@
 -export([start/0]).
 -include("schema.hrl").
 -include("test.hrl").
+-include_lib("stdlib/include/ms_transform.hrl").
 
 %% 战场初始化启动程序
 start() ->
@@ -113,23 +114,14 @@ act(Worriar) ->
 getActingWorriar(Time) ->
 
 	%% TODO: 根据sequence 取，以及随机挑选红方，蓝方谁先动
-	Pattern=#soldier{
-				id='_',
-				position={'_','_'},
-				hp='_',
-				direction='_',
-				action='_',
-				act_effect_time = Time
-			},
-	case ets:match_object(battle_field,Pattern) of
-		[Soldier|_] ->
-			Soldier;
+	MS = ets:fun2ms(fun({id, position, direction,action,act_effect_time})when act_effect_time =< Time ->
+							[id,position,direction,action] end),
+	case ets:select(battle_field,MS) of
+		[ActingSoldier|_] ->
+			ActingSoldier;
 		[]->
 			none
 	end.
-	
-	
-	
 	
 	
 	
