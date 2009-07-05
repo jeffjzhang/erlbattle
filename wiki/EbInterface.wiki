@@ -34,7 +34,7 @@
 
     {command , 指令, 发起的战士，发动时间}
 
-其中指令为：    前进 forward, 后退 back, 转向左边 turnLeft,转向右边 turnRight, 转向后面 turnBack, 攻击 attack, 原地待命 wait 
+其中指令为：    前进 forward, 后退 back, 转向（turnSouth, turnNorth, turnWest,turnEast), 攻击 attack, 原地待命 wait 
 
 发动时间：指希望该动作在哪个时间点发动。 比如我们希望部队在统一时间向前前进一步。而不希望他们乱走。  发动时间如果是 0  则表示希望立刻发动该动作。
 
