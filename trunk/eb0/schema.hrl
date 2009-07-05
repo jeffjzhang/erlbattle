@@ -7,7 +7,7 @@
 		%%血量
 		hp,
 		%%面朝方向
-		direction,
+		facing,
 		%%当前动作,
 		action,
 		%%动作生效时间
