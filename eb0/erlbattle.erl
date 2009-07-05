@@ -1,5 +1,5 @@
 -module(erlbattle).
--export([start/0]).
+-export([start/0,takeAction/1]).
 -include("schema.hrl").
 -include("test.hrl").
 -include_lib("stdlib/include/ms_transform.hrl").
