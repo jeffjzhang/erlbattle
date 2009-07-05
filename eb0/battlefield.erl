@@ -18,7 +18,7 @@ init_soldier(Army,X,Y,Direction)->
 				id={Id,Army},
 				position={X,Y+Id},
 				hp=100,
-				direction=Direction,
+				facing = Direction,
 				%%TODO action以及direction改成整数枚举类型
 				action="wait"
 			},
@@ -41,7 +41,7 @@ get_soldier_inbattle(Position) ->
 				id='_',
 				position=Position,
 				hp='_',
-				direction='_',
+				facing='_',
 				action='_'
 			},
 	case ets:match_object(battle_field,Pattern) of

@@ -105,24 +105,143 @@ takeAction(Time) ->
 	
 	
 %% 执行一个战士的动作
-act(Worriar) ->
+act(WorriarInfo) ->
 
-	%% do something
-	Worriar.
+    %% forward, 后退 back, 
+	%% 转向 turnSouth, turnNorth, turnWest,turnEast
+	%% 攻击 attack
+	%% 原地待命 wait 
+	
+	{_, _, _, Action} = WorriarInfo,
+	
+	case Action of 
+		
+		forward -> actMove(WorriarInfo, 1);
+		back -> actMove(WorriarInfo, -1);
+		turnSouth ->actTurn(WorriarInfo,"south");
+		turnWest ->actTurn(WorriarInfo,"west");
+		turnEast ->actTurn(WorriarInfo,"east");
+		turnNorth ->actTurn(WorriarInfo,"north");
+		attack -> actAttack(WorriarInfo);		
+		_ -> none
+	end.
+	
 	
 %% 获得一个当前节拍需要执行任务的战士信息
 getActingWorriar(Time) ->
 
 	%% TODO: 根据sequence 取，以及随机挑选红方，蓝方谁先动
-	MS = ets:fun2ms(fun({id, position, direction,action,act_effect_time})when act_effect_time =< Time ->
+	%% 取出非wait 状态，且动作生效时间 小于等于当前时间的 一个战士
+	MS = ets:fun2ms(fun({id, position, direction,action,act_effect_time})when act_effect_time =< Time andalso action /= "wait" ->
 							[id,position,direction,action] end),
-	case ets:select(battle_field,MS) of
-		[ActingSoldier|_] ->
+	case ets:select(battle_field,MS,1) of
+		[ActingSoldier] ->
 			ActingSoldier;
-		[]->
+		_->
 			none
 	end.
-	
-	
-	
 
+%%转向动作, 不受别人影响
+actTurn(WorriarInfo,Direction) ->
+	{Id, _Position, _Facting, _Action} = WorriarInfo,
+	ets:update_element(battle_field, Id, [{5, "wait"},{4, Direction}]).
+
+%% 移动动作，需要看目标格中是否有对手
+%% 1 向前走， -1 向后走	
+actMove(WorriarInfo, Direction) ->
+	
+	{Id, Position, Facting, _Action} = WorriarInfo,
+	DestPosition = calcDestination(Position, Facting, Direction),
+	
+	%% 如果目标位置是合法的，就移动，否则就放弃该动作,原地不动
+	case positionValid(DestPosition) of
+		true ->
+			ets:update_element(battle_field, Id, [{5, "wait"},{2, DestPosition}]);
+		_ ->
+			ets:update_element(battle_field, Id, [{5, "wait"}])
+	end.
+
+%%计算目标移动位置
+calcDestination(Position, Facing, Direction) ->
+	
+	{Px, Py} = Position,
+	
+	case Facing of 
+		west -> {Px - Direction, Py};
+		east -> {Px + Direction, Py};
+		north -> {Px, Py + Direction};
+		south -> {Px, Py - Direction};
+		_ -> {Px,Py}
+	end.
+
+%% 判定是否属于合法的目的地
+positionValid(Position)	->
+
+	{Px, Py} = Position,
+	
+	%% 1. 不允许超框
+	%% 2. 目的地有人站着，不能移动
+	not ((Px <0 orelse Py < 0 orelse Px >14 orelse Py > 14) orelse
+		battlefield:get_soldier_inbattle(Position) /= none).
+		
+	
+%% 攻击对手
+actAttack(WorriarInfo) ->
+	
+	{ID, Position, Facing, _Action} = WorriarInfo,
+	{_MyId, MySide} = ID,
+	
+	DestPosition = calcDestination(Position, Facing, 1),
+	
+	%% 如果在攻击方向上有敌人的话，计算攻击情况
+	case battlefield:get_soldier_inbattle(DestPosition) of
+		[Enemy] -> 
+			{EID, _EPosition, EHp, _EFacing, _EAction, _EEffTime, _ESeq} = Enemy,	
+			{_Eid, ESide} = EID,
+			if 
+				%% 只能攻击敌人，自己人不能攻击
+				MySide /= ESide ->
+					case calcHit(WorriarInfo, Enemy) of
+						%% 如果hit 返回 0 ，表示该敌人被杀死
+						Hit when Hit == 0 ->
+							ets:match_delete(battle_field, {EID,'_'});
+						%% Hit 大于零，扣减掉对方的血
+						Hit when Hit > 0 ->
+							ets:update_element(battle_field, EID, [{3, EHp - hit}])
+					end
+			end;
+		_ ->
+			true
+	end,
+	
+	%% 将自己的动作结束
+	ets:update_element(battle_field, ID, [{5, "wait"}]).
+	
+	
+%% 计算攻击损伤
+calcHit(WorriarInfo, Enemy) ->
+	
+	{_EId, EPosition, EHp, EFacing, _EAction, _EEffTime, _ESeq} = Enemy,	
+	{_Id, Position, _Facing, _Action} = WorriarInfo,
+	
+	%% 计算敌人面对的那格，和背后的那格，其他的都是侧面
+	FacePosition = calcDestination(EPosition,EFacing,1),
+	BackPosition = calcDestination(EPosition,EFacing,-1),	
+
+	%% 计算出损伤比例
+	case Position of 
+		FacePosition -> Hit = 10;
+		BackPosition -> Hit = 20;
+		_ -> Hit = 15
+	end,
+	
+	%% 如果敌人hp 不够，就返回零，表示杀掉了
+	%% 否则返回攻击点数
+	if
+		EHp > Hit -> Hit;
+		true -> 0
+	end.
+			
+	
+	
+	
