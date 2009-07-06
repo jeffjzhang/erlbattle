@@ -19,8 +19,10 @@ test10()->
 				id={2,"red"},
 				position={0,2+2},
 				hp=100,
-				direction="E",
-				action="wait"
+				facing="E",
+				action="wait",
+				act_effect_time=0,
+				act_sequence=0
 			},
 	?match(Soldier,battlefield:get_soldier(2,"red")).
 
@@ -32,8 +34,10 @@ test20()->
 			id={7,"blue"},
 			position={14,9},
 			hp=100,
-			direction="W",
-			action="wait"
-		},
+			facing="W",
+			action="wait",
+			act_effect_time=0,
+			act_sequence=0
+			},
 	?match(Soldier,battlefield:get_soldier_inbattle({14,9})).
 
