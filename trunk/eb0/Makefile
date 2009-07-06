@@ -5,7 +5,7 @@
  
 ERL = erl -boot start_clean
  
-MODS = erlbattle englandArmy feardFarmers battlefield
+MODS = erlbattle englandArmy feardFarmers battlefield tools.erl worldclock.erl  
  
 all: compile
 	${ERL} -noshell -s erlbattle start 
