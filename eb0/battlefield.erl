@@ -49,7 +49,7 @@ get_soldier_inbattle(Position) ->
 			},
 	
 	case ets:match_object(battle_field,Pattern) of
-		[Soldier] ->
+		[Soldier | _Other] ->
 			Soldier;
 		[]->
 			none

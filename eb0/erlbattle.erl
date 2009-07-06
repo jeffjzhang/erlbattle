@@ -147,7 +147,7 @@ getActingWorriar(Time) ->
 %%转向动作, 不受别人影响
 actTurn(WorriarInfo,Direction) ->
 	{Id, _Position, _Facting, _Action} = WorriarInfo,
-	ets:update_element(battle_field, Id, [{6, "wait"},{4, Direction}]).
+	ets:update_element(battle_field, Id, [{6, "wait"},{5, Direction}]).
 
 %% 移动动作，需要看目标格中是否有对手
 %% 1 向前走， -1 向后走	
@@ -187,8 +187,8 @@ positionValid(Position)	->
 
 	%% 1. 不允许超框
 	%% 2. 目的地不允许有人
-	Px >=0 andalso Py >= 0 andalso Px =<14 andalso Py =< 14 andalso 
-		battlefield:get_soldier_inbattle(Position) ==none.
+	(Px >=0) and (Py>=0) and (Px =<14) and (Py =<14) and  
+		(battlefield:get_soldier_inbattle(Position) ==none).
 	
 %% 攻击对手
 actAttack(WorriarInfo) ->
@@ -197,36 +197,40 @@ actAttack(WorriarInfo) ->
 	{_MyId, MySide} = ID,
 	
 	DestPosition = calcDestination(Position, Facing, 1),
-	
-	%% 如果在攻击方向上有敌人的话，计算攻击情况
-	case battlefield:get_soldier_inbattle(DestPosition) of
-		[Enemy] -> 
-			{EID, _EPosition, EHp, _EFacing, _EAction, _EEffTime, _ESeq} = Enemy,	
+
+	case battlefield:get_soldier_inbattle(DestPosition) of 
+		
+		Enemy when is_record(Enemy,soldier) -> 
+
+			{_Key, EID, _EPosition, EHp, _EFacing, _EAction, _EEffTime, _ESeq} = Enemy,
 			{_Eid, ESide} = EID,
+
 			if 
 				%% 只能攻击敌人，自己人不能攻击
 				MySide /= ESide ->
 					case calcHit(WorriarInfo, Enemy) of
 						%% 如果hit 返回 0 ，表示该敌人被杀死
 						Hit when Hit == 0 ->
-							ets:match_delete(battle_field, {EID,'_'});
+							ets:match_delete(battle_field, Enemy);
 						%% Hit 大于零，扣减掉对方的血
 						Hit when Hit > 0 ->
-							ets:update_element(battle_field, EID, [{3, EHp - hit}])
-					end
-			end;
-		_ ->
-			true
+							ets:update_element(battle_field, EID, [{4, EHp - Hit}])
+					end;
+				true -> true
+			end;	
+		_ -> 
+			none
 	end,
+
 	
 	%% 将自己的动作结束
-	ets:update_element(battle_field, ID, [{5, "wait"}]).
+	ets:update_element(battle_field, ID, [{6, "wait"}]).
 	
 	
 %% 计算攻击损伤
-calcHit(WorriarInfo, Enemy) ->
+calcHit(WorriarInfo, EnemyInfo) ->
 	
-	{_EId, EPosition, EHp, EFacing, _EAction, _EEffTime, _ESeq} = Enemy,	
+	{_Key, _EId, EPosition, EHp, EFacing, _EAction, _EEffTime, _ESeq} = EnemyInfo,	
 	{_Id, Position, _Facing, _Action} = WorriarInfo,
 	
 	%% 计算敌人面对的那格，和背后的那格，其他的都是侧面
