@@ -18,6 +18,7 @@ test() ->
 	test9(), % 没打到,攻击测试
 	test10(), % 打死一个,攻击测试
 	test11(), % 不会误伤自己人
+	test12(), % 两人互砍（测试是否能够让多个角色动起来）
 	
 	ets:delete(battle_field).
 
@@ -274,3 +275,33 @@ test11()->
 
 	Soldier5 = battlefield:get_soldier(9,"red"),
 	?match(Soldier2,Soldier5).
+	
+%% 两人互砍（测试是否能够让多个角色动起来）	
+test12() ->
+
+	ets:delete_all_objects(battle_field),
+	Soldier=#soldier{
+				id={10,"red"},
+				position={10,10},
+				hp=100,
+				facing = "north",
+				action="attack",
+				act_effect_time = 10,
+				act_sequence =0
+			},
+	
+	ets:insert(battle_field,Soldier),
+	Soldier2 = Soldier#soldier{id={9,"blue"},position={10,11},facing = "south"},
+	ets:insert(battle_field,Soldier2),
+	
+	erlbattle:takeAction(10),
+	Soldier3 = battlefield:get_soldier(10,"red"),
+	Soldier4 = Soldier#soldier{action="wait",hp=90},
+	?match(Soldier4,Soldier3),
+
+	Soldier5 = battlefield:get_soldier(9,"blue"),
+	Soldier6 = Soldier2#soldier{action="wait",hp=90},
+	?match(Soldier6,Soldier5).	
+	
+	
+	
