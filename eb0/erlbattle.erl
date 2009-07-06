@@ -158,10 +158,12 @@ actMove(WorriarInfo, Direction) ->
 	DestPosition = calcDestination(Position, Facing, Direction),
 	
 	%% 如果目标位置是合法的，就移动，否则就放弃该动作,原地不动
-	case positionValid(DestPosition) of
-		true ->
+	Valid = positionValid(DestPosition),
+		
+	if 		
+		Valid == true ->  
 			ets:update_element(battle_field, Id, [{6, "wait"},{3, DestPosition}]);
-		_ ->
+		true ->
 			ets:update_element(battle_field, Id, [{6, "wait"}])
 	end.
 
@@ -182,12 +184,11 @@ calcDestination(Position, Facing, Direction) ->
 positionValid(Position)	->
 
 	{Px, Py} = Position,
-	
+
 	%% 1. 不允许超框
-	%% 2. 目的地有人站着，不能移动
-	not ((Px <0 orelse Py < 0 orelse Px >14 orelse Py > 14) orelse
-		battlefield:get_soldier_inbattle(Position) /= none).
-		
+	%% 2. 目的地不允许有人
+	Px >=0 andalso Py >= 0 andalso Px =<14 andalso Py =< 14 andalso 
+		battlefield:get_soldier_inbattle(Position) ==none.
 	
 %% 攻击对手
 actAttack(WorriarInfo) ->

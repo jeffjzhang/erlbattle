@@ -43,8 +43,11 @@ get_soldier_inbattle(Position) ->
 				position=Position,
 				hp='_',
 				facing='_',
-				action='_'
+				action='_',
+				act_effect_time = '_',
+				act_sequence = '_'
 			},
+	
 	case ets:match_object(battle_field,Pattern) of
 		[Soldier] ->
 			Soldier;
