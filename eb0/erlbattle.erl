@@ -54,7 +54,7 @@ run(Timer, BlueSide, RedSide, BlueQueue, RedQueue) ->
 				%% 计算所有生效的动作
 				takeAction(Time),
 				
-				%% 从队列拿到处于wait 状态的战士的新的动作，并将该指令从队列中删除
+				%% EB-07从队列拿到处于wait 状态的战士的新的动作，并将该指令从队列中删除
 				%% do something
 				
 				%% 等待下一个节拍
