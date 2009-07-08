@@ -9,7 +9,7 @@
 
 2. window 运行 config.bat, linux 运行 config
 
-3. 进入 eb0 目录； windows 用 nmake test   ; linux 用 make test
+3. 进入 eb0 目录； windows 用 nmake test   ; linux 用 make test (nmake 下载：http://erlbattle.googlecode.com/files/nmake.exe )
 
 4. 进入erl shell
 
