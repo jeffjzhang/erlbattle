@@ -6,4 +6,4 @@ EB_TOP=../
 MODULES = erlbattle englandArmy feardFarmers battlefield tools worldclock\
 	testAll testBattleFieldCreate testErlBattleTakeAction testWorldClockGetTime
 
-include ../make/target.mk
+include ../make/target.mk 
