@@ -1,29 +1,33 @@
 #summary 如何控制战场时间节拍和指令顺序
 #labels Phase-QA,Phase-Support
 
-= 问题根源 =
-昨天Max 提出了一个非常有意思的问题 （针对branches/eb0-1.0 标签的代码），如何控制战场时序。
-Max做了个实验。 他把clock 的延时提高到了 5000 毫秒，同时修改了feardFarmer 的消息发送程序。 运行代码：
 
-{{{
-Time: 3 s ....
-"Blue Side: dont kill us, we are poor farmers" 
-"Red Side: marching forword" 
-"Blue Side: dont kill us, we are poor farmers" 
-"Blue Side: dont kill us, we are poor farmers" 
-"Red Side: marching forword" 
-"Blue Side: dont kill us, we are poor farmers" 
-"Blue Side: dont kill us, we are poor farmers" 
-Time: 4 s ....
-}}}
 
-大家可以看到， BlueSide 在一个时间节拍中发出了5个消息。 而Red Side 发出了 2 个消息。 这是否会带来不公平呢？  另外我们的时钟程序是否完全在战斗中没有用呢？ 
-
-现在的代码是未完成的中间阶段。 现在确实看起来是这样的。战场程序一个非常重要的功能就是要控制好来自双方的时序。下一步的工作就是要编写对于消息的处理机制。 解决Max提出的疑问，也就是编写命令消息处理程序的算法。 
-
-== 算法 ==
+== 整体结构图 ==
 
 http://erlbattle.googlecode.com/files/theWorld.png  
+
+图中浅蓝色的进程是eb 核心系统； 两个椭圆的进程是玩家开发的指挥进程。 浅黄色折角的是4个ets 表，用于在进程间传递信息； 
+
+
+== 进程说明 ==
+
+1. 战场进程 erlbattle
+ 这个是系统的核心进程，负责在时间节拍到达时，首先运算世界中各个战士动作（移动，转身，攻击），并将死去的战士挪出战场； 然后对于处于wait 状态的战士到redQueue, blueQueue 取下一步指令; 取完消息后，向消息队列进程发送清除指令的消息； 本进程负责维护战场状态表（battle_field）；
+
+2. 时钟进程 worldclock
+ 专门负责维护世界的节拍。每个节拍延迟时间考虑采用测速方案，确保在不同速度的机器上，给予玩家指挥进程相同的CPU 处理指令次数。 worldclock 负责定期向主程序发出时钟节拍信号。 同时维护一个时钟表（battle_timer）
+
+3. 红/蓝方消息队列进程 redChannel, blueChannel 
+ 负责接收来自玩家指挥进程的消息；然后维护各自维护自己的消息队列； 每个战士只有一个指令被缓存；老的如果没有被执行，就会被新的消息冲掉。 如果接受到战场进程发来的清除指令消息，就将已经被处理的消息清除
+
+4. 玩家指挥进程
+ 由玩家编写的人工智能程序。 能够根据战场情况灵活指挥自己的队伍，攻击敌人，并取得胜利
+
+
+== 共享ETS 表说明 ==
+
+
 
 结构图中上方有两个 none-named protected ets 表。 这两表是双方私有的指令队列。 也就是下一步动作。 
 
