@@ -3,21 +3,23 @@
 
 最快的开始。。。。
 
-假设你已经安装了erl 环境，并且会用svn, 使用M$ 环境
+假设你已经安装了erl 环境，并且会用svn, 使用M$ 或者 linux 环境
 
- 1. 用svn下载代码到你的机器上。 
+ 1. 用svn下载代码到你的机器上。 http://erlbattle.googlecode.com/svn/trunk
 
- 2. 在cmd 环境下， 运行winmake.bat
+ 2. window 运行 config.bat, linux 运行 config
 
- 3. 进入erl shell
+ 3. 进入 eb0 目录； windows 用 nmake test   ; linux 用 make test
 
- 4. erlbattle:start().
+ 4. 进入erl shell
 
- 5. 系统就启动了. 并且在你反应过来之前就结束了。 
+ 5. erlbattle:start().
 
- 6. 这是你观看的第一场战斗，发生在feardFarmers【恐惧的农民】 和englandArmy【英格兰卫兵】 之间的战斗。如何战斗的，需要仔细看屏幕输出的天书。 
+ 6. 系统就启动了. 并且在你反应过来之前就结束了。 
 
- 7. 以后会有专门的图形化回放程序来帮你看战斗。
+ 7. 这是你观看的第一场战斗，发生在feardFarmers【恐惧的农民】 和englandArmy【英格兰卫兵】 之间的战斗。如何战斗的，需要仔细看屏幕输出的天书。 
+
+ 8. 以后会有专门的图形化回放程序来帮你看战斗。
 
 
 ----
