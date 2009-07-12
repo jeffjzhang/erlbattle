@@ -29,4 +29,17 @@
 	}).
 
 %% 命令记录
--record(command, {warrior_id, command_name, execute_time}).
+-record(command, {
+		
+		%% 战士号，不用带side
+		soldier_id, 
+		
+		%% 指令名称
+		name,
+		
+		%% 要求执行时间
+		execute_time,
+		
+		%% 任务序号，用于识别哪些指令被执行过，以便清除
+		seq_id
+	}).

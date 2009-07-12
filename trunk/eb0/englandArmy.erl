@@ -1,28 +1,31 @@
 -module(englandArmy).
--export([start/2]).
+-export([run/2]).
 
-start(BattleField, Side) ->
+run(Channel, Side) ->
     
-	io:format("englandArmy begin to run on ~p army....~n", [Side]),
-	run(BattleField,Side).
+	Channel!{command,"forward",1,0},
+	Channel!{command,"forward",2,0},
+	Channel!{command,"forward",3,0},
+	Channel!{command,"forward",4,0},
+	Channel!{command,"forward",5,0},
+	Channel!{command,"forward",6,0},
+	Channel!{command,"forward",7,0},
+	Channel!{command,"forward",8,0},
+	Channel!{command,"forward",9,0},
+	Channel!{command,"forward",10,0},
 	
-run(BattleField, Side) ->
-	
-	BattleField!{self(), command,"forward",1,0},
-	BattleField!{self(), command,"forward",2,0},
-	BattleField!{self(), command,"forward",3,0},
-	BattleField!{self(), command,"forward",4,0},
-	BattleField!{self(), command,"forward",5,0},
-	BattleField!{self(), command,"forward",6,0},
-	BattleField!{self(), command,"forward",7,0},
-	BattleField!{self(), command,"forward",8,0},
-	BattleField!{self(), command,"forward",9,0},
-	BattleField!{self(), command,"forward",10,0},
-	
+	tools:sleep(100),
+
+	%% 结束战斗，可以做一些收尾工作后退出，或者什么都不做
+	%% 这个消息不是必须处理的
 	receive
-		finish ->  % 退出消息，以便让主进程能够结束战斗
-			BattleField!{self(), command, Side ++ " Side: finish battle"}
+		{'EXIT',_FROM, finish} ->  
+			true;
+		
+		_ ->
+			run(Channel, Side)
+			
 	after 1 -> 
-			run(BattleField, Side)
+			run(Channel, Side)
 	end.
 	

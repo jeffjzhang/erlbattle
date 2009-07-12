@@ -3,6 +3,6 @@
 
 test() ->
 	testBattleFieldCreate:test(),
-	testWorldClockGetTime:test(),
+	testErlBattleGetTime:test(),
 	testErlBattleTakeAction:test().
 
