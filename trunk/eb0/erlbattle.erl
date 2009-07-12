@@ -29,8 +29,8 @@ start() ->
 	RedQueue = ets:new(blueQueue, [{keypos, #command.soldier_id}]),	
 	
 	%% 启动红方和蓝方的通讯通道
-	BlueSide = spawn(channel, start, [self(), "blue",BlueArmy]),
-	RedSide = spawn(channel, start, [self(), "red", RedArmy]),
+	BlueSide = spawn_link(channel, start, [self(), "blue",BlueArmy]),
+	RedSide = spawn_link(channel, start, [self(), "red", RedArmy]),
 	
 	%% 将通讯队列的管理权交给通讯通道
 	ets:give_away(BlueQueue, BlueSide, none),
@@ -47,6 +47,8 @@ loop(BlueSide, RedSide, BlueQueue, RedQueue, Sleep) ->
 
 	%%获得当前时钟， 战场从 第一秒 开始
 	Time = ets:update_counter(battle_timer, clock, 1),
+	io:format("Time = ~p s ~n", [Time]),
+	io:format("Battle Field ~n ~p ~n", [ets:tab2list(battle_field)]),
 
 	%% 睡一会，让指挥程序可以考虑
 	tools:sleep(Sleep),
@@ -82,12 +84,12 @@ loop(BlueSide, RedSide, BlueQueue, RedQueue, Sleep) ->
 				true ->
 
 					%% 取红方处于wait 状态的战士的新的动作，执行，并将该指令从队列中删除
-					RedIdleSoldiers = battlefield:get_idle_soldier("Red"),
+					RedIdleSoldiers = battlefield:get_idle_soldier("red"),
 					RedUsedCommand = command(RedIdleSoldiers,RedQueue,Time),
 					RedSide ! {expireCommand, RedUsedCommand},
 					
 					%% 取蓝方处于wait 状态的战士的新的动作，执行，并将该指令从队列中删除					
-					BlueIdleSoldiers = battlefield:get_idle_soldier("Blue"),
+					BlueIdleSoldiers = battlefield:get_idle_soldier("blue"),
 					BlueUsedCommand = command(BlueIdleSoldiers,BlueQueue,Time),
 					BlueSide ! {expireCommand, BlueUsedCommand},
 
