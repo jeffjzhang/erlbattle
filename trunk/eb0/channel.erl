@@ -37,7 +37,7 @@ loop(BattleField, Commander, Queue,CommandId) ->
 		%% 主程序运行完后，会发出清除已经使用过的命令的消息，需要将其清除，避免重复命令
 		%% 如果在清除之前，已经有新的消息进来，其seq_id 已经更新，就不会被误删
 		{expireCommand, CommandIds} ->
-			io:format("begin to clear used command ~p.of ~p. ~n",  [CommandIds, ets:tab2list(Queue)]),
+
 			lists:foreach(
 				fun(SeqId) ->
 					Pattern=#command{
@@ -48,7 +48,7 @@ loop(BattleField, Commander, Queue,CommandId) ->
 					ets:match_delete(Queue, Pattern)
 				end,
 				CommandIds),
-			io:format("cleard after of ~p. ~n",  [ets:tab2list(Queue)]),
+
 			loop(BattleField, Commander, Queue,CommandId);
 			
 		%% 主程序开始杀我，我就杀玩家进程
