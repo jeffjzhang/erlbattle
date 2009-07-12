@@ -11,7 +11,7 @@ start(BattleField, Side, ArmyName) ->
 		%% 等待主程序将消息队列控制权转过来，然后启动指挥程序
 		{'ETS-TRANSFER',Tab,_FromPid,_GiftData} ->
 			io:format("~p plays the ~p Side ~n", [ArmyName, Side]),
-			Commander = spawn(ArmyName, run, [self(),Side]),
+			Commander = spawn_link(ArmyName, run, [self(),Side]),
 			loop(BattleField, Commander, Tab,1);
 		
 		_ ->
