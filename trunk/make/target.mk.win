@@ -19,7 +19,7 @@ EBIN = $(EBIN:/=\)
 
 all: compile
 
-test: compile
+test: clean compile
 	erl -nologo -noshell -s testAll test -s init stop
 
 compile: $(TARGETS)
