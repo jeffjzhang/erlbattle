@@ -104,7 +104,7 @@ command([],_Queue,_Time) -> [];
 command([Soldier | T], Queue, Time) ->
 	
 	%% 寻找当前战士新指令, 并执行之
-	case getNextCommand(Soldier,Queue) of
+	case getNextCommand(Soldier,Queue,Time) of
 
 		%% 找到指令
 		{command, Command} ->
@@ -125,7 +125,7 @@ command([Soldier | T], Queue, Time) ->
 	
 
 %% 获得一个战士下一步的动作指令	
-getNextCommand(Soldier,Queue) ->
+getNextCommand(Soldier,Queue,Time) ->
     
 	%% 提取Soldier 号，Queue由于是分开的，不需要Side 编号
 	{SoldierId, _Side} = Soldier#soldier.id,
@@ -137,12 +137,15 @@ getNextCommand(Soldier,Queue) ->
 		seq_id = '_'},
 
 	Command = ets:match_object(Queue, Pattern),
-
+	
 	if
 		length(Command) == 0 -> none;
 		true ->
 			[C | _T] = Command,
-			C
+			if
+				C#command.execute_time =< Time -> {command,	C};  %% 只取要求现在或者之前执行的动作。 以后的动作先不管
+				true -> none
+			end
 	end.
 
 %% 定义不同动作生效的时间

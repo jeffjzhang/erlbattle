@@ -19,7 +19,7 @@ test10()->
 				id={2,"red"},
 				position={0,2+2},
 				hp=100,
-				facing="E",
+				facing="east",
 				action="wait",
 				act_effect_time=0,
 				act_sequence=0
@@ -34,7 +34,7 @@ test20()->
 			id={7,"blue"},
 			position={14,9},
 			hp=100,
-			facing="W",
+			facing="west",
 			action="wait",
 			act_effect_time=0,
 			act_sequence=0
