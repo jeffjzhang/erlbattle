@@ -101,7 +101,7 @@ loop(BlueSide, RedSide, BlueQueue, RedQueue, Sleep) ->
 
 %% 对于处于wait 状态的战士，取出下一个指令（如果有的话），并执行之
 command([],_Queue,_Time) -> [];
-command([Soldier, T], Queue, Time) ->
+command([Soldier | T], Queue, Time) ->
 	
 	%% 寻找当前战士新指令, 并执行之
 	case getNextCommand(Soldier,Queue) of
@@ -120,9 +120,8 @@ command([Soldier, T], Queue, Time) ->
 		_ ->
 			ID = []
 	end,
-	ID ++ command(T,Queue,Time);
-command(A, B, C) ->
-	io:format("1111 ~p ~n", [A]).
+	ID ++ command(T,Queue,Time).
+
 	
 
 %% 获得一个战士下一步的动作指令	
@@ -130,16 +129,19 @@ getNextCommand(Soldier,Queue) ->
     
 	%% 提取Soldier 号，Queue由于是分开的，不需要Side 编号
 	{SoldierId, _Side} = Soldier#soldier.id,
+
 	Pattern=#command{
 		soldier_id = SoldierId,
 		name = '_',
 		execute_time = '_',
 		seq_id = '_'},
+
 	Command = ets:match_object(Queue, Pattern),
+
 	if
 		length(Command) == 0 -> none;
 		true ->
-			[C, _T] = Command,
+			[C | _T] = Command,
 			C
 	end.
 
@@ -393,6 +395,6 @@ cleanUp(BlueSide, RedSide) ->
 	exit(BlueSide, normal),
 	
 	%% 等其他进程都死掉，然后开始清理动作
-	tools:sleep(5000),
+	tools:sleep(3000),
 	ets:delete(battle_field),
 	ets:delete(battle_timer).
