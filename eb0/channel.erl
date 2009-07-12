@@ -52,7 +52,7 @@ loop(BattleField, Commander, Queue,CommandId) ->
 			loop(BattleField, Commander, Queue,CommandId);
 			
 		%% 主程序开始杀我，我就杀玩家进程
-		{'EXIT', _, normal} ->
+		{'EXIT', _, _} ->
 			exit(Commander, finish), %杀决策进程, 决策进程如果不捕捉，就自动退出
 			tools:sleep(500),
 			ets:delete(Queue) % 清除队列
