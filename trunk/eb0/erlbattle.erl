@@ -35,6 +35,7 @@ start() ->
 	%% 将通讯队列的管理权交给通讯通道
 	ets:give_away(BlueQueue, BlueSide, none),
 	ets:give_away(RedQueue, RedSide,none),
+	tools:sleep(1000),
 	
 	%% 开始战斗
 	loop(BlueSide, RedSide,BlueQueue, RedQueue, Sleep).
@@ -47,8 +48,8 @@ loop(BlueSide, RedSide, BlueQueue, RedQueue, Sleep) ->
 
 	%%获得当前时钟， 战场从 第一秒 开始
 	Time = ets:update_counter(battle_timer, clock, 1),
-	io:format("Time = ~p s ~n", [Time]),
-	io:format("Battle Field ~n ~p ~n", [ets:tab2list(battle_field)]),
+	io:format("~n~n~n--------------Time = ~p s --------------~n", [Time]),
+	io:format("Battle Field Status Report ~n ~p ~n", [ets:tab2list(battle_field)]),
 
 	%% 睡一会，让指挥程序可以考虑
 	tools:sleep(Sleep),
@@ -100,7 +101,7 @@ loop(BlueSide, RedSide, BlueQueue, RedQueue, Sleep) ->
 
 %% 对于处于wait 状态的战士，取出下一个指令（如果有的话），并执行之
 command([],_Queue,_Time) -> [];
-command([Soldier, T], Queue,Time) ->
+command([Soldier, T], Queue, Time) ->
 	
 	%% 寻找当前战士新指令, 并执行之
 	case getNextCommand(Soldier,Queue) of
@@ -119,7 +120,9 @@ command([Soldier, T], Queue,Time) ->
 		_ ->
 			ID = []
 	end,
-	ID ++ command(T,Queue,Time).
+	ID ++ command(T,Queue,Time);
+command(A, B, C) ->
+	io:format("1111 ~p ~n", [A]).
 	
 
 %% 获得一个战士下一步的动作指令	
