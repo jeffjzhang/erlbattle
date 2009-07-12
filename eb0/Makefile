@@ -3,7 +3,8 @@ EB_TOP=../
 # ----------------------------------------------------
 # Target Specs
 # ----------------------------------------------------
-MODULES = erlbattle englandArmy feardFarmers battlefield tools worldclock\
-	testAll testBattleFieldCreate testErlBattleTakeAction testWorldClockGetTime
+MODULES = erlbattle battlefield tools channel\
+			englandArmy feardFarmers\
+			testAll testBattleFieldCreate testErlBattleTakeAction testErlBattleGetTime
 
 include ../make/target.mk 

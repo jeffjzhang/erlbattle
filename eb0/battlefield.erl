@@ -1,6 +1,6 @@
 -module(battlefield).
 -author("swingbach@gmail.com").
--export([create/0,get_soldier/2,get_soldier_inbattle/1]).
+-export([create/0,get_soldier/2,get_soldier_by_position/1,get_soldier_by_side/1,get_idle_soldier/1]).
 -include("schema.hrl").
 
 create() ->
@@ -37,7 +37,7 @@ get_soldier(Id,Side) ->
 	end.
 
 %%得到某个坐标点上战士全部信息
-get_soldier_inbattle(Position) ->
+get_soldier_by_position(Position) ->
 	Pattern=#soldier{
 				id='_',
 				position=Position,
@@ -55,6 +55,31 @@ get_soldier_inbattle(Position) ->
 			none
 	end.
 
+%%获得某方所有战士列表
+get_soldier_by_side(Side) ->
+	Pattern=#soldier{
+				id={'_',Side},
+				position='_',
+				hp='_',
+				facing='_',
+				action='_',
+				act_effect_time = '_',
+				act_sequence = '_'
+			},
+	
+	ets:match_object(battle_field,Pattern).
 
-
+%%获得某方所有处于wait 状态的战士列表
+get_idle_soldier(Side) ->
+	Pattern=#soldier{
+				id={'_',Side},
+				position='_',
+				hp='_',
+				facing='_',
+				action="wait",
+				act_effect_time = '_',
+				act_sequence = '_'
+			},
+	
+	ets:match_object(battle_field,Pattern).
 

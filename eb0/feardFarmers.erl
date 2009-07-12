@@ -1,19 +1,13 @@
 -module(feardFarmers).
--export([start/2]).
+-export([run/2]).
 
-start(BattleField, Side) ->
-    
-	io:format("FeardFarmers begin to run on ~p army....~n", [Side]),
-	run(BattleField,Side).
+%% 这是一个最简单的例子
+%% 农民们吓的除了呻吟，什么战斗指令都没有发出去。原地不动等着别人屠杀
+run(Channel, Side) ->
 	
-run(BattleField, Side) ->
+	%%io:format("don't kill us , we are poor farmers ~n",[]),
 	
-	%% io:format("don't kill us , we are poor farmers ~n",[]),
+	tools:sleep(1000),
 	
-	receive
-		finish ->  % 退出消息，以便让主进程能够结束战斗
-			BattleField!{self(), command, Side ++ " Side: finish battle"}
-	after 1 -> 
-			run(BattleField, Side)
-	end.
+	run(Channel,Side).
 	

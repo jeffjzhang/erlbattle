@@ -28,8 +28,8 @@ test10()->
 
 %%测试根据坐标位置查找战士属性
 test20()->
-	?match(none,battlefield:get_soldier_inbattle({1,14})),
-	?match(none,battlefield:get_soldier_inbattle({14,0})),
+	?match(none,battlefield:get_soldier_by_position({1,14})),
+	?match(none,battlefield:get_soldier_by_position({14,0})),
 	Soldier=#soldier{
 			id={7,"blue"},
 			position={14,9},
@@ -39,5 +39,5 @@ test20()->
 			act_effect_time=0,
 			act_sequence=0
 			},
-	?match(Soldier,battlefield:get_soldier_inbattle({14,9})).
+	?match(Soldier,battlefield:get_soldier_by_position({14,9})).
 
