@@ -5,7 +5,7 @@
 %% 农民们吓的除了呻吟，什么战斗指令都没有发出去。原地不动等着别人屠杀
 run(Channel, Side) ->
 	
-	%%io:format("don't kill us , we are poor farmers ~n",[]),
+	io:format("don't kill us , we are poor farmers ~n",[]),
 	
 	tools:sleep(1000),
 	

@@ -4,6 +4,8 @@
 
 start(BattleField, Side, ArmyName) ->
 	
+	process_flag(trap_exit,true),
+	
 	receive
 		
 		%% 等待主程序将消息队列控制权转过来，然后启动指挥程序
@@ -21,7 +23,7 @@ start(BattleField, Side, ArmyName) ->
 loop(BattleField, Commander, Queue,CommandId) ->
 	
 	receive
-	
+		
 		{command,Command,Soldier,Time} ->
 			%% 生成一个command 记录
 			CmdRec = #command{
@@ -46,17 +48,14 @@ loop(BattleField, Commander, Queue,CommandId) ->
 					ets:match_delete(Queue, Pattern)
 				end,
 				CommandIds),
-			io:format("cleard after of ~p. ~n",  [ets:tab2list(Queue)]);
-
+			io:format("cleard after of ~p. ~n",  [ets:tab2list(Queue)]),
+			loop(BattleField, Commander, Queue,CommandId);
+			
 		%% 主程序开始杀我，我就杀玩家进程
-		{'Exit', _From, normal} ->
-		    io:format("begin to kill ..",  []),
-			exit(Commander, finish), %杀决策进程
+		{'EXIT', _, normal} ->
+			exit(Commander, finish), %杀决策进程, 决策进程如果不捕捉，就自动退出
 			tools:sleep(500),
-			ets:delete(Queue); % 清除队列
-
-		_ ->
-			loop(BattleField, Commander, Queue, CommandId)
+			ets:delete(Queue) % 清除队列
 	end.
 	
 	

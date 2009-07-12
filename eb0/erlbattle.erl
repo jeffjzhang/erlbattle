@@ -14,7 +14,7 @@ start() ->
 	RedArmy = englandArmy,
 
 	%%  TODO: 这段主要是后面用于让每台机器都能够以相同的结果运行的作用
-	Sleep = 10,
+	Sleep = 1000,
 	
 	%% 创建一个战场时钟表，并置为零
 	ets:new(battle_timer, [set, protected, named_table]),
@@ -383,11 +383,11 @@ calcBlood([Soldier | T]) ->
 %% 退出前，清理环境
 cleanUp(BlueSide, RedSide) ->
 
-	%%Todo 最好是能够直接杀进程，而不是一个个通知
+	io:format("begin to clean the battle field ~n",[]),	
+	exit(RedSide, normal),
 	exit(BlueSide, normal),
-	exit(RedSide,normal),
-
+	
 	%% 等其他进程都死掉，然后开始清理动作
-	tools:sleep(1000),
+	tools:sleep(5000),
 	ets:delete(battle_field),
 	ets:delete(battle_timer).
