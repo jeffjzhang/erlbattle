@@ -10,7 +10,7 @@ all: compile
 
 compile:$(TARGET_CONFIG_FILES) $(TARGET_FILES)
 
-test: compile
+test: clean compile
 	erl -nologo -noshell -s testAll test -s init stop
 
 $(EBIN)/%.beam: ./%.erl
