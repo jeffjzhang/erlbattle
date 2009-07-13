@@ -3,8 +3,14 @@
 
 
 
-== 整体结构图 ==
+== 第三版结构图 ==
+http://erlbattle.googlecode.com/files/theWorld-03.png 
 
+和第二版相比，取消了worldclock 进程。 完全由erlbattle 进程自己运算，睡眠，再运算。其节拍完全自己可以控制。 
+
+
+
+== 第二版结构图 ==
 http://erlbattle.googlecode.com/files/theWorld.png  
 
 图中浅蓝色的进程是eb 核心系统； 两个椭圆的进程是玩家开发的指挥进程。 浅黄色折角的是4个ets 表，用于在进程间传递信息； 
@@ -84,3 +90,13 @@ http://erlbattle.googlecode.com/files/theWorld.png
     * 发动一次攻击：2秒 
 
     当前时间是26的话，如果发出指令的话，真正生效的节拍是 26 + t. 也就是说移动发生在28. 转向发生在27， 后退发生在30，攻击发生在 28
+
+
+== 第一版结构图 ==
+http://erlbattle.googlecode.com/files/theWorld-01.png 
+
+这版是最老的一个原型系统，最大的问题是玩家的指挥程序发出消息和时钟发出的消息都是直接进erlbattle战场主程序。 会造成互相影响， 恶意的玩家程序可以阻塞主系统对于对方指令和时钟节拍的处理。 这个问题在第二版设计中通过引入了隔离的通讯进程，让玩家只能向自己的通讯进程发消息，而不能向主进程发消息来解决。 恶意程序只能影响自己，没法影响别人
+
+
+
+
