@@ -109,7 +109,7 @@ function addChar(_o){
 	ob.clip.mc._xscale = _o.scale;
 	ob.clip.id.text = _o.id;
 	ob.clip.mc.gotoAndPlay(ob.action + _o.dir);
-	ob.clip.blood.gotoAndStop(80);
+	ob.clip.blood.gotoAndStop(100);
 	ob.id = _o.id;
 	sprit.push(ob);
 }
