@@ -15,3 +15,4 @@ SEE::[EbWhatItIs EB:是什么?]
 
 == abt. ==
  * [EbRoadMap EB:路线] ~ 发展规划命名
+ * [EbHistoryBook EB:史书] ~ eb成长故事
