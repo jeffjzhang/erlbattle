@@ -1,5 +1,5 @@
 -module(erlbattle).
--export([start/0,takeAction/1,getTime/0]).
+-export([start/0,takeAction/1,getTime/0,calcDestination/3]).
 -include("schema.hrl").
 -include("test.hrl").
 -include_lib("stdlib/include/ms_transform.hrl").
@@ -14,7 +14,7 @@ start() ->
 	RedArmy = englandArmy,
 
 	%%  TODO: 这段主要是后面用于让每台机器都能够以相同的结果运行的作用
-	Sleep = 1000,
+	Sleep = 300,
 	
 	%% 创建一个战场时钟表，并置为零
 	ets:new(battle_timer, [set, protected, named_table]),
@@ -44,7 +44,7 @@ start() ->
 loop(BlueSide, RedSide, BlueQueue, RedQueue, Sleep) ->
 
 	%% 战场最多运行的次数 
-	MaxTurn = 5,
+	MaxTurn = 100,
 
 	%%获得当前时钟， 战场从 第一秒 开始
 	Time = ets:update_counter(battle_timer, clock, 1),
@@ -62,7 +62,9 @@ loop(BlueSide, RedSide, BlueQueue, RedQueue, Sleep) ->
 
 		%% 胜负已分
 		{winner, Winner} ->
-			io:format("~p army kills all the enemy, they win !! ~n", [Winner]);
+			io:format("~p army kills all the enemy, they win !! ~n", [Winner]),
+			%% 退出清理
+			cleanUp(BlueSide,RedSide);
 	
 		%% 胜负未分
 		none -> 
@@ -129,7 +131,7 @@ getNextCommand(Soldier,Queue,Time) ->
     
 	%% 提取Soldier 号，Queue由于是分开的，不需要Side 编号
 	{SoldierId, _Side} = Soldier#soldier.id,
-
+	
 	Pattern=#command{
 		soldier_id = SoldierId,
 		name = '_',
@@ -340,7 +342,6 @@ getTime() ->
 		_:_ -> -1			
 	end.
 	
-%% TODO 实现战场输赢判定
 %% 先看剩余人数， 然后看累计血量，如果都一样就判为平局
 calcWinner() ->
 	
@@ -378,7 +379,7 @@ checkWinner() ->
 		_ ->
 			case battlefield:get_soldier_by_side("blue") of
 				[] ->
-					{winer, "red"};
+					{winner, "red"};
 				_ ->
 					none
 			end
