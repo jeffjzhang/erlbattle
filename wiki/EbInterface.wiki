@@ -51,6 +51,10 @@
 
    当主程序结束的时候，会用： exit(Commander, finish) 命令来杀掉你的进程。如果你什么都处理，就会立即被杀掉。 如果你想处理这个消息，再被杀掉前做点收尾工作，那么请参见englandArmy.erl 代码。
 
+5. EB整体架构
+
+   [EbSequenceDesign EB:如何控制战场时间节拍和指令时序]
+
 
 ----
  
