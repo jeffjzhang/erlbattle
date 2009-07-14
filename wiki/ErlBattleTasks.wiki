@@ -2,7 +2,7 @@
 
 <wiki:toc/>
 
-= eb0:原型开发任务进度表 =
+= eb0:开发任务进度表 =
 
 *复杂任务的详细需求请参看：[EbTaskDoc EB:开发任务需求和算法详细描述]*
 
@@ -38,8 +38,3 @@
 
  * 尔后欢迎大家开发决策程序挑战我们胜利者【英格兰卫兵】，然后再挑战新的胜利者。。。。。
  * 参考: [http://code.google.com/p/openbookproject/wiki/LovPyRush LovPy 工程,终稿协同任务汇总表 - Google Code]
-
-= eb0.1:实战版原型任务进度表 =
-||＃ || 任务 || 认领 || 进度 || 备注^Changeset , Issue 相关链接...^ ||
-
-||＃ || 任务 || 认领 || 进度 || 备注^Changeset , Issue 相关链接...^ ||
