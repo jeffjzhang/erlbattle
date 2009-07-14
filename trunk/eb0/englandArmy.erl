@@ -1,15 +1,15 @@
 -module(englandArmy).
 -include("schema.hrl").
--export([run/2]).
+-export([run/3]).
 
-run(Channel, Side) ->
+run(Channel, Side, Queue) ->
     
 	%% 可以不捕获，直接由父进程杀掉
 	process_flag(trap_exit, true),
 	
-	loop(Channel, Side).
+	loop(Channel, Side, Queue).
 
-loop(Channel, Side) ->
+loop(Channel, Side, Queue) ->
 	
 	Army = [1,2,3,4,5,6,7,8,9,10],
 	
@@ -34,10 +34,10 @@ loop(Channel, Side) ->
 			io:format("England Army Go Back To Castle ~n",[]);
 					
 		_ ->
-			loop(Channel, Side)
+			loop(Channel, Side, Queue)
 			
 	after 100 -> 
-			loop(Channel, Side)
+			loop(Channel, Side, Queue)
 			
 	end.
 
