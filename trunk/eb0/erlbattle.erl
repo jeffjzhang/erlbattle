@@ -397,8 +397,28 @@ cleanUp(BlueSide, RedSide) ->
 	io:format("begin to clean the battle field ~n",[]),	
 	exit(RedSide, normal),
 	exit(BlueSide, normal),
+
+	%% 输出回放器所需日志
+	recordBattle(),
 	
 	%% 等其他进程都死掉，然后开始清理动作
 	tools:sleep(3000),
 	ets:delete(battle_field),
 	ets:delete(battle_timer).
+
+%% TODO 输出回放器所需日志
+recordBattle() ->
+	
+	%% do something
+	true.
+	
+%% TODO 记录回放器所需日志
+%% recordAction(action, XXXXX) ->
+%% recordAction(plan, XXXXX) ->
+%% recordAction(result, XXXXX) ->
+
+
+
+
+
+
