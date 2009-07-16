@@ -7,6 +7,10 @@
 test() ->
 	ets:new(battle_field,[named_table,protected,{keypos,#soldier.id}]),
 	
+	%% 这个可以有一个类似null 的空洞来做测试吗？
+	Recorder = spawn_link(battleRecorder,start, [self()]),
+	register(recorder, Recorder),
+	
 	test1(), % 向前一步
 	test2(), % 向后一步
 	test3(), % 有人不能走
@@ -20,8 +24,12 @@ test() ->
 	test11(), % 不会误伤自己人
 	test12(), % 两人互砍（测试是否能够让多个角色动起来）
 	
+	%%清理
+	exit(whereis(recorder), normal),
+	unregister(recorder),
 	ets:delete(battle_field).
 
+	
 %% 测试向前走一步
 test1() ->	
 	ets:delete_all_objects(battle_field),

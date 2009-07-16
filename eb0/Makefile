@@ -3,7 +3,7 @@ EB_TOP=../
 # ----------------------------------------------------
 # Target Specs
 # ----------------------------------------------------
-MODULES = erlbattle battlefield tools channel\
+MODULES = erlbattle battlefield tools channel battleRecorder\
 			englandArmy feardFarmers\
 			testAll testBattleFieldCreate testErlBattleTakeAction testErlBattleGetTime
 
