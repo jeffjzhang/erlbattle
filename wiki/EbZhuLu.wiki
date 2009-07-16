@@ -17,7 +17,7 @@
 
  希望参加的朋友可以在这两个报名贴 [http://groups.google.com/group/erlang-china/browse_thread/thread/6ff22669bd1cb6d6 ERLANG CHINA报名] [http://groups.google.com/group/ecug/browse_thread/thread/6ff22669bd1cb6d6 ECUG报名] 任意一个中回帖应战。
 
- 或者在本文的参赛战队中直接添加. 
+ 或者在本文的参赛战队中直接添加. 或者在本文后跟帖。
 
 
 *2. 参赛*
@@ -36,5 +36,3 @@
  按照： 胜积3分， 平积1分， 负 0分 的标准积分
 
  比赛完成后，在官网和论坛张贴比赛结果了实况录像
-
-
