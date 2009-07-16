@@ -1,16 +1,21 @@
 fscommand("allowscale", false);
 // our map is 2-dimensional array
 myMap1 = [
-[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
-[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
-[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
-[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
-[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
-[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
-[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
-[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
-[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
-[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ];
 // declare game object that holds info
 game = {tileW:40, tileH:40};
@@ -30,9 +35,11 @@ function buildMap(map) {
 	//_root.attachMovie("empty", "tiles", 1);
 	// attach empty mc to hold background tiles
 	_root.tiles.attachMovie("empty", "back", 0);
+	_root.tiles._xscale = 85;
+	_root.tiles._yscale = 85;
 	// declare clip in the game object
 	game.clip = _root.tiles;
-	game.clip._x = 360;
+	game.clip._x = 460;
 	game.clip._y = 80;
 	// get map dimensions
 	var mapWidth = map[0].length;
@@ -85,7 +92,7 @@ function buildMap(map) {
 }
 function addChar(_o){
 	// declare char object, xtile and ytile are tile where chars center is
-	var ob = {xtile:0, ytile:0, speed:4, moving:false, width:40, height:40, targetx:6,  targety:1, action:"stand", dir:"_d", id:0};
+	var ob = {xtile:0, ytile:0, speed:4, moving:false, width:40, height:40, targetx:6,  targety:1, action:"stand", dir:"_d", id:0, face:"w"};
 	// calculate starting position
 	ob.x = _o.xtile*game.tileW;
 	ob.y = _o.ytile*game.tileW;
@@ -102,16 +109,32 @@ function addChar(_o){
 	// declare clip in the game object
 	ob.clip = game.clip["id" + _o.id];
 	// place char mc
-	ob.clip._x = ob.xiso + ob.width;
-	ob.clip._y = ob.yiso + ob.height/2;
+	//ob.clip._x = ob.xiso + ob.width;
+	//ob.clip._y = ob.yiso + ob.height/2;
+	ob.clip._x = -10000;
+	ob.clip._y = -10000;
 	ob.dir = "";
 	ob.action = "stand";
 	ob.clip.mc._xscale = _o.scale;
 	ob.clip.id.text = _o.id;
+	if (_o.id > 10) ob.clip.id.text = _o.id - 10;
 	ob.clip.mc.gotoAndPlay(ob.action + _o.dir);
 	ob.clip.blood.gotoAndStop(100);
 	ob.id = _o.id;
 	sprit.push(ob);
+}
+function set_to_current_place(ob){
+	ob.x = ob.xtile*game.tileW;
+	ob.y = ob.ytile*game.tileW;
+	// calculate position in isometric view
+	ob.xiso = ob.x-ob.y;
+	ob.yiso = (ob.x+ob.y)/2;
+	// update char position
+	ob.clip._x = ob.xiso + ob.width;
+	ob.clip._y = ob.yiso + ob.height/2;
+	// calculate depth
+	ob.depth = (ob.yiso-ob.depthshift)*300+(ob.xiso)+1;
+	ob.clip.swapDepths(ob.depth);
 }
 function moveChar(ob) {
 	// is char in the center of tile
@@ -149,6 +172,27 @@ function moveChar(ob) {
 		} else {
 			ob.moving = false;
 			moving = false;	
+			trace(ob.action);
+			if (ob.action == "back") {
+				switch(ob.face){
+					case "e":
+						ob.dir = "_l";
+						ob.clip.mc._xscale = -80;
+						break;
+					case "s":
+						ob.dir = "_d";
+						ob.clip.mc._xscale = -80;
+						break;
+					case "w":
+						ob.dir = "_d";
+						ob.clip.mc._xscale = 80;
+						break;
+					case "n":
+						ob.dir = "_l";
+						ob.clip.mc._xscale = 80;
+						break;
+				}
+			}
 			ob.action = "stand";
 			ob.clip.mc.gotoAndStop(ob.action + ob.dir);
 			//trace("id="+ob.id);
@@ -205,7 +249,8 @@ function next_step(){
 	var ytile = step_com[3];
 	var id = step_com[4];
 	var dir = step_com[5];
-	var blood = step_com[6];
+	var blood = Number(step_com[6]);
+	var del_blood = Number(step_com[7]);
 	
 	var ob = null;
 	for(var i = 0 ; i < sprit.length ; i++){
@@ -218,7 +263,9 @@ function next_step(){
 	ob.targetx = xtile;
 	ob.targety = ytile;
 	ob.action = action;
+	if (action == "stand" || action == "status" || action == "turnWest" || action == "turnEast" || action == "turnSouth" || action == "turnNorth" )  ob.action = "stand";
 	if (action == "fight") ob.action = "fight1";
+	ob.face = dir;
 	switch(dir){
 		case "e":
 			ob.dir = "_l";
@@ -237,17 +284,58 @@ function next_step(){
 			ob.clip.mc._xscale = 80;
 			break;
 	}
+	if (ob.action == "back") {
+		switch(dir){
+			case "e":
+				ob.dir = "_d";
+				ob.clip.mc._xscale = 80;
+				break;
+			case "s":
+				ob.dir = "_l";
+				ob.clip.mc._xscale = 80;
+				break;
+			case "w":
+				ob.dir = "_l";
+				ob.clip.mc._xscale = -80;
+				break;
+			case "n":
+				ob.dir = "_d";
+				ob.clip.mc._xscale = -80;
+				break;
+		}
+	}
+	//播放mc，针对stand，fight
 	ob.clip.mc.gotoAndPlay(ob.action + ob.dir);
-	trace(ob.action + ob.dir);
+	//trace(ob.action + ob.dir);
+	//血量减少显示
 	ob.clip.blood.gotoAndStop(Number(blood));
-	step_txt.text += command[pt]+"\n";
-	step_txt.scroll = step_txt.maxscroll;
+	//信息窗口显示
+	step_txt.text += "r"+round+":  c:"+action+"  id:"+id+"(x:"+xtile+",y:"+ytile+")  face("+dir+") ";
+	if (del_blood == 0){
+		step_txt.text += " hp("+blood+") \n";
+	}else{
+		step_txt.text += " hp("+blood+"="+String(blood+del_blood)+"-"+del_blood+") \n";
+	}
+	step_txt.vPosition = step_txt.maxVPosition;
+
 	round_txt.text = "ROUND "+ round + " ["+player+"]";
 	pt ++;
 	walk_sprit = null;
+	if (ob.action == "stand") {
+		ob.xtile = xtile;
+		ob.ytile = ytile;
+		set_to_current_place(ob);
+	}
 	if (ob.action == "walk") {
 		walk_sprit = ob;
 		moving = true;
+	}
+	if (ob.action == "back") {
+		walk_sprit = ob;
+		moving = true;
+	}
+	if (blood == 0){
+		ob.clip._visible = false;
 	}
 	if (ob.action == "stand" && player == "play") next_step();
 }
