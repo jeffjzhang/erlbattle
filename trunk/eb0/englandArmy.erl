@@ -30,7 +30,7 @@ loop(Channel, Side, Queue) ->
 	receive
 		%% 结束战斗，可以做一些收尾工作后退出，或者什么都不做
 		%% 这个消息不是必须处理的
-		{'EXIT',_FROM, finish} ->  
+		{'EXIT',_FROM, _Reason} ->  
 			io:format("England Army Go Back To Castle ~n",[]);
 					
 		_ ->
