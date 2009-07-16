@@ -37,6 +37,10 @@ EB 不是一个单纯的对战游戏，而是为了引导大家在游戏中学�
 === 下载代码 ===
 
 === 编译运行 ===
+
+==== Ubuntu 中 ====
+可能现象::
+
 根据:[http://magixyu.javaeye.com/blog/268998 Erlang 安装手记 - magixyu？magixyu！]
  * 配置时依然..
 {{{
@@ -69,6 +73,11 @@ make[1]: *** [opt] 错误 2
 make[1]:正在离开目录 `/usr/local/tmp/0day/otp_src_R13B01/lib'
 make: *** [fourth_bootstrap_build] 错误 2
 }}}
+
+ 解决::
+  * [ http://argan.javaeye.com/blog/424110 在ubuntu上编译erlang with wx - 阿干的个人博客 - JavaEye技术网站]
+  * [http://groups.google.com/group/erlang-china/browse_thread/thread/acd8efea64e35e2 问下UTF-8 编码的erl 文件如何编译和运行 - Erlang China | Google 网上论坛]
+
 
 == in M$ ==
 
