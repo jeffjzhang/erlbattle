@@ -31,7 +31,6 @@ recordBattle() ->
 	
 	%%提取信息后清除表
 	Records = ets:tab2list(battle_record),
-	io:format("2223232", []),
 	ets:delete(battle_record),
 	
 	%% open file
