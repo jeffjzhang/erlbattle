@@ -3,8 +3,6 @@
 SEE:
 
  * [EbJoinnig EB:成员总表]
-  * [EbRoles EB:角色说明]
-  * [EbContribute EB:贡献榜]
 
 = 2009 =
 
