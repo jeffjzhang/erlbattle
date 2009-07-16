@@ -2,6 +2,9 @@
 #labels Phase-Support,FAQ
 
 最快的开始...^假设你已经安装了erl 环境，并且会用svn, 使用M$ 或者 linux 环境^
+
+*ERLANG 环境： 5.7.2  （部分语法老版本不支持，需要用这个版本以上）*
+
  * 1. 用svn下载代码到你的机器上。 http://erlbattle.googlecode.com/svn/trunk
  * 2. window 运行 config.bat, linux 运行 config
  * 3. 进入 eb0 目录； windows 用 nmake test   ; linux 用 make test (nmake 下载：http://erlbattle.googlecode.com/files/nmake.exe )
@@ -88,4 +91,3 @@ make: *** [fourth_bootstrap_build] 错误 2
 === 下载代码 ===
 
 === 编译运行 ===
-
