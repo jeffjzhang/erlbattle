@@ -3,6 +3,15 @@
 
 ----
 
+== 第四版结构图 ==
+
+http://erlbattle.googlecode.com/files/theWorld-04.png
+
+和第三版相比，增加了一个用于记录战场日志的 battleRecorder进程。 主程序在运算过程中，不断将战场状态发给这个进程（避免直接写文件影响时钟）， 这个进程收到消息后，先将日志缓冲到ets表中（private) ， 在收到主程序退出消息时，开始将内存缓冲写文件。 这个算法最大限度的避免写文件缓慢操作对于系统时钟节拍稳定性的影响。 
+
+
+----
+
 == 第三版结构图 ==
 http://erlbattle.googlecode.com/files/theWorld-03.png 
 
@@ -97,5 +106,3 @@ http://erlbattle.googlecode.com/files/theWorld.png
 http://erlbattle.googlecode.com/files/theWorld-01.png 
 
 这版是最老的一个原型系统，最大的问题是玩家的指挥程序发出消息和时钟发出的消息都是直接进erlbattle战场主程序。 会造成互相影响， 恶意的玩家程序可以阻塞主系统对于对方指令和时钟节拍的处理。 这个问题在第二版设计中通过引入了隔离的通讯进程，让玩家只能向自己的通讯进程发消息，而不能向主进程发消息来解决。 恶意程序只能影响自己，没法影响别人
-
-
