@@ -1,8 +1,5 @@
 #summary EB 掺合成员列表
 #labels Phase-QA,member
-SEE:
-
- * [EbJoinnig EB:成员总表]
 
 = 2009 =
 
