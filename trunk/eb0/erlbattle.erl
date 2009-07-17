@@ -10,7 +10,7 @@ start() ->
 	io:format("Battle Begin ....~n", []),
 	
 	%% 如果要更换对手的话，修改这里
-	BlueArmy = feardFarmers,
+	BlueArmy = englandArmy,
 	RedArmy = englandArmy,
 
 	%%  TODO: 这段主要是后面用于让每台机器都能够以相同的结果运行的作用
@@ -48,7 +48,7 @@ start() ->
 loop(BlueSide, RedSide, BlueQueue, RedQueue, Sleep) ->
 
 	%% 战场最多运行的次数 
-	MaxTurn = 100,
+	MaxTurn = 55,
 
 	%%获得当前时钟， 战场从 第一秒 开始
 	Time = ets:update_counter(battle_timer, clock, 1),
@@ -85,19 +85,16 @@ loop(BlueSide, RedSide, BlueQueue, RedQueue, Sleep) ->
 					%% 计算胜负
 					io:format("Sun goes down, battle finished!~n", []),
 
-					Winner = calcWinner(),
+					case calcWinner() of
 					
-					%% 输出战斗结果
-					io:format("~p army win the battle!! ~n", [Winner]),
-					
-					%% 输出战斗结果回放日志
-					if 
-						Winner == none -> 
-							record({result, 'no army win the battle!!'});
-						true ->
-							record({result, Winner ++ " army win the battle!!"})
+						none -> 
+							io:format("no army win the battle!! ~n", []),
+							record({result, "no army win the battle!!"});
+						{winner,Winner} ->
+							io:format("~p army win the battle!! ~n", [Winner]),
+							record({result, Winner ++ " army win the battle!!"});
+						_ -> none
 					end,
-						
 					
 					%% 退出清理
 					cleanUp(BlueSide,RedSide);
@@ -381,8 +378,10 @@ getTime() ->
 %% 先看剩余人数， 然后看累计血量，如果都一样就判为平局
 calcWinner() ->
 	
-	RedArmy = battlefield:get_soldier_by_side("Red"),
-	BlueArmy = battlefield:get_soldier_by_side("Blue"),
+	RedArmy = battlefield:get_soldier_by_side("red"),
+	io:format("red = ~p~n", [RedArmy]),
+	BlueArmy = battlefield:get_soldier_by_side("blue"),
+	io:format("blue = ~p~n", [BlueArmy]),
 	
 	RedCount = length(RedArmy),
 	BlueCount = length(BlueArmy),
