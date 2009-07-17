@@ -59,7 +59,7 @@ recordBattle() ->
 					{X,Y} = Position,
 					io:fwrite(Io,"~p,~p,~p,~p,~p,~p,~p,~p~n" , [Time,'status', X,Y, uniqueId(Id), simpleDirection(Facing), Hp, HpLost]);
 				{result, Result}->
-					io:fwrite(Io,"result,~p~n" , [Result]);
+					io:fwrite(Io,"result,~p~n" , [list_to_atom(Result)]);
 				_ ->
 					none
 				end
@@ -112,7 +112,7 @@ changeAction(Action) ->
 		Action == "turnWest" -> 'turnWest';
 		Action == "turnSouth" -> 'turnSouth';
 		Action == "turnNorth" -> 'turnNorth';
-		true -> Action
+		true -> list_to_atom(Action)
 	end.
 	
 	

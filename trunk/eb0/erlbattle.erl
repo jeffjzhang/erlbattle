@@ -93,7 +93,7 @@ loop(BlueSide, RedSide, BlueQueue, RedQueue, Sleep) ->
 					%% 输出战斗结果回放日志
 					if 
 						Winner == none -> 
-							record({result, "no army win the battle!!"});
+							record({result, 'no army win the battle!!'});
 						true ->
 							record({result, Winner ++ " army win the battle!!"})
 					end,
@@ -420,7 +420,6 @@ checkWinner() ->
 					none
 			end
 	end.
-		
 
 %% 计算一个队伍的总血量
 calcBlood([]) -> 0;
