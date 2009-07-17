@@ -17,7 +17,7 @@ test10()->
 	%%成功取到信息
 	Soldier=#soldier{
 				id={2,"red"},
-				position={0,2+2},
+				position={0,1+2},
 				hp=100,
 				facing="east",
 				action="wait",
@@ -31,7 +31,7 @@ test20()->
 	?match(none,battlefield:get_soldier_by_position({1,14})),
 	?match(none,battlefield:get_soldier_by_position({14,0})),
 	Soldier=#soldier{
-			id={7,"blue"},
+			id={8,"blue"},
 			position={14,9},
 			hp=100,
 			facing="west",
