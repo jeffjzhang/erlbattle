@@ -1,7 +1,7 @@
 EB_TOP=../
 
 # ----------------------------------------------------
-# Target Specs
+# Target Specs 。
 # ----------------------------------------------------
 MODULES = erlbattle battlefield tools channel battleRecorder\
 			englandArmy feardFarmers\

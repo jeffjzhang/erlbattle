@@ -3,34 +3,34 @@
 -include("test.hrl").
 -include("schema.hrl").
 
-%% ²âÊÔgetTime()
+%% æµ‹è¯•getTime()
 test() ->
 	ets:new(battle_field,[named_table,protected,{keypos,#soldier.id}]),
 	
-	%% Õâ¸ö¿ÉÒÔÓÐÒ»¸öÀàËÆnull µÄ¿Õ¶´À´×ö²âÊÔÂð£¿
+	%% è¿™ä¸ªå¯ä»¥æœ‰ä¸€ä¸ªç±»ä¼¼null çš„ç©ºæ´žæ¥åšæµ‹è¯•å—ï¼Ÿ
 	Recorder = spawn_link(battleRecorder,start, [self()]),
 	register(recorder, Recorder),
 	
-	test1(), % ÏòÇ°Ò»²½
-	test2(), % ÏòºóÒ»²½
-	test3(), % ÓÐÈË²»ÄÜ×ß
-	test4(), % ³¬¹ý±ß¿ò²»ÄÜ×ß
-	test5(), % ×ªÏò²âÊÔ
-	test6(), % ÕýÃæ¹¥»÷²âÊÔ
-	test7(), % ±³ºó¹¥»÷²âÊÔ
-	test8(), % ²àÃæ¹¥»÷²âÊÔ
-	test9(), % Ã»´òµ½,¹¥»÷²âÊÔ
-	test10(), % ´òËÀÒ»¸ö,¹¥»÷²âÊÔ
-	test11(), % ²»»áÎóÉË×Ô¼ºÈË
-	test12(), % Á½ÈË»¥¿³£¨²âÊÔÊÇ·ñÄÜ¹»ÈÃ¶à¸ö½ÇÉ«¶¯ÆðÀ´£©
+	test1(), % å‘å‰ä¸€æ­¥
+	test2(), % å‘åŽä¸€æ­¥
+	test3(), % æœ‰äººä¸èƒ½èµ°
+	test4(), % è¶…è¿‡è¾¹æ¡†ä¸èƒ½èµ°
+	test5(), % è½¬å‘æµ‹è¯•
+	test6(), % æ­£é¢æ”»å‡»æµ‹è¯•
+	test7(), % èƒŒåŽæ”»å‡»æµ‹è¯•
+	test8(), % ä¾§é¢æ”»å‡»æµ‹è¯•
+	test9(), % æ²¡æ‰“åˆ°,æ”»å‡»æµ‹è¯•
+	test10(), % æ‰“æ­»ä¸€ä¸ª,æ”»å‡»æµ‹è¯•
+	test11(), % ä¸ä¼šè¯¯ä¼¤è‡ªå·±äºº
+	test12(), % ä¸¤äººäº’ç ï¼ˆæµ‹è¯•æ˜¯å¦èƒ½å¤Ÿè®©å¤šä¸ªè§’è‰²åŠ¨èµ·æ¥ï¼‰
 	
-	%%ÇåÀí
+	%%æ¸…ç†
 	exit(whereis(recorder), normal),
 	unregister(recorder),
 	ets:delete(battle_field).
 
 	
-%% ²âÊÔÏòÇ°×ßÒ»²½
+%% æµ‹è¯•å‘å‰èµ°ä¸€æ­¥
 test1() ->	
 	ets:delete_all_objects(battle_field),
 	Soldier=#soldier{
@@ -48,7 +48,7 @@ test1() ->
 	Soldier3 = battlefield:get_soldier(10,"red"),
 	?match(Soldier2,Soldier3).
 	
-%% ²âÊÔÏòºó×ßÒ»²½
+%% æµ‹è¯•å‘åŽèµ°ä¸€æ­¥
 test2() ->	
 	ets:delete_all_objects(battle_field),
 	Soldier=#soldier{
@@ -66,7 +66,7 @@ test2() ->
 	Soldier3 = battlefield:get_soldier(10,"red"),
 	?match(Soldier2,Soldier3).	
 
-%% ²âÊÔÓÐÈËµ²×¡µÄÊ±ºò²»ÄÜ×ß
+%% æµ‹è¯•æœ‰äººæŒ¡ä½çš„æ—¶å€™ä¸èƒ½èµ°
 test3() ->	
 	ets:delete_all_objects(battle_field),
 	Soldier=#soldier{
@@ -87,7 +87,7 @@ test3() ->
 	Soldier4 = Soldier#soldier{action="wait"},
 	?match(Soldier4,Soldier3).	
 	
-%% ²âÊÔ³¬¹ý±ß¿ò²»ÄÜ×ß
+%% æµ‹è¯•è¶…è¿‡è¾¹æ¡†ä¸èƒ½èµ°
 test4() ->	
 	ets:delete_all_objects(battle_field),
 	Soldier=#soldier{
@@ -105,7 +105,7 @@ test4() ->
 	Soldier3 = Soldier#soldier{action="wait"},
 	?match(Soldier2,Soldier3).	
 	
-%% ²âÊÔ×ªÏò
+%% æµ‹è¯•è½¬å‘
 test5() ->	
 	ets:delete_all_objects(battle_field),
 	Soldier=#soldier{
@@ -123,7 +123,7 @@ test5() ->
 	Soldier3 = Soldier#soldier{action="wait",facing="west"},
 	?match(Soldier2,Soldier3).		
 	
-%% ÕýÃæ¹¥»÷²âÊÔ
+%% æ­£é¢æ”»å‡»æµ‹è¯•
 test6() ->	
 	ets:delete_all_objects(battle_field),
 	Soldier=#soldier{
@@ -149,7 +149,7 @@ test6() ->
 	Soldier6 = Soldier2#soldier{hp=90},
 	?match(Soldier6,Soldier5).		
 
-%% ±³ºó¹¥»÷²âÊÔ	
+%% èƒŒåŽæ”»å‡»æµ‹è¯•	
 test7() ->
 	ets:delete_all_objects(battle_field),
 	Soldier=#soldier{
@@ -175,7 +175,7 @@ test7() ->
 	Soldier6 = Soldier2#soldier{hp=80},
 	?match(Soldier6,Soldier5).	
 
-%% ²àÃæ¹¥»÷²âÊÔ	
+%% ä¾§é¢æ”»å‡»æµ‹è¯•	
 test8()->
 	ets:delete_all_objects(battle_field),
 	Soldier=#soldier{
@@ -201,7 +201,7 @@ test8()->
 	Soldier6 = Soldier2#soldier{hp=85},
 	?match(Soldier6,Soldier5).
 	
-%% Ã»´òµ½,¹¥»÷²âÊÔ	
+%% æ²¡æ‰“åˆ°,æ”»å‡»æµ‹è¯•	
 test9()->
 	ets:delete_all_objects(battle_field),
 	Soldier=#soldier{
@@ -227,7 +227,7 @@ test9()->
 	Soldier6 = Soldier2#soldier{hp=100},
 	?match(Soldier6,Soldier5).
 	
-%% ´òËÀÒ»¸ö,¹¥»÷²âÊÔ	
+%% æ‰“æ­»ä¸€ä¸ª,æ”»å‡»æµ‹è¯•	
 test10()->
 	ets:delete_all_objects(battle_field),
 	Soldier=#soldier{
@@ -259,7 +259,7 @@ test10()->
 			? match("get soldier result" , "unkown")
 	end.
 	
-%% ²»»áÎóÉË×Ô¼ºÈË
+%% ä¸ä¼šè¯¯ä¼¤è‡ªå·±äºº
 test11()->
 	ets:delete_all_objects(battle_field),
 	Soldier=#soldier{
@@ -284,7 +284,7 @@ test11()->
 	Soldier5 = battlefield:get_soldier(9,"red"),
 	?match(Soldier2,Soldier5).
 	
-%% Á½ÈË»¥¿³£¨²âÊÔÊÇ·ñÄÜ¹»ÈÃ¶à¸ö½ÇÉ«¶¯ÆðÀ´£©	
+%% ä¸¤äººäº’ç ï¼ˆæµ‹è¯•æ˜¯å¦èƒ½å¤Ÿè®©å¤šä¸ªè§’è‰²åŠ¨èµ·æ¥ï¼‰	
 test12() ->
 
 	ets:delete_all_objects(battle_field),

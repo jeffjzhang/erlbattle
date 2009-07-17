@@ -4,9 +4,9 @@
 -include("schema.hrl").
 
 create() ->
-	%%´´½¨Õ½³¡ĞÅÏ¢±í£¬ÓÃÓÚ²éÕÒÕ½Ê¿ĞÅÏ¢£¬¼°Ä³×ø±êµãĞÅÏ¢
+	%%åˆ›å»ºæˆ˜åœºä¿¡æ¯è¡¨ï¼Œç”¨äºæŸ¥æ‰¾æˆ˜å£«ä¿¡æ¯ï¼ŒåŠæŸåæ ‡ç‚¹ä¿¡æ¯
 	ets:new(battle_field,[named_table,protected,{keypos,#soldier.id}]),
-    %%³õÊ¼»¯Ê¿±ø¼°Î»ÖÃ
+    %%åˆå§‹åŒ–å£«å…µåŠä½ç½®
 	init_soldier("red",0,2,"east"),
 	init_soldier("blue",14,2,"west").
 
@@ -27,7 +27,7 @@ init_soldier(Army,X,Y,Direction)->
 		end,
 		Soldiers).
 
-%%¸ù¾İÕ½Ê¿±àºÅ¼°Õ½¶ÓµÃµ½¸ÃÕ½Ê¿ĞÅÏ¢
+%%æ ¹æ®æˆ˜å£«ç¼–å·åŠæˆ˜é˜Ÿå¾—åˆ°è¯¥æˆ˜å£«ä¿¡æ¯
 get_soldier(Id,Side) ->
 	case ets:lookup(battle_field,{Id,Side}) of
 		[Soldier] ->
@@ -36,7 +36,7 @@ get_soldier(Id,Side) ->
 			none
 	end.
 
-%%µÃµ½Ä³¸ö×ø±êµãÉÏÕ½Ê¿È«²¿ĞÅÏ¢
+%%å¾—åˆ°æŸä¸ªåæ ‡ç‚¹ä¸Šæˆ˜å£«å…¨éƒ¨ä¿¡æ¯
 get_soldier_by_position(Position) ->
 	Pattern=#soldier{
 				id='_',
@@ -55,7 +55,7 @@ get_soldier_by_position(Position) ->
 			none
 	end.
 
-%%»ñµÃÄ³·½ËùÓĞÕ½Ê¿ÁĞ±í
+%%è·å¾—æŸæ–¹æ‰€æœ‰æˆ˜å£«åˆ—è¡¨
 get_soldier_by_side(Side) ->
 	Pattern=#soldier{
 				id={'_',Side},
@@ -69,7 +69,7 @@ get_soldier_by_side(Side) ->
 	
 	ets:match_object(battle_field,Pattern).
 
-%%»ñµÃÄ³·½ËùÓĞ´¦ÓÚwait ×´Ì¬µÄÕ½Ê¿ÁĞ±í
+%%è·å¾—æŸæ–¹æ‰€æœ‰å¤„äºwait çŠ¶æ€çš„æˆ˜å£«åˆ—è¡¨
 get_idle_soldier(Side) ->
 	Pattern=#soldier{
 				id={'_',Side},

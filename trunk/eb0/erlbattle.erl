@@ -4,93 +4,93 @@
 -include("test.hrl").
 -include_lib("stdlib/include/ms_transform.hrl").
 
-%% Õ½³¡³õÊ¼»¯Æô¶¯³ÌĞò
+%% æˆ˜åœºåˆå§‹åŒ–å¯åŠ¨ç¨‹åº
 start() ->
     
 	io:format("Battle Begin ....~n", []),
 	
-	%% Èç¹ûÒª¸ü»»¶ÔÊÖµÄ»°£¬ĞŞ¸ÄÕâÀï
+	%% å¦‚æœè¦æ›´æ¢å¯¹æ‰‹çš„è¯ï¼Œä¿®æ”¹è¿™é‡Œ
 	BlueArmy = feardFarmers,
 	RedArmy = englandArmy,
 
-	%%  TODO: Õâ¶ÎÖ÷ÒªÊÇºóÃæÓÃÓÚÈÃÃ¿Ì¨»úÆ÷¶¼ÄÜ¹»ÒÔÏàÍ¬µÄ½á¹ûÔËĞĞµÄ×÷ÓÃ
+	%%  TODO: è¿™æ®µä¸»è¦æ˜¯åé¢ç”¨äºè®©æ¯å°æœºå™¨éƒ½èƒ½å¤Ÿä»¥ç›¸åŒçš„ç»“æœè¿è¡Œçš„ä½œç”¨
 	Sleep = 300,
 	
-	%% ´´½¨Ò»¸öÕ½³¡Ê±ÖÓ±í£¬²¢ÖÃÎªÁã
+	%% åˆ›å»ºä¸€ä¸ªæˆ˜åœºæ—¶é’Ÿè¡¨ï¼Œå¹¶ç½®ä¸ºé›¶
 	ets:new(battle_timer, [set, protected, named_table]),
 	ets:insert(battle_timer, {clock, 0}),
 	
-    %% ´´½¨Á½·½²¿¶ÓµÄ³õÊ¼×´Ì¬
+    %% åˆ›å»ºä¸¤æ–¹éƒ¨é˜Ÿçš„åˆå§‹çŠ¶æ€
 	io:format("Army matching into the battle fileds....~n", []),
 	battlefield:create(),
 
-	%% ´´½¨Í¨Ñ¶¶ÓÁĞ
+	%% åˆ›å»ºé€šè®¯é˜Ÿåˆ—
 	BlueQueue = ets:new(blueQueue, [{keypos, #command.soldier_id}]),	
 	RedQueue = ets:new(blueQueue, [{keypos, #command.soldier_id}]),	
 	
-	%% Æô¶¯ºì·½ºÍÀ¶·½µÄÍ¨Ñ¶Í¨µÀ
+	%% å¯åŠ¨çº¢æ–¹å’Œè“æ–¹çš„é€šè®¯é€šé“
 	BlueSide = spawn_link(channel, start, [self(), "blue",BlueArmy]),
 	RedSide = spawn_link(channel, start, [self(), "red", RedArmy]),
 
-	%% Æô¶¯Õ½³¡Çé¿ö¼ÇÂ¼Æ÷,²¢×¢²á
+	%% å¯åŠ¨æˆ˜åœºæƒ…å†µè®°å½•å™¨,å¹¶æ³¨å†Œ
 	Recorder = spawn_link(battleRecorder,start, [self()]),
 	register(recorder, Recorder),
 	
-	%% ½«Í¨Ñ¶¶ÓÁĞµÄ¹ÜÀíÈ¨½»¸øÍ¨Ñ¶Í¨µÀ
+	%% å°†é€šè®¯é˜Ÿåˆ—çš„ç®¡ç†æƒäº¤ç»™é€šè®¯é€šé“
 	ets:give_away(BlueQueue, BlueSide, none),
 	ets:give_away(RedQueue, RedSide,none),
 	tools:sleep(1000),
 	
-	%% ¿ªÊ¼Õ½¶·
+	%% å¼€å§‹æˆ˜æ–—
 	loop(BlueSide, RedSide,BlueQueue, RedQueue, Sleep).
 
-%% Õ½³¡Âß¼­Ö÷³ÌĞò
+%% æˆ˜åœºé€»è¾‘ä¸»ç¨‹åº
 loop(BlueSide, RedSide, BlueQueue, RedQueue, Sleep) ->
 
-	%% Õ½³¡×î¶àÔËĞĞµÄ´ÎÊı 
+	%% æˆ˜åœºæœ€å¤šè¿è¡Œçš„æ¬¡æ•° 
 	MaxTurn = 100,
 
-	%%»ñµÃµ±Ç°Ê±ÖÓ£¬ Õ½³¡´Ó µÚÒ»Ãë ¿ªÊ¼
+	%%è·å¾—å½“å‰æ—¶é’Ÿï¼Œ æˆ˜åœºä» ç¬¬ä¸€ç§’ å¼€å§‹
 	Time = ets:update_counter(battle_timer, clock, 1),
 	io:format("~n~n~n--------------Time = ~p s --------------~n", [Time]),
 	io:format("Battle Field Status Report ~n ~p ~n", [ets:tab2list(battle_field)]),
 
-	%% Ë¯Ò»»á£¬ÈÃÖ¸»Ó³ÌĞò¿ÉÒÔ¿¼ÂÇ
+	%% ç¡ä¸€ä¼šï¼Œè®©æŒ‡æŒ¥ç¨‹åºå¯ä»¥è€ƒè™‘
 	tools:sleep(Sleep),
 	
-	%% ¼ÆËãËùÓĞÉúĞ§µÄ¶¯×÷
+	%% è®¡ç®—æ‰€æœ‰ç”Ÿæ•ˆçš„åŠ¨ä½œ
 	takeAction(Time),
 
-	%% ¼ì²éÊÇ·ñÓĞÈÎÒâÒ»·½ÒÑ¾­È«²¿ÎşÉü
+	%% æ£€æŸ¥æ˜¯å¦æœ‰ä»»æ„ä¸€æ–¹å·²ç»å…¨éƒ¨ç‰ºç‰²
 	case checkWinner() of
 
-		%% Ê¤¸ºÒÑ·Ö
+		%% èƒœè´Ÿå·²åˆ†
 		{winner, Winner} ->
 			
 			io:format("~p army kills all the enemy, they win !! ~n", [Winner]),
 			
-			%% Êä³ö½á¹û
+			%% è¾“å‡ºç»“æœ
 			record({result, Winner ++ " army kills all the enemy, they win !!"}),
 			
-			%% ÍË³öÇåÀí
+			%% é€€å‡ºæ¸…ç†
 			cleanUp(BlueSide, RedSide);
 	
-		%% Ê¤¸ºÎ´·Ö
+		%% èƒœè´Ÿæœªåˆ†
 		none -> 
 			
-			%% ÅĞ¶ÁÊÇ·ñ³¬¹ıÁËÕ½¶·×î´óÂÖ´Î
+			%% åˆ¤è¯»æ˜¯å¦è¶…è¿‡äº†æˆ˜æ–—æœ€å¤§è½®æ¬¡
 			if	
 				Time == MaxTurn ->
 
-					%% ¼ÆËãÊ¤¸º
+					%% è®¡ç®—èƒœè´Ÿ
 					io:format("Sun goes down, battle finished!~n", []),
 
 					Winner = calcWinner(),
 					
-					%% Êä³öÕ½¶·½á¹û
+					%% è¾“å‡ºæˆ˜æ–—ç»“æœ
 					io:format("~p army win the battle!! ~n", [Winner]),
 					
-					%% Êä³öÕ½¶·½á¹û»Ø·ÅÈÕÖ¾
+					%% è¾“å‡ºæˆ˜æ–—ç»“æœå›æ”¾æ—¥å¿—
 					if 
 						Winner == none -> 
 							record({result, "no army win the battle!!"});
@@ -99,49 +99,49 @@ loop(BlueSide, RedSide, BlueQueue, RedQueue, Sleep) ->
 					end,
 						
 					
-					%% ÍË³öÇåÀí
+					%% é€€å‡ºæ¸…ç†
 					cleanUp(BlueSide,RedSide);
 					
 				
-				%% ¿ªÊ¼ÏÂÒ»ÂÖµÄÔËËã					
+				%% å¼€å§‹ä¸‹ä¸€è½®çš„è¿ç®—					
 				true ->
 
-					%% È¡ºì·½´¦ÓÚwait ×´Ì¬µÄÕ½Ê¿µÄĞÂµÄ¶¯×÷£¬Ö´ĞĞ£¬²¢½«¸ÃÖ¸Áî´Ó¶ÓÁĞÖĞÉ¾³ı
+					%% å–çº¢æ–¹å¤„äºwait çŠ¶æ€çš„æˆ˜å£«çš„æ–°çš„åŠ¨ä½œï¼Œæ‰§è¡Œï¼Œå¹¶å°†è¯¥æŒ‡ä»¤ä»é˜Ÿåˆ—ä¸­åˆ é™¤
 					RedIdleSoldiers = battlefield:get_idle_soldier("red"),
 					RedUsedCommand = command(RedIdleSoldiers,RedQueue,Time),
 					RedSide ! {expireCommand, RedUsedCommand},
 					
-					%% È¡À¶·½´¦ÓÚwait ×´Ì¬µÄÕ½Ê¿µÄĞÂµÄ¶¯×÷£¬Ö´ĞĞ£¬²¢½«¸ÃÖ¸Áî´Ó¶ÓÁĞÖĞÉ¾³ı					
+					%% å–è“æ–¹å¤„äºwait çŠ¶æ€çš„æˆ˜å£«çš„æ–°çš„åŠ¨ä½œï¼Œæ‰§è¡Œï¼Œå¹¶å°†è¯¥æŒ‡ä»¤ä»é˜Ÿåˆ—ä¸­åˆ é™¤					
 					BlueIdleSoldiers = battlefield:get_idle_soldier("blue"),
 					BlueUsedCommand = command(BlueIdleSoldiers,BlueQueue,Time),
 					BlueSide ! {expireCommand, BlueUsedCommand},
 
-					%% Êä³öµ±Ç°ËùÓĞÕ½Ê¿µÄÏÂÒ»²½¼Æ»®
+					%% è¾“å‡ºå½“å‰æ‰€æœ‰æˆ˜å£«çš„ä¸‹ä¸€æ­¥è®¡åˆ’
 					recordPlan(Time),
 					
-					%% ÏÂÒ»ÂÖÕ½¶·
+					%% ä¸‹ä¸€è½®æˆ˜æ–—
 					loop(BlueSide, RedSide, BlueQueue, RedQueue, Sleep)
 			end
 	end.
 
-%% ¶ÔÓÚ´¦ÓÚwait ×´Ì¬µÄÕ½Ê¿£¬È¡³öÏÂÒ»¸öÖ¸Áî£¨Èç¹ûÓĞµÄ»°£©£¬²¢Ö´ĞĞÖ®
+%% å¯¹äºå¤„äºwait çŠ¶æ€çš„æˆ˜å£«ï¼Œå–å‡ºä¸‹ä¸€ä¸ªæŒ‡ä»¤ï¼ˆå¦‚æœæœ‰çš„è¯ï¼‰ï¼Œå¹¶æ‰§è¡Œä¹‹
 command([],_Queue,_Time) -> [];
 command([Soldier | T], Queue, Time) ->
 	
-	%% Ñ°ÕÒµ±Ç°Õ½Ê¿ĞÂÖ¸Áî, ²¢Ö´ĞĞÖ®
+	%% å¯»æ‰¾å½“å‰æˆ˜å£«æ–°æŒ‡ä»¤, å¹¶æ‰§è¡Œä¹‹
 	case getNextCommand(Soldier,Queue,Time) of
 
-		%% ÕÒµ½Ö¸Áî
+		%% æ‰¾åˆ°æŒ‡ä»¤
 		{command, Command} ->
 			
-			%% ¸üĞÂÕ½Ê¿¶¯×÷
+			%% æ›´æ–°æˆ˜å£«åŠ¨ä½œ
 			NewSoldier = Soldier#soldier{action = Command#command.name, act_effect_time = Time + calcActionTime(Command#command.name)},
 			ets:insert(battle_field, NewSoldier),
 			
-			%% ¼ÇÂ¼Ö¸ÁîĞòºÅ
+			%% è®°å½•æŒ‡ä»¤åºå·
 			ID = [Command#command.seq_id];
 		
-		%% Ã»ÕÒµ½Ö¸Áî
+		%% æ²¡æ‰¾åˆ°æŒ‡ä»¤
 		_ ->
 			ID = []
 	end,
@@ -149,10 +149,10 @@ command([Soldier | T], Queue, Time) ->
 
 	
 
-%% »ñµÃÒ»¸öÕ½Ê¿ÏÂÒ»²½µÄ¶¯×÷Ö¸Áî	
+%% è·å¾—ä¸€ä¸ªæˆ˜å£«ä¸‹ä¸€æ­¥çš„åŠ¨ä½œæŒ‡ä»¤	
 getNextCommand(Soldier,Queue,Time) ->
     
-	%% ÌáÈ¡Soldier ºÅ£¬QueueÓÉÓÚÊÇ·Ö¿ªµÄ£¬²»ĞèÒªSide ±àºÅ
+	%% æå–Soldier å·ï¼ŒQueueç”±äºæ˜¯åˆ†å¼€çš„ï¼Œä¸éœ€è¦Side ç¼–å·
 	{SoldierId, _Side} = Soldier#soldier.id,
 	
 	Pattern=#command{
@@ -168,12 +168,12 @@ getNextCommand(Soldier,Queue,Time) ->
 		true ->
 			[C | _T] = Command,
 			if
-				C#command.execute_time =< Time -> {command,	C};  %% Ö»È¡ÒªÇóÏÖÔÚ»òÕßÖ®Ç°Ö´ĞĞµÄ¶¯×÷¡£ ÒÔºóµÄ¶¯×÷ÏÈ²»¹Ü
+				C#command.execute_time =< Time -> {command,	C};  %% åªå–è¦æ±‚ç°åœ¨æˆ–è€…ä¹‹å‰æ‰§è¡Œçš„åŠ¨ä½œã€‚ ä»¥åçš„åŠ¨ä½œå…ˆä¸ç®¡
 				true -> none
 			end
 	end.
 
-%% ¶¨Òå²»Í¬¶¯×÷ÉúĞ§µÄÊ±¼ä
+%% å®šä¹‰ä¸åŒåŠ¨ä½œç”Ÿæ•ˆçš„æ—¶é—´
 calcActionTime(Action) ->
 
 	if
@@ -187,18 +187,18 @@ calcActionTime(Action) ->
 		true -> 0
 	end.
 	
-%% ¼ÆËãµ±Ç°½ÚÅÄ£¬ËùÓĞĞèÒªÉúĞ§µÄ¶¯×÷
+%% è®¡ç®—å½“å‰èŠ‚æ‹ï¼Œæ‰€æœ‰éœ€è¦ç”Ÿæ•ˆçš„åŠ¨ä½œ
 takeAction(Time) ->
 	
-	%% Ê×ÏÈ´ÓÕ½³¡×´Ì¬±íÖĞÈ¡³ö±¾½ÚÅÄÉúĞ§µÄ¶¯×÷£¬È¡ÆäÖĞÒ»¸ö¿ªÊ¼´¦Àí
+	%% é¦–å…ˆä»æˆ˜åœºçŠ¶æ€è¡¨ä¸­å–å‡ºæœ¬èŠ‚æ‹ç”Ÿæ•ˆçš„åŠ¨ä½œï¼Œå–å…¶ä¸­ä¸€ä¸ªå¼€å§‹å¤„ç†
 	case getActingSoldier(Time) of
 	
 		[SoldierInfo] ->
 			
-			%% ´¦ÀíWorria µÄ¶¯×÷£¬¸üĞÂÊÀ½ç±í£¬Èç¹ûÓĞÈË±»É±£¬¾Í½«¸ÃÈË´ÓÊÀ½çÖĞÒÆ×ß
+			%% å¤„ç†Worria çš„åŠ¨ä½œï¼Œæ›´æ–°ä¸–ç•Œè¡¨ï¼Œå¦‚æœæœ‰äººè¢«æ€ï¼Œå°±å°†è¯¥äººä»ä¸–ç•Œä¸­ç§»èµ°
 			act(SoldierInfo,Time),
 			
-			%% ÔÙ¶ÁÏÂÒ»¸öĞèÒªÖ´ĞĞµÄÕ½Ê¿			
+			%% å†è¯»ä¸‹ä¸€ä¸ªéœ€è¦æ‰§è¡Œçš„æˆ˜å£«			
 			takeAction(Time);
 		_ ->
 			none
@@ -206,13 +206,13 @@ takeAction(Time) ->
 			
 	
 	
-%% Ö´ĞĞÒ»¸öÕ½Ê¿µÄ¶¯×÷
+%% æ‰§è¡Œä¸€ä¸ªæˆ˜å£«çš„åŠ¨ä½œ
 act(SoldierInfo,Time) ->
 
-    %% forward, ºóÍË back, 
-	%% ×ªÏò turnSouth, turnNorth, turnWest,turnEast
-	%% ¹¥»÷ attack
-	%% Ô­µØ´ıÃü wait 
+    %% forward, åé€€ back, 
+	%% è½¬å‘ turnSouth, turnNorth, turnWest,turnEast
+	%% æ”»å‡» attack
+	%% åŸåœ°å¾…å‘½ wait 
 	
 	{_Id, _Position, _Facing, Action,_Hp} = SoldierInfo,
 	
@@ -228,11 +228,11 @@ act(SoldierInfo,Time) ->
 	end.
 	
 	
-%% »ñµÃÒ»¸öµ±Ç°½ÚÅÄĞèÒªÖ´ĞĞÈÎÎñµÄÕ½Ê¿ĞÅÏ¢
+%% è·å¾—ä¸€ä¸ªå½“å‰èŠ‚æ‹éœ€è¦æ‰§è¡Œä»»åŠ¡çš„æˆ˜å£«ä¿¡æ¯
 getActingSoldier(Time) ->
 
-	%% TODO: ¸ù¾İsequence È¡£¬ÒÔ¼°Ëæ»úÌôÑ¡ºì·½£¬À¶·½Ë­ÏÈ¶¯
-	%% È¡³ö·Çwait ×´Ì¬£¬ÇÒ¶¯×÷ÉúĞ§Ê±¼ä Ğ¡ÓÚµÈÓÚµ±Ç°Ê±¼äµÄ Ò»¸öÕ½Ê¿
+	%% TODO: æ ¹æ®sequence å–ï¼Œä»¥åŠéšæœºæŒ‘é€‰çº¢æ–¹ï¼Œè“æ–¹è°å…ˆåŠ¨
+	%% å–å‡ºéwait çŠ¶æ€ï¼Œä¸”åŠ¨ä½œç”Ÿæ•ˆæ—¶é—´ å°äºç­‰äºå½“å‰æ—¶é—´çš„ ä¸€ä¸ªæˆ˜å£«
 	MS = ets:fun2ms(fun({Soldier, Id, Position,Hp,Facing,Action,Act_effect_time,Act_sequence}) 
 			when (Action /= "wait" andalso Act_effect_time =< Time)  ->  
 							{Id,Position,Facing,Action,Hp} end),
@@ -246,22 +246,22 @@ getActingSoldier(Time) ->
 		_:_ -> none
 	end.
 
-%%×ªÏò¶¯×÷, ²»ÊÜ±ğÈËÓ°Ïì
+%%è½¬å‘åŠ¨ä½œ, ä¸å—åˆ«äººå½±å“
 actTurn(SoldierInfo, Direction, Time) ->
 	{Id, Position, Facing, _Action,Hp} = SoldierInfo,
 	ets:update_element(battle_field, Id, [{6, "wait"},{5, Direction}]),
 	record({action, Time, Id, addTurn(Direction), Position, Facing, Hp}).
 	
 
-%% ÒÆ¶¯¶¯×÷£¬ĞèÒª¿´Ä¿±ê¸ñÖĞÊÇ·ñÓĞ¶ÔÊÖ
-%% Direction : 1 ÏòÇ°×ß£¬ -1 Ïòºó×ß	
+%% ç§»åŠ¨åŠ¨ä½œï¼Œéœ€è¦çœ‹ç›®æ ‡æ ¼ä¸­æ˜¯å¦æœ‰å¯¹æ‰‹
+%% Direction : 1 å‘å‰èµ°ï¼Œ -1 å‘åèµ°	
 actMove(SoldierInfo, Direction, Time) ->
 	
 	{Id, Position, Facing, _Action, Hp} = SoldierInfo,
 	
 	DestPosition = calcDestination(Position, Facing, Direction),
 	
-	%% Èç¹ûÄ¿±êÎ»ÖÃÊÇºÏ·¨µÄ£¬¾ÍÒÆ¶¯£¬·ñÔò¾Í·ÅÆú¸Ã¶¯×÷,Ô­µØ²»¶¯
+	%% å¦‚æœç›®æ ‡ä½ç½®æ˜¯åˆæ³•çš„ï¼Œå°±ç§»åŠ¨ï¼Œå¦åˆ™å°±æ”¾å¼ƒè¯¥åŠ¨ä½œ,åŸåœ°ä¸åŠ¨
 	Valid = positionValid(DestPosition),
 		
 	if 		
@@ -271,10 +271,10 @@ actMove(SoldierInfo, Direction, Time) ->
 			ets:update_element(battle_field, Id, [{6, "wait"}])
 	end,
 	
-	%% Êä³öĞĞ×ß¶¯×÷
+	%% è¾“å‡ºè¡Œèµ°åŠ¨ä½œ
 	record({action, Time, Id, "move", DestPosition, Facing, Hp}).
 
-%%¼ÆËãÄ¿±êÒÆ¶¯Î»ÖÃ
+%%è®¡ç®—ç›®æ ‡ç§»åŠ¨ä½ç½®
 calcDestination(Position, Facing, Direction) ->
 	
 	{Px, Py} = Position,
@@ -287,17 +287,17 @@ calcDestination(Position, Facing, Direction) ->
 		true -> {Px,Py}
 	end.
 
-%% ÅĞ¶¨ÊÇ·ñÊôÓÚºÏ·¨µÄÄ¿µÄµØ
+%% åˆ¤å®šæ˜¯å¦å±äºåˆæ³•çš„ç›®çš„åœ°
 positionValid(Position)	->
 
 	{Px, Py} = Position,
 
-	%% 1. ²»ÔÊĞí³¬¿ò
-	%% 2. Ä¿µÄµØ²»ÔÊĞíÓĞÈË
+	%% 1. ä¸å…è®¸è¶…æ¡†
+	%% 2. ç›®çš„åœ°ä¸å…è®¸æœ‰äºº
 	(Px >=0) and (Py>=0) and (Px =<14) and (Py =<14) and  
 		(battlefield:get_soldier_by_position(Position) ==none).
 	
-%% ¹¥»÷¶ÔÊÖ
+%% æ”»å‡»å¯¹æ‰‹
 actAttack(SoldierInfo,Time) ->
 	
 	{ID, Position, Facing, _Action,Hp} = SoldierInfo,
@@ -313,19 +313,19 @@ actAttack(SoldierInfo,Time) ->
 			{_Eid, ESide} = EID,
 
 			if 
-				%% Ö»ÄÜ¹¥»÷µĞÈË£¬×Ô¼ºÈË²»ÄÜ¹¥»÷
+				%% åªèƒ½æ”»å‡»æ•Œäººï¼Œè‡ªå·±äººä¸èƒ½æ”»å‡»
 				MySide /= ESide ->
-					%% Êä³ö¸ÃÕ½Ê¿¹¥»÷¶¯×÷
+					%% è¾“å‡ºè¯¥æˆ˜å£«æ”»å‡»åŠ¨ä½œ
 					record({action, Time, ID, "attack", Position, Facing, Hp}),
 
 					case calcHit(SoldierInfo, Enemy) of
-						%% Èç¹ûhit ·µ»Ø 0 £¬±íÊ¾¸ÃµĞÈË±»É±ËÀ
+						%% å¦‚æœhit è¿”å› 0 ï¼Œè¡¨ç¤ºè¯¥æ•Œäººè¢«æ€æ­»
 						Hit when Hit == 0 ->
 							ets:match_delete(battle_field, Enemy),
-							%% Êä³ö±»¹¥»÷Õß×´Ì¬
+							%% è¾“å‡ºè¢«æ”»å‡»è€…çŠ¶æ€
 							record({status, Time, Enemy#soldier.id, Enemy#soldier.position, Enemy#soldier.facing, 0, Enemy#soldier.hp});
 	
-						%% Hit ´óÓÚÁã£¬¿Û¼õµô¶Ô·½µÄÑª
+						%% Hit å¤§äºé›¶ï¼Œæ‰£å‡æ‰å¯¹æ–¹çš„è¡€
 						Hit when Hit > 0 ->
 							ets:update_element(battle_field, EID, [{4, EHp - Hit}]),
 							record({status, Time, Enemy#soldier.id, Enemy#soldier.position, Enemy#soldier.facing, Enemy#soldier.hp - Hit, Hit})
@@ -338,35 +338,35 @@ actAttack(SoldierInfo,Time) ->
 	end,
 
 	
-	%% ½«×Ô¼ºµÄ¶¯×÷½áÊø
+	%% å°†è‡ªå·±çš„åŠ¨ä½œç»“æŸ
 	ets:update_element(battle_field, ID, [{6, "wait"}]).
 	
 	
-%% ¼ÆËã¹¥»÷ËğÉË
+%% è®¡ç®—æ”»å‡»æŸä¼¤
 calcHit(SoldierInfo, EnemyInfo) ->
 	
 	{_Key, _EId, EPosition, EHp, EFacing, _EAction, _EEffTime, _ESeq} = EnemyInfo,	
 	{_Id, Position, _Facing, _Action, _Hp} = SoldierInfo,
 	
-	%% ¼ÆËãµĞÈËÃæ¶ÔµÄÄÇ¸ñ£¬ºÍ±³ºóµÄÄÇ¸ñ£¬ÆäËûµÄ¶¼ÊÇ²àÃæ
+	%% è®¡ç®—æ•Œäººé¢å¯¹çš„é‚£æ ¼ï¼Œå’ŒèƒŒåçš„é‚£æ ¼ï¼Œå…¶ä»–çš„éƒ½æ˜¯ä¾§é¢
 	FacePosition = calcDestination(EPosition,EFacing,1),
 	BackPosition = calcDestination(EPosition,EFacing,-1),	
 
-	%% ¼ÆËã³öËğÉË±ÈÀı
+	%% è®¡ç®—å‡ºæŸä¼¤æ¯”ä¾‹
 	case Position of 
 		FacePosition -> Hit = 10;
 		BackPosition -> Hit = 20;
 		_ -> Hit = 15
 	end,
 	
-	%% Èç¹ûµĞÈËhp ²»¹»£¬¾Í·µ»ØÁã£¬±íÊ¾É±µôÁË
-	%% ·ñÔò·µ»Ø¹¥»÷µãÊı
+	%% å¦‚æœæ•Œäººhp ä¸å¤Ÿï¼Œå°±è¿”å›é›¶ï¼Œè¡¨ç¤ºæ€æ‰äº†
+	%% å¦åˆ™è¿”å›æ”»å‡»ç‚¹æ•°
 	if
 		EHp > Hit -> Hit;
 		true -> 0
 	end.
 			
-%% È¡Ê±¼äº¯Êı
+%% å–æ—¶é—´å‡½æ•°
 getTime() ->
 	
 	try ets:lookup(battle_timer, clock) of
@@ -378,7 +378,7 @@ getTime() ->
 		_:_ -> -1			
 	end.
 	
-%% ÏÈ¿´Ê£ÓàÈËÊı£¬ È»ºó¿´ÀÛ¼ÆÑªÁ¿£¬Èç¹û¶¼Ò»Ñù¾ÍÅĞÎªÆ½¾Ö
+%% å…ˆçœ‹å‰©ä½™äººæ•°ï¼Œ ç„¶åçœ‹ç´¯è®¡è¡€é‡ï¼Œå¦‚æœéƒ½ä¸€æ ·å°±åˆ¤ä¸ºå¹³å±€
 calcWinner() ->
 	
 	RedArmy = battlefield:get_soldier_by_side("Red"),
@@ -389,7 +389,7 @@ calcWinner() ->
 	
 	if 
 		RedCount == BlueCount ->
-			%% ±È½ÏÑªÁ¿
+			%% æ¯”è¾ƒè¡€é‡
 			RedBlood = calcBlood(RedArmy),
 			BlueBlood = calcBlood(BlueArmy),
 			if 
@@ -406,7 +406,7 @@ calcWinner() ->
 			{winner, "Red"}
 	end.
 
-%% ¼ì²éÕ½¶·ÊÇ·ñÒÑ¾­½áÊø
+%% æ£€æŸ¥æˆ˜æ–—æ˜¯å¦å·²ç»ç»“æŸ
 checkWinner() ->
 
 	case battlefield:get_soldier_by_side("red") of 
@@ -422,17 +422,17 @@ checkWinner() ->
 	end.
 		
 
-%% ¼ÆËãÒ»¸ö¶ÓÎéµÄ×ÜÑªÁ¿
+%% è®¡ç®—ä¸€ä¸ªé˜Ÿä¼çš„æ€»è¡€é‡
 calcBlood([]) -> 0;
 calcBlood([Soldier | T]) ->
 	Soldier#soldier.hp + calcBlood(T).
 
 	
-%% ¼ÇÂ¼½ÇÉ«¼Æ»®·½°¸
+%% è®°å½•è§’è‰²è®¡åˆ’æ–¹æ¡ˆ
 record(Record) ->
 	recorder! {self(),Record}.
 	
-%% ¼ÇÂ¼ËùÓĞÕ½Ê¿µÄÏÂÒ»²½¶¯×÷¼Æ»®
+%% è®°å½•æ‰€æœ‰æˆ˜å£«çš„ä¸‹ä¸€æ­¥åŠ¨ä½œè®¡åˆ’
 recordPlan(Time) ->
 	
 	Soldiers = ets:tab2list(battle_field),
@@ -443,7 +443,7 @@ recordPlan(Time) ->
 		end,
 		Soldiers).
 
-%% °´ÕÕ±ê×¼¸ñÊ½»¯Êä³öturnWest µÈ×´Ì¬	
+%% æŒ‰ç…§æ ‡å‡†æ ¼å¼åŒ–è¾“å‡ºturnWest ç­‰çŠ¶æ€	
 addTurn(Direction) ->
 	if 
 		Direction == "west" -> "turnWest";
@@ -454,7 +454,7 @@ addTurn(Direction) ->
 	end.
 
 	
-%% ÍË³öÇ°£¬ÇåÀí»·¾³
+%% é€€å‡ºå‰ï¼Œæ¸…ç†ç¯å¢ƒ
 cleanUp(BlueSide, RedSide) ->
 
 	io:format("begin to clean the battle field ~n",[]),	
@@ -462,7 +462,7 @@ cleanUp(BlueSide, RedSide) ->
 	exit(BlueSide, normal),
 	exit(whereis(recorder), normal),
 	
-	%% µÈÆäËû½ø³Ì¶¼ËÀµô£¬È»ºó¿ªÊ¼ÇåÀí¶¯×÷
+	%% ç­‰å…¶ä»–è¿›ç¨‹éƒ½æ­»æ‰ï¼Œç„¶åå¼€å§‹æ¸…ç†åŠ¨ä½œ
 	tools:sleep(3000),
 	ets:delete(battle_field),
 	ets:delete(battle_timer).	

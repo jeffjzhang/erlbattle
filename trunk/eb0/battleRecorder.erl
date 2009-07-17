@@ -7,39 +7,39 @@ start(Pid) ->
 	
 	io:format("Battle Recorder Begin to Run ~n",[]),
 	
-	%% ´´½¨ÓÃÓÚ»º´æ»Ø·ÅÈÕÖ¾µÄ±í
+	%% åˆ›å»ºç”¨äºŽç¼“å­˜å›žæ”¾æ—¥å¿—çš„è¡¨
 	ets:new(battle_record,[ordered_set,named_table,private]),
 
 	run(Pid,1).
 
-%% Ñ­»·µÈ´ýÈÕ×ÓÃüÁî	
+%% å¾ªçŽ¯ç­‰å¾…æ—¥å­å‘½ä»¤	
 run(Pid, Seq) ->
 
 	receive
-		%% ÍË³öÊ±Êä³öËùÓÐ»º³åÏûÏ¢
+		%% é€€å‡ºæ—¶è¾“å‡ºæ‰€æœ‰ç¼“å†²æ¶ˆæ¯
 		{'EXIT', Pid , _Msg} ->  
 			recordBattle();	
 		{Pid,Record} ->
 			ets:insert(battle_record, {Seq, Record} ),
 			run(Pid, Seq + 1);
 		_ ->
-			run(Pid,Seq)   %% ÆäËû·Ç·¨ÏûÏ¢ÈÓµô
+			run(Pid,Seq)   %% å…¶ä»–éžæ³•æ¶ˆæ¯æ‰”æŽ‰
 	end.
 
-%% ½«ÄÚ´æÖÐËùÓÐ¼ÇÂ¼¶¼Êä³öµ½ÎÄ¼þÖÐ
+%% å°†å†…å­˜ä¸­æ‰€æœ‰è®°å½•éƒ½è¾“å‡ºåˆ°æ–‡ä»¶ä¸­
 recordBattle() ->
 	
-	%%ÌáÈ¡ÐÅÏ¢ºóÇå³ý±í
+	%%æå–ä¿¡æ¯åŽæ¸…é™¤è¡¨
 	Records = ets:tab2list(battle_record),
 	ets:delete(battle_record),
 	
 	%% open file
 	{_Ok, Io} = file:open("erlbattle.warlog",[write]),		
 	
-	%% ³õÊ¼»¯Õ½³¡
+	%% åˆå§‹åŒ–æˆ˜åœº
 	initBattleField(Io),
 	
-	%% ½«ÄÚ´æÖÐµÄ¼¸Àà¼ÇÂ¼£¬°´ÕÕ¹æ·¶Êä³ö
+	%% å°†å†…å­˜ä¸­çš„å‡ ç±»è®°å½•ï¼ŒæŒ‰ç…§è§„èŒƒè¾“å‡º
 	lists:foreach(
 		fun(RawRecord) ->
 			{_Seq, Record} = RawRecord,
@@ -69,19 +69,19 @@ recordBattle() ->
 	%% close file
 	file:close(Io).	
 
-%% Êä³öÖ¸Áî£¬ÈÃË«·½²¿¶Ó½øÈëÕ½³¡	
+%% è¾“å‡ºæŒ‡ä»¤ï¼Œè®©åŒæ–¹éƒ¨é˜Ÿè¿›å…¥æˆ˜åœº	
 initBattleField(Io) ->
 
 	Army = [1,2,3,4,5,6,7,8,9,10],
 	
-	%% ×¼±¸ºì·½Î»ÖÃ
+	%% å‡†å¤‡çº¢æ–¹ä½ç½®
 	lists:foreach(
 		fun(Id) ->
 			io:fwrite(Io,"~p,~p,~p,~p,~p,~p,~p,~p~n" , [0,'stand', 0,1+Id, Id, 'e', 100, 0])
 		end,
 		Army),
 
-	%% ×¼±¸À¶·½Î»ÖÃ
+	%% å‡†å¤‡è“æ–¹ä½ç½®
 	lists:foreach(
 		fun(Id) ->
 			io:fwrite(Io,"~p,~p,~p,~p,~p,~p,~p,~p~n" , [0,'stand', 14,1+Id, Id+10, 'w', 100, 0])
@@ -89,7 +89,7 @@ initBattleField(Io) ->
 		Army).
 		
 			
-%% record Êä³öÐ­ÒéÒªÇóÀ¶·½°´ÕÕ id =10 Êä³ö
+%% record è¾“å‡ºåè®®è¦æ±‚è“æ–¹æŒ‰ç…§ id =10 è¾“å‡º
 uniqueId(Id) ->
 
 	{Sid, Side} = Id,
@@ -101,7 +101,7 @@ uniqueId(Id) ->
 			Sid
 	end.
 
-%% ¶¯×÷×ªÂë	
+%% åŠ¨ä½œè½¬ç 	
 changeAction(Action) ->	
 	if
 		Action == "move" -> 'walk';
@@ -116,7 +116,7 @@ changeAction(Action) ->
 	end.
 	
 	
-%% ·½Ïò×ªÂë
+%% æ–¹å‘è½¬ç 
 simpleDirection(Facing) ->
 
 	if
