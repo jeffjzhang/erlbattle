@@ -7,8 +7,8 @@ create() ->
 	%%创建战场信息表，用于查找战士信息，及某坐标点信息
 	ets:new(battle_field,[named_table,protected,{keypos,#soldier.id}]),
     %%初始化士兵及位置
-	init_soldier("red",0,2,"east"),
-	init_soldier("blue",14,2,"west").
+	init_soldier("red",0,1,"east"),
+	init_soldier("blue",14,1,"west").
 
 init_soldier(Army,X,Y,Direction)->
 	Soldiers=[1,2,3,4,5,6,7,8,9,10],

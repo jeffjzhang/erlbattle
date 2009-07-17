@@ -106,7 +106,7 @@ changeAction(Action) ->
 	if
 		Action == "move" -> 'walk';
 		Action == "forward" -> 'walk';
-		Action == "attack" -> 'attack';
+		Action == "attack" -> 'fight';
 		Action == "back" -> 'back';
 		Action == "turnEast" -> 'turnEast';
 		Action == "turnWest" -> 'turnWest';

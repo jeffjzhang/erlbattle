@@ -266,13 +266,13 @@ actMove(SoldierInfo, Direction, Time) ->
 		
 	if 		
 		Valid == true ->  
-			ets:update_element(battle_field, Id, [{6, "wait"},{3, DestPosition}]);
+			ets:update_element(battle_field, Id, [{6, "wait"},{3, DestPosition}]),
+			%% 输出行走动作
+			record({action, Time, Id, "move", DestPosition, Facing, Hp});			
 		true ->
 			ets:update_element(battle_field, Id, [{6, "wait"}])
-	end,
+	end.
 	
-	%% 输出行走动作
-	record({action, Time, Id, "move", DestPosition, Facing, Hp}).
 
 %%计算目标移动位置
 calcDestination(Position, Facing, Direction) ->
