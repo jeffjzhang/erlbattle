@@ -172,7 +172,7 @@ function moveChar(ob) {
 		} else {
 			ob.moving = false;
 			moving = false;	
-			trace(ob.action);
+			//trace(ob.action);
 			if (ob.action == "back") {
 				switch(ob.face){
 					case "e":
@@ -241,7 +241,7 @@ function work() {
 function next_step(){
 	if (moving) return ;
 	if (player == "pause") return;
-	if (pt == command.length) return;
+	if (pt >= command.length) return;
 	var step_com = command[pt].split(",");
 	var round = step_com[0];
 	var action = step_com[1];
@@ -252,6 +252,18 @@ function next_step(){
 	var blood = Number(step_com[6]);
 	var del_blood = Number(step_com[7]);
 	
+	//ºöÂÔ plan Öµ
+	if (round == "plan"){
+		pt++;
+		next_step();
+	}
+	//Ê¤Àû£¬½áÊø
+	if (round == "result") {
+		step_txt.text += action + "\n";
+		step_txt.vPosition = step_txt.maxVPosition;
+		pt++;
+		return;
+	}
 	var ob = null;
 	for(var i = 0 ; i < sprit.length ; i++){
 		if (sprit[i].id == Number(id)){
@@ -263,7 +275,7 @@ function next_step(){
 	ob.targetx = xtile;
 	ob.targety = ytile;
 	ob.action = action;
-	if (action == "stand" || action == "status" || action == "turnWest" || action == "turnEast" || action == "turnSouth" || action == "turnNorth" )  ob.action = "stand";
+	if (action == "stand" || action == "status" || action == "turnWest" || action == "turnEast" || action == "turnSouth" || action == "turnNorth"  || action == "status" )  ob.action = "stand";
 	if (action == "fight") ob.action = "fight1";
 	ob.face = dir;
 	switch(dir){
