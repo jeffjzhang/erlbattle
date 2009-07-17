@@ -46,17 +46,18 @@ recordBattle() ->
 			case Record of 
 				{action, Time, Id, Action, Position, Facing, Hp}->
 					{X,Y} = Position,
-					io:fwrite(Io,"~p,~p,~p,~p,~p,~p,~p,0~n" , [Time, Action, X, Y, uniqueId(Id), Facing, Hp]);
+
+					io:fwrite(Io,"~p,~p,~p,~p,~p,~p,~p,0~n" , [Time, changeAction(Action), X, Y, uniqueId(Id), simpleDirection(Facing), Hp]);
 				{plan, Id, Action, ActionEffectTime} ->
 					if 
 						Action == "wait"  ->
 							io:fwrite(Io,"plan,~p,[]~n" , [uniqueId(Id)]);
 						true ->
-							io:fwrite(Io,"plan,~p,~p@~p~n" , [uniqueId(Id), Action, ActionEffectTime])
+							io:fwrite(Io,"plan,~p,~p@~p~n" , [uniqueId(Id), changeAction(Action), ActionEffectTime])
 					end;
 				{status,Time, Id, Position, Facing, Hp, HpLost} ->
 					{X,Y} = Position,
-					io:fwrite(Io,"~p,~p,~p,~p,~p,~p,~p,~p~n" , [Time,"status", X,Y, uniqueId(Id), Facing, Hp, HpLost]);
+					io:fwrite(Io,"~p,~p,~p,~p,~p,~p,~p,~p~n" , [Time,'status', X,Y, uniqueId(Id), simpleDirection(Facing), Hp, HpLost]);
 				{result, Result}->
 					io:fwrite(Io,"result,~p~n" , [Result]);
 				_ ->
@@ -76,14 +77,14 @@ initBattleField(Io) ->
 	%% 准备红方位置
 	lists:foreach(
 		fun(Id) ->
-			io:fwrite(Io,"~p,~p,~p,~p,~p,~p,~p,~p~n" , [0,"status", 0,1+Id, Id, "east", 100, 0])
+			io:fwrite(Io,"~p,~p,~p,~p,~p,~p,~p,~p~n" , [0,'stand', 0,1+Id, Id, 'e', 100, 0])
 		end,
 		Army),
 
 	%% 准备蓝方位置
 	lists:foreach(
 		fun(Id) ->
-			io:fwrite(Io,"~p,~p,~p,~p,~p,~p,~p,~p~n" , [0,"status", 14,1+Id, Id+10, "west", 100, 0])
+			io:fwrite(Io,"~p,~p,~p,~p,~p,~p,~p,~p~n" , [0,'stand', 14,1+Id, Id+10, 'w', 100, 0])
 		end,
 		Army).
 		
@@ -98,5 +99,30 @@ uniqueId(Id) ->
 			Sid + 10;
 		true ->
 			Sid
+	end.
+
+%% 动作转码	
+changeAction(Action) ->	
+	if
+		Action == "move" -> 'walk';
+		Action == "forward" -> 'walk';
+		Action == "attack" -> 'attack';
+		Action == "back" -> 'back';
+		Action == "turnEast" -> 'turnEast';
+		Action == "turnWest" -> 'turnWest';
+		Action == "turnSouth" -> 'turnSouth';
+		Action == "turnNorth" -> 'turnNorth';
+		true -> Action
+	end.
+	
+	
+%% 方向转码
+simpleDirection(Facing) ->
+
+	if
+		Facing == "west" ->'w';
+		Facing == "east" ->'e';
+		Facing == "north" ->'n';
+		Facing == "south" ->'s'
 	end.
 	
