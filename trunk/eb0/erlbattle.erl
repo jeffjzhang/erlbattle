@@ -10,7 +10,7 @@ start() ->
 	io:format("Battle Begin ....~n", []),
 	
 	%% 如果要更换对手的话，修改这里
-	BlueArmy = englandArmy,
+	BlueArmy = feardFarmers,
 	RedArmy = englandArmy,
 
 	%%  TODO: 这段主要是后面用于让每台机器都能够以相同的结果运行的作用
