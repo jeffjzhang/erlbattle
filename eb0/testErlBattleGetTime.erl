@@ -1,13 +1,13 @@
 -module(testErlBattleGetTime).
 -export([test/0]).
 
-%% ²âÊÔgetTime()
+%% æµ‹è¯•getTime()
 test() ->
 	test1(),
 	test2(),
 	test3().
 	
-%% Õý³£Çé¿ö
+%% æ­£å¸¸æƒ…å†µ
 test1() ->
 	ets:new(battle_timer, [set, protected, named_table]),
 	ets:insert(battle_timer, {clock, 23}),
@@ -19,7 +19,7 @@ test1() ->
 	end,
 	ets:delete(battle_timer).
 
-%% ¿Õ±í·µ»Ø 0	
+%% ç©ºè¡¨è¿”å›ž 0	
 test2() ->
 	ets:new(battle_timer, [set, protected, named_table]),
 	case erlbattle:getTime() of 
@@ -30,7 +30,7 @@ test2() ->
 	end,
 	ets:delete(battle_timer).
 
-%% Ã»ÓÐ±íµÄÊ±ºò·µ»Ø -1	
+%% æ²¡æœ‰è¡¨çš„æ—¶å€™è¿”å›ž -1	
 test3() ->
 	case erlbattle:getTime() of 
 		-1 ->

@@ -4,7 +4,7 @@
 
 run(Channel, Side, Queue) ->
     
-	%% ¿ÉÒÔ²»²¶»ñ£¬Ö±½ÓÓÉ¸¸½ø³ÌÉ±µô
+	%% å¯ä»¥ä¸æ•èŽ·ï¼Œç›´æŽ¥ç”±çˆ¶è¿›ç¨‹æ€æŽ‰
 	process_flag(trap_exit, true),
 	
 	loop(Channel, Side, Queue).
@@ -14,7 +14,7 @@ loop(Channel, Side, Queue) ->
 	Army = [1,2,3,4,5,6,7,8,9,10],
 	
 	lists:foreach(
-		fun(Soldier) ->   % Ò»Ö±³¯Ç°£¬ Ö±µ½Åöµ½ÈË£¬È»ºó¿ªÊ¼¿³	
+		fun(Soldier) ->   % ä¸€ç›´æœå‰ï¼Œ ç›´åˆ°ç¢°åˆ°äººï¼Œç„¶åŽå¼€å§‹ç 	
 			case someoneAhead(Soldier,Side) of
 				true ->
 					Channel!{command,"attack",Soldier,0};
@@ -26,10 +26,10 @@ loop(Channel, Side, Queue) ->
 		end,
 		Army),
 	
-	%% µÈ´ý½áÊøÖ¸Áî£¬ÆäÊµÕâ¸ö³ÌÐò²»ÐèÒª×öÈÎºÎÉÆºó£¬Ö»ÊÇ×÷ÎªÀý×ÓÌá¹©¸ø´ó¼ÒÄ£·Â
+	%% ç­‰å¾…ç»“æŸæŒ‡ä»¤ï¼Œå…¶å®žè¿™ä¸ªç¨‹åºä¸éœ€è¦åšä»»ä½•å–„åŽï¼Œåªæ˜¯ä½œä¸ºä¾‹å­æä¾›ç»™å¤§å®¶æ¨¡ä»¿
 	receive
-		%% ½áÊøÕ½¶·£¬¿ÉÒÔ×öÒ»Ð©ÊÕÎ²¹¤×÷ºóÍË³ö£¬»òÕßÊ²Ã´¶¼²»×ö
-		%% Õâ¸öÏûÏ¢²»ÊÇ±ØÐë´¦ÀíµÄ
+		%% ç»“æŸæˆ˜æ–—ï¼Œå¯ä»¥åšä¸€äº›æ”¶å°¾å·¥ä½œåŽé€€å‡ºï¼Œæˆ–è€…ä»€ä¹ˆéƒ½ä¸åš
+		%% è¿™ä¸ªæ¶ˆæ¯ä¸æ˜¯å¿…é¡»å¤„ç†çš„
 		{'EXIT',_FROM, _Reason} ->  
 			io:format("England Army Go Back To Castle ~n",[]);
 					
@@ -42,22 +42,22 @@ loop(Channel, Side, Queue) ->
 	end.
 
 
-%% ¼ÆËãÄ³¸ö½ÇÉ«Ç°ÃæÊÇ·ñÓÐÈË
+%% è®¡ç®—æŸä¸ªè§’è‰²å‰é¢æ˜¯å¦æœ‰äºº
 someoneAhead(SoldierId,Side) ->
 	
 	case battlefield:get_soldier(SoldierId,Side) of
 		
-		none ->  % ½ÇÉ«²»´æÔÚ£¨ÒÑ¾­¹ÒµôÁË£©
+		none ->  % è§’è‰²ä¸å­˜åœ¨ï¼ˆå·²ç»æŒ‚æŽ‰äº†ï¼‰
 			none;
 		
-		Soldier when is_record(Soldier,soldier) ->  % ÕÒµ½½ÇÉ«
+		Soldier when is_record(Soldier,soldier) ->  % æ‰¾åˆ°è§’è‰²
 
 			Position = erlbattle:calcDestination(Soldier#soldier.position, Soldier#soldier.facing, 1),
 
 			case battlefield:get_soldier_by_position(Position) of 
-				none ->  		%Ç°ÃæÃ»ÈË
+				none ->  		%å‰é¢æ²¡äºº
 					false;
-				_Found ->		%ÓÐÈË
+				_Found ->		%æœ‰äºº
 					true
 			end;
 		_->

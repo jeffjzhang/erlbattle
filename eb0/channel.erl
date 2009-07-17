@@ -8,7 +8,7 @@ start(BattleField, Side, ArmyName) ->
 	
 	receive
 		
-		%% µÈ´ıÖ÷³ÌĞò½«ÏûÏ¢¶ÓÁĞ¿ØÖÆÈ¨×ª¹ıÀ´£¬È»ºóÆô¶¯Ö¸»Ó³ÌĞò
+		%% ç­‰å¾…ä¸»ç¨‹åºå°†æ¶ˆæ¯é˜Ÿåˆ—æ§åˆ¶æƒè½¬è¿‡æ¥ï¼Œç„¶åå¯åŠ¨æŒ‡æŒ¥ç¨‹åº
 		{'ETS-TRANSFER',Tab,_FromPid,_GiftData} ->
 			io:format("~p plays the ~p Side ~n", [ArmyName, Side]),
 			Commander = spawn_link(ArmyName, run, [self(),Side,Tab]),
@@ -19,13 +19,13 @@ start(BattleField, Side, ArmyName) ->
 			
 	end.	
 	
-%% ÏûÏ¢Ñ­»·£¬½«Ö¸Áî·Åµ½¶ÓÁĞÖĞ
+%% æ¶ˆæ¯å¾ªç¯ï¼Œå°†æŒ‡ä»¤æ”¾åˆ°é˜Ÿåˆ—ä¸­
 loop(BattleField, Commander, Queue,CommandId) ->
 	
 	receive
 		
 		{command,Command,Soldier,Time} ->
-			%% Éú³ÉÒ»¸öcommand ¼ÇÂ¼
+			%% ç”Ÿæˆä¸€ä¸ªcommand è®°å½•
 			CmdRec = #command{
 					soldier_id = Soldier,
 					name = Command,
@@ -34,8 +34,8 @@ loop(BattleField, Commander, Queue,CommandId) ->
 			ets:insert(Queue, CmdRec),
 			loop(BattleField, Commander, Queue,CommandId +1);
 
-		%% Ö÷³ÌĞòÔËĞĞÍêºó£¬»á·¢³öÇå³ıÒÑ¾­Ê¹ÓÃ¹ıµÄÃüÁîµÄÏûÏ¢£¬ĞèÒª½«ÆäÇå³ı£¬±ÜÃâÖØ¸´ÃüÁî
-		%% Èç¹ûÔÚÇå³ıÖ®Ç°£¬ÒÑ¾­ÓĞĞÂµÄÏûÏ¢½øÀ´£¬Æäseq_id ÒÑ¾­¸üĞÂ£¬¾Í²»»á±»ÎóÉ¾
+		%% ä¸»ç¨‹åºè¿è¡Œå®Œåï¼Œä¼šå‘å‡ºæ¸…é™¤å·²ç»ä½¿ç”¨è¿‡çš„å‘½ä»¤çš„æ¶ˆæ¯ï¼Œéœ€è¦å°†å…¶æ¸…é™¤ï¼Œé¿å…é‡å¤å‘½ä»¤
+		%% å¦‚æœåœ¨æ¸…é™¤ä¹‹å‰ï¼Œå·²ç»æœ‰æ–°çš„æ¶ˆæ¯è¿›æ¥ï¼Œå…¶seq_id å·²ç»æ›´æ–°ï¼Œå°±ä¸ä¼šè¢«è¯¯åˆ 
 		{expireCommand, CommandIds} ->
 
 			lists:foreach(
@@ -51,11 +51,11 @@ loop(BattleField, Commander, Queue,CommandId) ->
 
 			loop(BattleField, Commander, Queue,CommandId);
 			
-		%% Ö÷³ÌĞò¿ªÊ¼É±ÎÒ£¬ÎÒ¾ÍÉ±Íæ¼Ò½ø³Ì
+		%% ä¸»ç¨‹åºå¼€å§‹æ€æˆ‘ï¼Œæˆ‘å°±æ€ç©å®¶è¿›ç¨‹
 		{'EXIT', _, _} ->
-			exit(Commander, finish), %É±¾ö²ß½ø³Ì, ¾ö²ß½ø³ÌÈç¹û²»²¶×½£¬¾Í×Ô¶¯ÍË³ö
+			exit(Commander, finish), %æ€å†³ç­–è¿›ç¨‹, å†³ç­–è¿›ç¨‹å¦‚æœä¸æ•æ‰ï¼Œå°±è‡ªåŠ¨é€€å‡º
 			tools:sleep(500),
-			ets:delete(Queue) % Çå³ı¶ÓÁĞ
+			ets:delete(Queue) % æ¸…é™¤é˜Ÿåˆ—
 	end.
 	
 	

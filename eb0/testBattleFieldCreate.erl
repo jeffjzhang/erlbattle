@@ -3,18 +3,18 @@
 -include("test.hrl").
 -include("schema.hrl").
 
-%% ²âÊÔ
+%% æµ‹è¯•
 test()->
 	battlefield:create(),
 	test10(),
 	test20(),
 	ets:delete(battle_field).
 	
-%%²âÊÔ¸ù¾ÝID²éÕÒÕ½Ê¿ÊôÐÔ
+%%æµ‹è¯•æ ¹æ®IDæŸ¥æ‰¾æˆ˜å£«å±žæ€§
 test10()->
-	%%Õ½¶Ó´íÎó
+	%%æˆ˜é˜Ÿé”™è¯¯
 	?match(none,battlefield:get_soldier(1,"sdf")),
-	%%³É¹¦È¡µ½ÐÅÏ¢
+	%%æˆåŠŸå–åˆ°ä¿¡æ¯
 	Soldier=#soldier{
 				id={2,"red"},
 				position={0,2+2},
@@ -26,7 +26,7 @@ test10()->
 			},
 	?match(Soldier,battlefield:get_soldier(2,"red")).
 
-%%²âÊÔ¸ù¾Ý×ø±êÎ»ÖÃ²éÕÒÕ½Ê¿ÊôÐÔ
+%%æµ‹è¯•æ ¹æ®åæ ‡ä½ç½®æŸ¥æ‰¾æˆ˜å£«å±žæ€§
 test20()->
 	?match(none,battlefield:get_soldier_by_position({1,14})),
 	?match(none,battlefield:get_soldier_by_position({14,0})),

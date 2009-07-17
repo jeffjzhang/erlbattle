@@ -1,7 +1,7 @@
 -module(tools).
 -export([sleep/1]).
 
-%% Sleep ¹¤¾ßº¯Êý
+%% Sleep å·¥å…·å‡½æ•°
 sleep(Sleep) ->
 	receive
 	
