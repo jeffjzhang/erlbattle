@@ -1,0 +1,1 @@
+copy make\target.mk.win make\target.mk

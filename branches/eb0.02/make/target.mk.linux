@@ -1,0 +1,23 @@
+ERLC = erlc
+CP = cp
+
+EBIN = ./
+ERL_COMPILE_FLAGS += -W +debug_info
+ERL_FILES = $(MODULES:%=%.erl)
+TARGET_FILES= $(MODULES:%=$(EBIN)/%.beam)
+TARGET_CONFIG_FILES = $(CONFIG_FILE:%=$(EBIN)/%)
+all: compile
+
+compile:$(TARGET_CONFIG_FILES) $(TARGET_FILES)
+
+test: clean compile
+	erl -nologo -noshell -s testAll test -s init stop
+
+$(EBIN)/%.beam: ./%.erl
+	$(ERLC) $(ERL_COMPILE_FLAGS) -o$(EBIN) $<
+
+$(EBIN)/%.app: ./%.app
+	$(CP) $< $@
+
+clean:
+	rm -rf $(TARGET_FILES) $(TARGET_CONFIG_FILES)
