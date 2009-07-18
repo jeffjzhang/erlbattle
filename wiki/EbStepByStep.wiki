@@ -19,7 +19,7 @@
  * 12. 把输出的 erlbattle.warlog 文件改名为warfield.txt。 用第一步下载的播放器播放这个战斗
  * 13. 阅读战场程序代码，或者动手编写你的第一个指挥程序。。。。enjoy it. 
 
- [http://code.google.com/p/erlbattle/wiki/EbInterface *EB:玩家指挥程序编写指南* ]
+ [http://code.google.com/p/erlbattle/wiki/EbInterface 【EB:玩家指挥程序编写指南】]
 
 <br><br><br>
 
