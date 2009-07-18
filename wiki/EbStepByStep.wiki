@@ -78,6 +78,12 @@ Eshell V5.6.4  (abort with ^G)
 
 `即 R12B`
 
+ 建议::
+  * EB 稳定后,也可发布到 CEAN 中! 这样,安装 EB 就可以简单的
+{{{
+cean:install(erlbattle).
+}}}
+
 ==== 编译最新版本 ====
 可能有问题::
  根据:[http://magixyu.javaeye.com/blog/268998 Erlang 安装手记 - magixyu？magixyu！]
