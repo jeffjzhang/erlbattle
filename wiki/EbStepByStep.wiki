@@ -137,9 +137,65 @@ make: *** [fourth_bootstrap_build] 错误 2
 
 
 === 安装 svn ===
+{{{
+$sudo apt-get install subversion
+}}}
+检查安装的版本
+{{{
+l> svn --version
+svn，版本 1.5.1 (r32289)
+   编译于 Oct  6 2008，12:54:52
+
+版权所有 (C) 2000-2008 CollabNet。
+Subversion 是开放源代码软件，请参阅 http://subversion.tigris.org/ 站点。
+此产品包含由 CollabNet(http://www.Collab.Net/) 开发的软件。
+
+可使用以下的版本库访问模块: 
+
+* ra_neon : 通过 WebDAV 协议使用 neon 访问版本库的模块。
+  - 处理“http”方案
+  - 处理“https”方案
+* ra_svn : 使用 svn 网络协议访问版本库的模块。  - 使用 Cyrus SASL 认证
+  - 处理“svn”方案
+* ra_local : 访问本地磁盘的版本库模块。
+  - 处理“file”方案
+}}}
 
 === 下载代码 ===
-=== 编译运行 ===
+{{{
+$ svn checkout http://erlbattle.googlecode.com/svn/trunk/ erlbattle-read-only
+}}}
+
+=== 运行EB ===
+ 预测试::
+{{{
+$ cd /path/to/u/erlbattle-read-only
+$ ./configure
+$ cd eb0
+$ make test
+rm -rf .//erlbattle.beam .//battlefield.beam .//tools.beam .//channel.beam .//battleRecorder.beam .//englandArmy.beam .//feardFarmers.beam .//testAll.beam .//testBattleFieldCreate.beam .//testErlBattleTakeAction.beam .//testErlBattleGetTime.beam 
+erlc -W +debug_info -o./ erlbattle.erl
+erlc -W +debug_info -o./ battlefield.erl
+erlc -W +debug_info -o./ tools.erl
+erlc -W +debug_info -o./ channel.erl
+erlc -W +debug_info -o./ battleRecorder.erl
+erlc -W +debug_info -o./ englandArmy.erl
+erlc -W +debug_info -o./ feardFarmers.erl
+...
+}}}
+
+
+运行游戏!
+{{{
+$ erl -noshell -s erlbattle start
+Battle Begin ....
+Army matching into the battle fileds....
+don't kill us , we are poor farmers 
+Battle Recorder Begin to Run 
+don't kill us , we are poor farmers 
+don't kill us , we are poor farmers 
+...
+}}}
 
 == in M$ ==
 
