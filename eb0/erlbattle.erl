@@ -1,5 +1,5 @@
 -module(erlbattle).
--export([start/0,takeAction/1,getTime/0,calcDestination/3]).
+-export([start/0,takeAction/1,getTime/0,calcDestination/3,testSpeed/0]).
 -include("schema.hrl").
 -include("test.hrl").
 -include_lib("stdlib/include/ms_transform.hrl").
@@ -51,15 +51,12 @@ waitQueue(BlueSide, RedSide, BlueQueue, RedQueue, QueueCounter) ->
 %% 启动战场前准备工作
 beginWar(BlueSide, RedSide, BlueQueue, RedQueue) ->
 
-	%% 等决策启动完毕，并作出某种行为
-	tools:sleep(200),
-
 	%% 启动战场情况记录器,并注册
 	Recorder = spawn_link(battleRecorder,start, [self()]),
 	register(recorder, Recorder),
 
-	%%  TODO: 这段主要是后面用于让每台机器都能够以相同的结果运行的作用
-	Sleep = 300,
+	%% 让每台机器都能够以相同的结果运行的作用
+	Sleep = testSpeed(),
 			
 	%% 开始战斗
 	loop(BlueSide, RedSide,BlueQueue, RedQueue, Sleep).
@@ -484,5 +481,38 @@ cleanUp(BlueSide, RedSide) ->
 	tools:sleep(3000),
 	ets:delete(battle_field),
 	ets:delete(battle_timer).	
+
+%% 由于每台机器的运算速度不同，会造成不同的算法在不同的机器上表现不同。 
+%% 解决方案是测试某机器运算某个标准行为需要多少时间， 然后以他的倍数来决定主战场sleep 时间	
+%% 返回毫秒
+testSpeed() ->
 	
+	Times = 1000000,  % 可以调整这个倍数去控制速度
+	
+	Begin = tools:getLongDate(),
+	testSpeed(Times),
+	End = tools:getLongDate(),
+	
+	Speed = (End - Begin) / 1000,
+
+	if 
+		Speed < 1 ->
+			1;
+		true ->
+			round(Speed)
+	end.
+
+%% 测速算法：做某个行为	; 现在按照list运算和sqrt作为运算标准
+testSpeed(Counter) ->
+	
+	_X = lists:reverse([23,232,43,3,343,34,3,33,4,334,33,44,34,3,33,43,43,2332,2,3,3232,23,2,4343,343,343,334,34343,393]),
+	_Y = math:sqrt(9238339),
+	
+	if 
+		Counter > 1 -> testSpeed(Counter - 1);
+		true -> true
+	end.
+		
+		
+		
 	
