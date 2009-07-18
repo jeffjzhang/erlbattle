@@ -32,19 +32,55 @@ EB 不是一个单纯的对战游戏，而是为了引导大家在游戏中学�
 *"[http://www.douban.com/subject/3260311/ Erlang程序设计]"* ^(豆瓣)^
 
 == in Linux ==
+`推荐使用 Debian 系的有良好软件仓库支持的发行版本`
+~ 这里以 ubuntu 8.04 为例进行说明
 
 === 安装 erl ===
 
-=== 安装 svn ===
+==== apt ====
+{{{
+$sudo apt-get install erlang
+}}}
 
-=== 下载代码 ===
+或是在`新立得`中搜索 erlang 并安装
+ * http://ecug.googlegroups.com/web/2009-07-18-154413_544x245_scrot.png
+ * 输入命令 erl 就进入了 Erlang shell
+{{{
+~> erl
+Erlang (BEAM) emulator version 5.5.5 [source] [async-threads:0] [kernel-poll:false]
 
-=== 编译运行 ===
+Eshell V5.5.5  (abort with ^G)
+}}}
 
-==== Ubuntu 中 ====
-可能现象::
+`即 R11B`
 
-根据:[http://magixyu.javaeye.com/blog/268998 Erlang 安装手记 - magixyu？magixyu！]
+==== CEAN ====
+*[http://cean.process-one.net/doc/ Comprehensive Erlang Archive Network]*
+ * Erlang软件收藏库
+ * 效仿[http://www.cpan.org/ CPAN] 的又一个规范的友好的可无限扩展的 Erlang 作品发布平台!
+ * 跨平台的轻易安装,并通过一致性的命令安装/升级/卸载 软件!
+ * 唯一要注意的是CEAN 可能默认的没有安装编译器,那么只要:
+{{{
+cean:install(compiler).
+}}}
+
+下载: http://cean.process-one.net/downloads
+
+搜索: http://cean.process-one.net/packages/
+
+运行:
+{{{
+/opt/bin/cean> ./start.sh 
+Erlang (BEAM) emulator version 5.6.4 [source] [smp:2] [async-threads:0] [kernel-poll:false]
+
+Eshell V5.6.4  (abort with ^G)
+}}}
+
+`即 R12B`
+
+==== 编译最新版本 ====
+可能有问题::
+ 根据:[http://magixyu.javaeye.com/blog/268998 Erlang 安装手记 - magixyu？magixyu！]
  * 配置时依然..
 {{{
 *********************************************************************
@@ -82,6 +118,11 @@ make: *** [fourth_bootstrap_build] 错误 2
   * [http://groups.google.com/group/erlang-china/browse_thread/thread/acd8efea64e35e2 问下UTF-8 编码的erl 文件如何编译和运行 - Erlang China | Google 网上论坛]
 
 
+=== 安装 svn ===
+
+=== 下载代码 ===
+=== 编译运行 ===
+
 == in M$ ==
 
 === 安装 erl ===
@@ -91,3 +132,4 @@ make: *** [fourth_bootstrap_build] 错误 2
 === 下载代码 ===
 
 === 编译运行 ===
+
