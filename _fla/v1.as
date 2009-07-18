@@ -196,7 +196,7 @@ function moveChar(ob) {
 			ob.action = "stand";
 			ob.clip.mc.gotoAndStop(ob.action + ob.dir);
 			//trace("id="+ob.id);
-			next_step();
+			_root.actions = "next";
 			return;
 		}
 		//trace(ob.action + ob.dir);
@@ -236,13 +236,33 @@ function randRange(min:Number, max:Number):Number {
     return randomNum;
 }
 function work() {
+	if (actions == "next"){
+		pt++;
+		next_step()
+	}
+	if(	_root.actions == "pause_next"){
+		pt++;
+		next_step()
+	}
 	if (moving) loop_move_char();
 }
 function next_step(){
-	if (moving) return ;
-	if (player == "pause") return;
-	if (pt >= command.length) return;
+	if (moving) {
+		return ;
+	}
+	if (player == "pause" && actions != "pause_next")  {
+		return ;
+	}
+	if (pt >= command.length)  {
+		return ;
+	}
+	_root.actions = "";
 	var step_com = command[pt].split(",");
+	//忽略 plan 值
+	while (step_com[0] == "plan"){
+		pt++;
+		step_com = command[pt].split(",");
+	}
 	var round = step_com[0];
 	var action = step_com[1];
 	var xtile = step_com[2];
@@ -252,11 +272,6 @@ function next_step(){
 	var blood = Number(step_com[6]);
 	var del_blood = Number(step_com[7]);
 	
-	//忽略 plan 值
-	if (round == "plan"){
-		pt++;
-		next_step();
-	}
 	//胜利，结束
 	if (round == "result") {
 		step_txt.text += action + "\n";
@@ -270,8 +285,9 @@ function next_step(){
 			ob = sprit[i];					
 		}
 	}
-	if (ob == null) return;
-	
+	if (ob == null){
+		return;
+	}
 	ob.targetx = xtile;
 	ob.targety = ytile;
 	ob.action = action;
@@ -318,7 +334,8 @@ function next_step(){
 	}
 	//播放mc，针对stand，fight
 	ob.clip.mc.gotoAndPlay(ob.action + ob.dir);
-	//trace(ob.action + ob.dir);
+	//ob.clip.mc.gotoAndPlay(ob.action + ob.dir);
+	//trace(ob.id);
 	//血量减少显示
 	ob.clip.blood.gotoAndStop(Number(blood));
 	//信息窗口显示
@@ -331,9 +348,9 @@ function next_step(){
 	step_txt.vPosition = step_txt.maxVPosition;
 
 	round_txt.text = "ROUND "+ round + " ["+player+"]";
-	pt ++;
+	break_loop++;
 	walk_sprit = null;
-	if (ob.action == "stand") {
+	if (ob.action == "stand" || ob.action == "fight1") {
 		ob.xtile = xtile;
 		ob.ytile = ytile;
 		set_to_current_place(ob);
@@ -349,7 +366,11 @@ function next_step(){
 	if (blood == 0){
 		ob.clip._visible = false;
 	}
-	if (ob.action == "stand" && player == "play") next_step();
+	if (( ob.action == "stand") && player == "play") next_step2();
+}
+function next_step2(){
+	_root.actions = "next";
+	return;
 }
 //init
 var sprit = new Array();
@@ -357,7 +378,8 @@ var walk_sprit = null;
 var command = new Array();
 var step = 0;
 var player = "pause"; //play, pause, next_round
-var pt = 0
+var pt = -1
+var actions = "";
 var moving = false;
 // make the map
 
@@ -370,7 +392,7 @@ my_lv.onData = function(src:String) {
     }
 	_root.command = src.split("\r").join("").split("\n");
     //trace(command.length);
-	_root.next_step();
+	//_root.next_step();
 };
 my_lv.load("warfield.txt", my_lv, "GET");
 stop();
