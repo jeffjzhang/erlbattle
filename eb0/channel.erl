@@ -6,18 +6,18 @@ start(BattleField, Side, ArmyName) ->
 	
 	process_flag(trap_exit,true),
 	
-	receive
-		
-		%% 等待主程序将消息队列控制权转过来，然后启动指挥程序
-		{'ETS-TRANSFER',Tab,_FromPid,_GiftData} ->
-			io:format("~p plays the ~p Side ~n", [ArmyName, Side]),
-			Commander = spawn_link(ArmyName, run, [self(),Side,Tab]),
-			loop(BattleField, Commander, Tab,1);
-		
-		_ ->
-			start(BattleField, Side, ArmyName)
-			
-	end.	
+	%% 创建通讯队列
+	Queue = ets:new(queue, [protected, {keypos, #command.soldier_id}]),	
+	
+	%%启动玩家指挥程序
+	Commander = spawn_link(ArmyName, run, [self(),Side,Queue]),
+	
+	%%将queue 的句柄通过消息，发回给主程序
+	BattleField ! {queue,self(), Queue},
+	
+	loop(BattleField, Commander, Queue,1).
+	
+
 	
 %% 消息循环，将指令放到队列中
 loop(BattleField, Commander, Queue,CommandId) ->
