@@ -5,15 +5,19 @@
 
 *ERLANG 环境： 5.7.2  （部分语法老版本不支持，需要用这个版本以上）*
 
- * 1. 用svn下载代码到你的机器上。 http://erlbattle.googlecode.com/svn/trunk
- * 2. window 运行 config.bat, linux 运行 config
- * 3. 进入 eb0 目录； windows 用 nmake test   ; linux 用 make test (nmake 下载：http://erlbattle.googlecode.com/files/nmake.exe )
- * 4. 进入erl shell
- * 5. erlbattle:start().
- * 6. 系统就启动了. 并且在你反应过来之前就结束了。 
- * 7. 这是你观看的第一场战斗，发生在feardFarmers【恐惧的农民】 和englandArmy【英格兰卫兵】 之间的战斗。如何战斗的，需要仔细看屏幕输出的天书。 
- * 8. 以后会有专门的图形化回放程序来帮你看战斗。
-
+ * 1. [http://erlbattle.googlecode.com/files/war-2.zip 播放器和战斗录像下载]^内有readme.txt^
+ * 2. 观看录像，获得饿狼战役战斗的直观感觉
+ * 3. 用svn下载代码到你的机器上。 http://erlbattle.googlecode.com/svn/trunk
+ * 4. window 运行 config.bat, linux 运行 config
+ * 5. 进入 eb0 目录； windows 用 nmake test   ; linux 用 make test (nmake 下载：http://erlbattle.googlecode.com/files/nmake.exe )
+ * 6. 进入erl shell
+ * 7. erlbattle:start().
+ * 8. 系统就启动了. 并且在你反应过来之前就结束了。 
+ * 9. 这是你观看的第一场战斗，发生在feardFarmers【恐惧的农民】 和englandArmy【英格兰卫兵】 之间的战斗。
+ * 10. 把输出的 erlbattle.warlog 文件改名为warfield.txt。 用第一步下载的播放器播放这个战斗
+ * 11. 尝试运行 erlbattle:start(englandArmy,englandArmy)  让两个【英格兰卫兵】比赛
+ * 12. 把输出的 erlbattle.warlog 文件改名为warfield.txt。 用第一步下载的播放器播放这个战斗
+ * 13. 阅读战场程序代码，或者动手编写你的第一个指挥程序。。。。enjoy it. 
 
 ----
 
@@ -206,4 +210,3 @@ don't kill us , we are poor farmers
 === 下载代码 ===
 
 === 编译运行 ===
-
