@@ -89,6 +89,8 @@ loop(BlueSide, RedSide, BlueQueue, RedQueue, Sleep) ->
 			%% 输出结果
 			record({result, Winner ++ " army kills all the enemy, they win !!"}),
 			
+			io:format("The battle run at ~pms per round speed ~n",[Sleep]),
+			
 			%% 退出清理
 			cleanUp(BlueSide, RedSide);
 	
@@ -114,6 +116,7 @@ loop(BlueSide, RedSide, BlueQueue, RedQueue, Sleep) ->
 					end,
 					
 					%% 退出清理
+					io:format("The battle run at ~pms per round speed~n",[Sleep]),
 					cleanUp(BlueSide,RedSide);
 					
 				
@@ -487,13 +490,16 @@ cleanUp(BlueSide, RedSide) ->
 %% 返回毫秒
 testSpeed() ->
 	
-	Times = 1000000,  % 可以调整这个倍数去控制速度
+	Seed = 10, %可以调整这个倍数去控制速度
+	
+	Times = 10000000,  %  这个运算在w500的机器上大概是2秒。之所以要运算这么多遍，再除seed ,主要要确保每次输出的稳定性。 
+	
 	
 	Begin = tools:getLongDate(),
 	testSpeed(Times),
 	End = tools:getLongDate(),
 	
-	Speed = (End - Begin) / 1000,
+	Speed = (End - Begin) / 1000 / Seed,
 
 	if 
 		Speed < 1 ->
