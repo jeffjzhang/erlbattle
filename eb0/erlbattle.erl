@@ -2,12 +2,14 @@
 -export([start/0,takeAction/1,getTime/0,calcDestination/3,testSpeed/0]).
 -include("schema.hrl").
 -include("test.hrl").
--include_lib("stdlib/include/ms_transform.hrl").
 
 %% 战场初始化启动程序
 start() ->
     
 	io:format("Battle Begin ....~n", []),
+	
+	%% 初始化random
+	random:seed(now()),
 	
 	%% 如果要更换对手的话，修改这里
 	BlueArmy = feardFarmers,
@@ -152,7 +154,9 @@ command([Soldier | T], Queue, Time) ->
 		{command, Command} ->
 			
 			%% 更新战士动作
-			NewSoldier = Soldier#soldier{action = Command#command.name, act_effect_time = Time + calcActionTime(Command#command.name)},
+			NewSoldier = Soldier#soldier{action = Command#command.name, 
+				act_effect_time = Time + calcActionTime(Command#command.name),
+				act_sequence = Command#command.execute_seq},
 			ets:insert(battle_field, NewSoldier),
 			
 			%% 记录指令序号
@@ -176,6 +180,7 @@ getNextCommand(Soldier,Queue,Time) ->
 		soldier_id = SoldierId,
 		name = '_',
 		execute_time = '_',
+		execute_seq = '_',
 		seq_id = '_'},
 
 	Command = ets:match_object(Queue, Pattern),
@@ -210,37 +215,34 @@ takeAction(Time) ->
 	%% 首先从战场状态表中取出本节拍生效的动作，取其中一个开始处理
 	case getActingSoldier(Time) of
 	
-		[SoldierInfo] ->
-			
+		none ->  none;
+		Soldier -> 
 			%% 处理Worria 的动作，更新世界表，如果有人被杀，就将该人从世界中移走
-			act(SoldierInfo,Time),
+			act(Soldier,Time),
 			
 			%% 再读下一个需要执行的战士			
-			takeAction(Time);
-		_ ->
-			none
+			takeAction(Time)
 	end.
 			
 	
 	
 %% 执行一个战士的动作
-act(SoldierInfo,Time) ->
+act(Soldier,Time) ->
 
     %% forward, 后退 back, 
 	%% 转向 turnSouth, turnNorth, turnWest,turnEast
 	%% 攻击 attack
 	%% 原地待命 wait 
 	
-	{_Id, _Position, _Facing, Action,_Hp} = SoldierInfo,
-	
+	Action = Soldier#soldier.action,
 	if 		
-		Action == "forward"  -> actMove(SoldierInfo, 1,Time);
-		Action == "back" -> actMove(SoldierInfo, -1,Time);
-		Action == "turnSouth" ->actTurn(SoldierInfo,"south",Time);
-		Action == "turnWest" ->actTurn(SoldierInfo,"west",Time);
-		Action == "turnEast" ->actTurn(SoldierInfo,"east",Time);
-		Action == "turnNorth" ->actTurn(SoldierInfo,"north",Time);
-		Action == "attack" -> actAttack(SoldierInfo,Time);
+		Action == "forward"  -> actMove(Soldier, 1,Time);
+		Action == "back" -> actMove(Soldier, -1,Time);
+		Action == "turnSouth" ->actTurn(Soldier,"south",Time);
+		Action == "turnWest" ->actTurn(Soldier,"west",Time);
+		Action == "turnEast" ->actTurn(Soldier,"east",Time);
+		Action == "turnNorth" ->actTurn(Soldier,"north",Time);
+		Action == "attack" -> actAttack(Soldier,Time);
 		true -> none
 	end.
 	
@@ -248,46 +250,81 @@ act(SoldierInfo,Time) ->
 %% 获得一个当前节拍需要执行任务的战士信息
 getActingSoldier(Time) ->
 
-	%% TODO: 根据sequence 取，以及随机挑选红方，蓝方谁先动
-	%% 取出非wait 状态，且动作生效时间 小于等于当前时间的 一个战士
-	MS = ets:fun2ms(fun({Soldier, Id, Position,Hp,Facing,Action,Act_effect_time,Act_sequence}) 
-			when (Action /= "wait" andalso Act_effect_time =< Time)  ->  
-							{Id,Position,Facing,Action,Hp} end),
+	Army = ets:tab2list(battle_field),
 	
-	try ets:select(battle_field,MS,1) of
-		{SoldierInfo, _Other} ->
-			SoldierInfo;
-		_->
-			none
-	catch
-		_:_ -> none
+	%% 红方和蓝方各自选一个执行sequence 最高的战士
+	BlueSoldier = getActingSoldier(Army,"blue",Time),
+	RedSoldier = getActingSoldier(Army,"red",Time),
+	
+	%% 随机决定双方选出来的战士谁先执行
+	if
+		BlueSoldier == none andalso RedSoldier == none -> none;
+		BlueSoldier == none andalso RedSoldier /= none -> RedSoldier;
+		BlueSoldier /= none andalso RedSoldier == none -> BlueSoldier;
+		true -> %随机取红方或者蓝方
+			case random:uniform(2) of 
+				1 -> BlueSoldier;
+				_ -> RedSoldier
+			end
+	end.
+		
+
+%% 过滤出指定颜色的并且有马上需要执行动作的队伍
+getActingSoldier(Army, Side, Time) ->
+
+	%% 过滤出本队伍所有需要当前执行动作的战士,并按照act_sequence 排序
+	MyArmy = lists:keysort(8, lists:filter(
+		fun(Soldier) ->
+			{_Id, MySide} = Soldier#soldier.id,
+			if
+				%% 过滤wait 状态的， 生效时间大于当前的，非本方的战士
+				Soldier#soldier.act_effect_time =< Time andalso 
+					MySide == Side andalso Soldier#soldier.action /= "wait" -> true ;
+				true -> false
+			end
+		end,
+		Army)),
+		
+	%% 从队伍act_sequence 最小的战士中，随机取出一个
+	case length(MyArmy) > 0 of
+		
+		false -> none;
+		true ->
+			Soldier = lists:nth(1,MyArmy),
+			MinSeq = Soldier#soldier.act_sequence,
+			
+			MinSeqArmy = lists:filter(
+				fun(S) ->
+					S#soldier.act_sequence == MinSeq
+				end,
+				MyArmy),
+								
+			lists:nth(random:uniform(length(MinSeqArmy)), MinSeqArmy)
 	end.
 
+
 %%转向动作, 不受别人影响
-actTurn(SoldierInfo, Direction, Time) ->
-	{Id, Position, Facing, _Action,Hp} = SoldierInfo,
-	ets:update_element(battle_field, Id, [{6, "wait"},{5, Direction}]),
-	record({action, Time, Id, addTurn(Direction), Position, Facing, Hp}).
+actTurn(Soldier, Direction, Time) ->
+	
+	ets:update_element(battle_field, Soldier#soldier.id, [{6, "wait"},{5, Direction}]),
+	record({action, Time, Soldier#soldier.id, addTurn(Direction), Soldier#soldier.position, Soldier#soldier.facing, Soldier#soldier.hp}).
 	
 
 %% 移动动作，需要看目标格中是否有对手
 %% Direction : 1 向前走， -1 向后走	
-actMove(SoldierInfo, Direction, Time) ->
+actMove(Soldier, Direction, Time) ->
 	
-	{Id, Position, Facing, _Action, Hp} = SoldierInfo,
-	
-	DestPosition = calcDestination(Position, Facing, Direction),
+	DestPosition = calcDestination(Soldier#soldier.position, Soldier#soldier.facing, Direction),
 	
 	%% 如果目标位置是合法的，就移动，否则就放弃该动作,原地不动
-	Valid = positionValid(DestPosition),
+	case positionValid(DestPosition) of
 		
-	if 		
-		Valid == true ->  
-			ets:update_element(battle_field, Id, [{6, "wait"},{3, DestPosition}]),
+		true ->  
+			ets:update_element(battle_field, Soldier#soldier.id, [{6, "wait"},{3, DestPosition}]),
 			%% 输出行走动作
-			record({action, Time, Id, "move", DestPosition, Facing, Hp});			
-		true ->
-			ets:update_element(battle_field, Id, [{6, "wait"}])
+			record({action, Time, Soldier#soldier.id, "move", DestPosition, Soldier#soldier.facing, Soldier#soldier.hp});			
+		_ ->
+			ets:update_element(battle_field, Soldier#soldier.id, [{6, "wait"}])
 	end.
 	
 
@@ -315,9 +352,13 @@ positionValid(Position)	->
 		(battlefield:get_soldier_by_position(Position) ==none).
 	
 %% 攻击对手
-actAttack(SoldierInfo,Time) ->
+actAttack(Soldier,Time) ->
 	
-	{ID, Position, Facing, _Action,Hp} = SoldierInfo,
+	ID = Soldier#soldier.id,
+	Position = Soldier#soldier.position,
+	Facing = Soldier#soldier.facing,
+	Hp = Soldier#soldier.hp,
+	
 	{_MyId, MySide} = ID,
 	
 	DestPosition = calcDestination(Position, Facing, 1),
@@ -335,7 +376,7 @@ actAttack(SoldierInfo,Time) ->
 					%% 输出该战士攻击动作
 					record({action, Time, ID, "attack", Position, Facing, Hp}),
 
-					case calcHit(SoldierInfo, Enemy) of
+					case calcHit(Soldier, Enemy) of
 						%% 如果hit 返回 0 ，表示该敌人被杀死
 						Hit when Hit == 0 ->
 							ets:match_delete(battle_field, Enemy),
@@ -360,10 +401,13 @@ actAttack(SoldierInfo,Time) ->
 	
 	
 %% 计算攻击损伤
-calcHit(SoldierInfo, EnemyInfo) ->
+calcHit(Soldier, Enemy) ->
 	
-	{_Key, _EId, EPosition, EHp, EFacing, _EAction, _EEffTime, _ESeq} = EnemyInfo,	
-	{_Id, Position, _Facing, _Action, _Hp} = SoldierInfo,
+	EPosition = Enemy#soldier.position,
+	EHp = Enemy#soldier.hp,
+	EFacing = Enemy#soldier.facing,
+	
+	Position = Soldier#soldier.position,
 	
 	%% 计算敌人面对的那格，和背后的那格，其他的都是侧面
 	FacePosition = calcDestination(EPosition,EFacing,1),
@@ -399,9 +443,7 @@ getTime() ->
 calcWinner() ->
 	
 	RedArmy = battlefield:get_soldier_by_side("red"),
-	io:format("red = ~p~n", [RedArmy]),
 	BlueArmy = battlefield:get_soldier_by_side("blue"),
-	io:format("blue = ~p~n", [BlueArmy]),
 	
 	RedCount = length(RedArmy),
 	BlueCount = length(BlueArmy),

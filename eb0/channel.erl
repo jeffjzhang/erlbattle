@@ -24,12 +24,13 @@ loop(BattleField, Commander, Queue,CommandId) ->
 	
 	receive
 		
-		{command,Command,Soldier,Time} ->
+		{command,Command,Soldier,Time,Seq} ->
 			%% 生成一个command 记录
 			CmdRec = #command{
 					soldier_id = Soldier,
 					name = Command,
 					execute_time = Time,
+					execute_seq = Seq,
 					seq_id = CommandId},
 			ets:insert(Queue, CmdRec),
 			loop(BattleField, Commander, Queue,CommandId +1);
