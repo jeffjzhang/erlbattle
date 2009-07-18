@@ -1,5 +1,0 @@
-#!/bin/sh
-cd make
-rm target.mk
-ln -s target.mk.linux target.mk 
-cd ..
