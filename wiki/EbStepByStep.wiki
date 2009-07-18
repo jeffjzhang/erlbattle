@@ -63,6 +63,18 @@ Eshell V5.5.5  (abort with ^G)
 {{{
 cean:install(compiler).
 }}}
+当然可以先查看安装了什么软件:
+{{{
+ cean:installed().
+["appmon","asn1","cean","common_test","compiler","cosEvent",
+ "cosEventDomain","cosFileTransfer","cosNotification",
+ "cosProperty","cosTime","cosTransactions","crypto",
+ "debugger","dialyzer","docbuilder","edoc","et","gs","hipe",
+ "ibrowse","ic","inets","inviso","jinterface","kernel",
+ "megaco","mnesia",
+ [...]|...]
+}}}
+
 
 下载: http://cean.process-one.net/downloads
 
