@@ -1,20 +1,24 @@
 -module(erlbattle).
--export([start/0,takeAction/1,getTime/0,calcDestination/3,testSpeed/0]).
+-export([start/0,start/2,start/3,takeAction/1,getTime/0,calcDestination/3,testSpeed/0]).
 -include("schema.hrl").
 -include("test.hrl").
 
-%% 战场初始化启动程序
+%% 默认战场入口程序
 start() ->
+	start(feardFarmers,englandArmy, none).
+
+%% 指定队伍，测速入口程序
+start(BlueArmy, RedArmy) ->
+	start(BlueArmy, RedArmy, none).
+	
+%% 参数化战场入口程序
+start(BlueArmy, RedArmy, Sleep) ->
     
 	io:format("Battle Begin ....~n", []),
 	
 	%% 初始化random
 	random:seed(now()),
 	
-	%% 如果要更换对手的话，修改这里
-	BlueArmy = feardFarmers,
-	RedArmy = englandArmy,
-
 	%% 创建一个战场时钟表，并置为零
 	ets:new(battle_timer, [set, protected, named_table]),
 	ets:insert(battle_timer, {clock, 0}),
@@ -28,40 +32,45 @@ start() ->
 	RedSide = spawn_link(channel, start, [self(), "red", RedArmy]),
 
 	%% 开始等待两个channel 将queue 的句柄传回来， 要两个都收到，才能开始战斗
-	waitQueue(BlueSide, RedSide, none, none, 0).
+	waitQueue(BlueSide, RedSide, none, none, Sleep, 0).
 
 %%等待两个channel 将queue 的句柄返回回来
-waitQueue(BlueSide, RedSide, BlueQueue, RedQueue, QueueCounter) ->
+waitQueue(BlueSide, RedSide, BlueQueue, RedQueue, Sleep, QueueCounter) ->
 
 	receive
 		
 		%%两方都收到后， 才进入正式战斗
 		{queue, RedSide, Queue} ->
 			if
-				QueueCounter == 1 -> beginWar(BlueSide, RedSide, BlueQueue, Queue);
-				true -> waitQueue(BlueSide,RedSide,BlueQueue, Queue,1)
+				QueueCounter == 1 -> beginWar(BlueSide, RedSide, BlueQueue, Queue, Sleep);
+				true -> waitQueue(BlueSide,RedSide,BlueQueue, Queue, Sleep, 1)
 			end;
 		{queue, BlueSide, Queue} ->
 			if
-				QueueCounter == 1 -> beginWar(BlueSide, RedSide, Queue, RedQueue);
-				true -> waitQueue(BlueSide,RedSide,Queue, RedQueue,1)
+				QueueCounter == 1 -> beginWar(BlueSide, RedSide, Queue, RedQueue, Sleep);
+				true -> waitQueue(BlueSide,RedSide,Queue, RedQueue,Sleep, 1)
 			end;			
 		_ ->  %其他消息扔掉,接着等
-			waitQueue(BlueSide,RedSide,BlueQueue, RedQueue,QueueCounter)
+			waitQueue(BlueSide,RedSide,BlueQueue, RedQueue,Sleep, QueueCounter)
 	end.
 
 %% 启动战场前准备工作
-beginWar(BlueSide, RedSide, BlueQueue, RedQueue) ->
+beginWar(BlueSide, RedSide, BlueQueue, RedQueue, Sleep) ->
 
 	%% 启动战场情况记录器,并注册
 	Recorder = spawn_link(battleRecorder,start, [self()]),
 	register(recorder, Recorder),
 
 	%% 让每台机器都能够以相同的结果运行的作用
-	Sleep = testSpeed(),
+	if 
+		Sleep == none ->
+			Sleep2 = testSpeed();
+		true ->
+			Sleep2 = Sleep
+	end,
 			
 	%% 开始战斗
-	loop(BlueSide, RedSide,BlueQueue, RedQueue, Sleep).
+	loop(BlueSide, RedSide,BlueQueue, RedQueue, Sleep2).
 
 %% 战场逻辑主程序
 loop(BlueSide, RedSide, BlueQueue, RedQueue, Sleep) ->
