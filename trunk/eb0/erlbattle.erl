@@ -13,9 +13,6 @@ start() ->
 	BlueArmy = feardFarmers,
 	RedArmy = englandArmy,
 
-	%%  TODO: 这段主要是后面用于让每台机器都能够以相同的结果运行的作用
-	Sleep = 300,
-	
 	%% 创建一个战场时钟表，并置为零
 	ets:new(battle_timer, [set, protected, named_table]),
 	ets:insert(battle_timer, {clock, 0}),
@@ -24,23 +21,46 @@ start() ->
 	io:format("Army matching into the battle fileds....~n", []),
 	battlefield:create(),
 
-	%% 创建通讯队列
-	BlueQueue = ets:new(blueQueue, [{keypos, #command.soldier_id}]),	
-	RedQueue = ets:new(blueQueue, [{keypos, #command.soldier_id}]),	
-	
 	%% 启动红方和蓝方的通讯通道
 	BlueSide = spawn_link(channel, start, [self(), "blue",BlueArmy]),
 	RedSide = spawn_link(channel, start, [self(), "red", RedArmy]),
 
+	%% 开始等待两个channel 将queue 的句柄传回来， 要两个都收到，才能开始战斗
+	waitQueue(BlueSide, RedSide, none, none, 0).
+
+%%等待两个channel 将queue 的句柄返回回来
+waitQueue(BlueSide, RedSide, BlueQueue, RedQueue, QueueCounter) ->
+
+	receive
+		
+		%%两方都收到后， 才进入正式战斗
+		{queue, RedSide, Queue} ->
+			if
+				QueueCounter == 1 -> beginWar(BlueSide, RedSide, BlueQueue, Queue);
+				true -> waitQueue(BlueSide,RedSide,BlueQueue, Queue,1)
+			end;
+		{queue, BlueSide, Queue} ->
+			if
+				QueueCounter == 1 -> beginWar(BlueSide, RedSide, Queue, RedQueue);
+				true -> waitQueue(BlueSide,RedSide,Queue, RedQueue,1)
+			end;			
+		_ ->  %其他消息扔掉,接着等
+			waitQueue(BlueSide,RedSide,BlueQueue, RedQueue,QueueCounter)
+	end.
+
+%% 启动战场前准备工作
+beginWar(BlueSide, RedSide, BlueQueue, RedQueue) ->
+
+	%% 等决策启动完毕，并作出某种行为
+	tools:sleep(200),
+
 	%% 启动战场情况记录器,并注册
 	Recorder = spawn_link(battleRecorder,start, [self()]),
 	register(recorder, Recorder),
-	
-	%% 将通讯队列的管理权交给通讯通道
-	ets:give_away(BlueQueue, BlueSide, none),
-	ets:give_away(RedQueue, RedSide,none),
-	tools:sleep(1000),
-	
+
+	%%  TODO: 这段主要是后面用于让每台机器都能够以相同的结果运行的作用
+	Sleep = 300,
+			
 	%% 开始战斗
 	loop(BlueSide, RedSide,BlueQueue, RedQueue, Sleep).
 
