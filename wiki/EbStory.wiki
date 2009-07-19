@@ -1,5 +1,4 @@
 #summary EA 游戏的背景设计
-#labels Featured,Phase-Design
 
 <wiki:toc/>
 
@@ -24,5 +23,3 @@ so we fighting in erlbattle
 = 故事 =
 
 == 冰与火的传说 ==
-
-
