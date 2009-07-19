@@ -1,7 +1,8 @@
 #summary 《恶狼战役游戏规则 V1.0正式版》
 #labels Featured,ECUG,Project,Game
 
-<wiki:toc:/>
+<wiki:toc/>
+
 = EB:游戏规则的制定和修改原则 =
 ----
  # 这个世界是由一个非常简单的规则构成的，规则越简单，组合越丰富
