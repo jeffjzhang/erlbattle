@@ -1,5 +1,4 @@
 #summary EB 各种团队角色的约定和职责
-#labels Phase-QA,Featured,member
 
 <wiki:toc/>
 
