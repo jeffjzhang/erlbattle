@@ -1,5 +1,4 @@
 #summary EA 的宗旨分析,口号设计
-#labels Featured,Phase-Design
 
 
 <wiki:toc/>
