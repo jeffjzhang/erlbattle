@@ -59,7 +59,7 @@ $sudo apt-get install erlang
 
 或是在`新立得`中搜索 erlang 并安装
 
-http://ecug.googlegroups.com/web/2009-07-18-154413_544x245_scrot.png
+http://erlbattle.googlecode.com/files/2009-07-18-154413_544x245_scrot.png
 
  * 输入命令 erl 就进入了 Erlang shell
 {{{
