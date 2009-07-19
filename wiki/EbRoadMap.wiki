@@ -1,5 +1,4 @@
 #summary EB 各个版本的别称
-#labels Featured,Phase-Design
 <wiki:toc/>
 
  SEE::
