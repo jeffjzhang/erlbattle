@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns/graphml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:y="http://www.yworks.com/xml/graphml" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns/graphml http://www.yworks.com/xml/schema/graphml/1.0/ygraphml.xsd">
+  <key for="node" id="d0" yfiles.type="nodegraphics"/>
+  <key attr.name="description" attr.type="string" for="node" id="d1"/>
+  <key for="edge" id="d2" yfiles.type="edgegraphics"/>
+  <key attr.name="description" attr.type="string" for="edge" id="d3"/>
+  <key for="graphml" id="d4" yfiles.type="resources"/>
+  <graph edgedefault="directed" id="G" parse.edges="0" parse.nodes="17" parse.order="free">
+    <node id="n0">
+      <data key="d0">
+        <y:ImageNode>
+          <y:Geometry height="50.0" width="50.0" x="-325.0" y="215.0"/>
+          <y:Fill color="#CCCCFF" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="4.0" modelName="sandwich" modelPosition="s" textColor="#000000" visible="true" width="4.0" x="23.0" y="54.0"/>
+          <y:Image refid="1"/>
+        </y:ImageNode>
+      </data>
+      <data key="d1"/>
+    </node>
+    <node id="n1">
+      <data key="d0">
+        <y:ImageNode>
+          <y:Geometry height="50.0" width="50.0" x="-265.0" y="275.0"/>
+          <y:Fill color="#CCCCFF" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="4.0" modelName="sandwich" modelPosition="s" textColor="#000000" visible="true" width="4.0" x="23.0" y="54.0"/>
+          <y:Image refid="2"/>
+        </y:ImageNode>
+      </data>
+      <data key="d1"/>
+    </node>
+    <node id="n2">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="22.0" width="628.0" x="-374.0" y="169.0"/>
+          <y:Fill color="#CCFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="65.998046875" x="281.0009765625" y="1.6494140625">T  时间状态</y:NodeLabel>
+          <y:Shape type="roundrectangle"/>
+        </y:ShapeNode>
+      </data>
+      <data key="d1"/>
+    </node>
+    <node id="n3">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="77.0" width="619.0" x="-369.5" y="321.5"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="62.8046875" modelName="internal" modelPosition="tl" textColor="#000000" visible="true" width="283.703125" x="4.0" y="4.0">1.红方处于状态为 forward,  在T+2 会到达前面的位置
+2.蓝方处于wait 状态
+3.蓝方发现战机，发出turnNorth 指令
+4 该指令会在T+1被服务器采纳，T+2生效</y:NodeLabel>
+          <y:Shape type="roundrectangle"/>
+        </y:ShapeNode>
+      </data>
+      <data key="d1"/>
+    </node>
+    <node id="n4">
+      <data key="d0">
+        <y:ImageNode>
+          <y:Geometry height="50.0" width="50.0" x="395.0" y="215.0"/>
+          <y:Fill color="#CCCCFF" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="4.0" modelName="sandwich" modelPosition="s" textColor="#000000" visible="true" width="4.0" x="23.0" y="54.0"/>
+          <y:Image refid="1"/>
+        </y:ImageNode>
+      </data>
+      <data key="d1"/>
+    </node>
+    <node id="n5">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="22.0" width="628.0" x="286.0" y="169.0"/>
+          <y:Fill color="#CCFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="79.6796875" x="274.16015625" y="1.6494140625">T+2  时间状态</y:NodeLabel>
+          <y:Shape type="roundrectangle"/>
+        </y:ShapeNode>
+      </data>
+      <data key="d1"/>
+    </node>
+    <node id="n6">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="77.0" width="619.0" x="290.5" y="321.5"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="62.8046875" modelName="internal" modelPosition="tl" textColor="#000000" visible="true" width="338.353515625" x="4.0" y="4.0">1.红方在T+1 的时候发现蓝方会侧面攻击，立刻也发出转向指令
+2. 该指令会在T+2被服务器收到， T+3 执行
+3. 蓝方T+1 的时候发出攻击指令
+4. 该指令会在T+2 被服务器收到， T+4 执行</y:NodeLabel>
+          <y:Shape type="roundrectangle"/>
+        </y:ShapeNode>
+      </data>
+      <data key="d1"/>
+    </node>
+    <node id="n7">
+      <data key="d0">
+        <y:ImageNode>
+          <y:Geometry height="50.0" width="50.0" x="395.0" y="275.0"/>
+          <y:Fill color="#CCCCFF" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="4.0" modelName="sandwich" modelPosition="s" textColor="#000000" visible="true" width="4.0" x="23.0" y="54.0"/>
+          <y:Image refid="3"/>
+        </y:ImageNode>
+      </data>
+      <data key="d1"/>
+    </node>
+    <node id="n8">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="22.0" width="628.0" x="-374.0" y="469.0"/>
+          <y:Fill color="#CCFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="79.6796875" x="274.16015625" y="1.6494140625">T+3  时间状态</y:NodeLabel>
+          <y:Shape type="roundrectangle"/>
+        </y:ShapeNode>
+      </data>
+      <data key="d1"/>
+    </node>
+    <node id="n9">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="77.0" width="619.0" x="-369.5" y="621.5"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="33.40234375" modelName="internal" modelPosition="tl" textColor="#000000" visible="true" width="203.365234375" x="4.0" y="4.0">1.红方转过身来，立刻发出攻击指令
+2. 该指令会在T+3被接受，T+5被执行</y:NodeLabel>
+          <y:Shape type="roundrectangle"/>
+        </y:ShapeNode>
+      </data>
+      <data key="d1"/>
+    </node>
+    <node id="n10">
+      <data key="d0">
+        <y:ImageNode>
+          <y:Geometry height="50.0" width="50.0" x="-265.0" y="575.0"/>
+          <y:Fill color="#CCCCFF" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="4.0" modelName="sandwich" modelPosition="s" textColor="#000000" visible="true" width="4.0" x="23.0" y="54.0"/>
+          <y:Image refid="3"/>
+        </y:ImageNode>
+      </data>
+      <data key="d1"/>
+    </node>
+    <node id="n11">
+      <data key="d0">
+        <y:ImageNode>
+          <y:Geometry height="50.0" width="50.0" x="-265.0" y="515.0"/>
+          <y:Fill color="#CCCCFF" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="4.0" modelName="sandwich" modelPosition="s" textColor="#000000" visible="true" width="4.0" x="23.0" y="54.0"/>
+          <y:Image refid="4"/>
+        </y:ImageNode>
+      </data>
+      <data key="d1"/>
+    </node>
+    <node id="n12">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="22.0" width="628.0" x="286.0" y="469.0"/>
+          <y:Fill color="#CCFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="79.6796875" x="274.16015625" y="1.6494140625">T+4  时间状态</y:NodeLabel>
+          <y:Shape type="roundrectangle"/>
+        </y:ShapeNode>
+      </data>
+      <data key="d1"/>
+    </node>
+    <node id="n13">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="77.0" width="619.0" x="290.5" y="621.5"/>
+          <y:Fill color="#FFFFFF" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="62.8046875" modelName="internal" modelPosition="tl" textColor="#000000" visible="true" width="320.67578125" x="4.0" y="4.0">1.蓝方攻击红方，砍掉10点
+2. 然后立刻再发起攻击
+3. 该攻击会在T+4被接收，T+6执行
+4. 蓝方总是领先于红方一轮砍，在血量相等的情况下， 占优</y:NodeLabel>
+          <y:Shape type="roundrectangle"/>
+        </y:ShapeNode>
+      </data>
+      <data key="d1"/>
+    </node>
+    <node id="n14">
+      <data key="d0">
+        <y:ImageNode>
+          <y:Geometry height="50.0" width="50.0" x="395.0" y="575.0"/>
+          <y:Fill color="#CCCCFF" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="4.0" modelName="sandwich" modelPosition="s" textColor="#000000" visible="true" width="4.0" x="23.0" y="54.0"/>
+          <y:Image refid="3"/>
+        </y:ImageNode>
+      </data>
+      <data key="d1"/>
+    </node>
+    <node id="n15">
+      <data key="d0">
+        <y:ImageNode>
+          <y:Geometry height="50.0" width="50.0" x="395.0" y="515.0"/>
+          <y:Fill color="#CCCCFF" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="4.0" modelName="sandwich" modelPosition="s" textColor="#000000" visible="true" width="4.0" x="23.0" y="54.0"/>
+          <y:Image refid="4"/>
+        </y:ImageNode>
+      </data>
+      <data key="d1"/>
+    </node>
+    <node id="n16">
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry height="18.75" width="52.5" x="425.0" y="538.125"/>
+          <y:Fill color="#FF0000" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="21.34375" x="15.578125" y="0.0244140625">-10</y:NodeLabel>
+          <y:Shape type="ellipse"/>
+        </y:ShapeNode>
+      </data>
+      <data key="d1"/>
+    </node>
+  </graph>
+  <data key="d4">
+    <y:Resources>
+      <y:Resource id="1" type="java.awt.image.BufferedImage">iVBORw0KGgoAAAANSUhEUgAAAE0AAABPCAYAAACuwUi7AAAFxUlEQVR42u2c608UVxiHkYuiglVL&#13;
+EXuhi1spXiotkZs2Aq26C9uksfYiWPuhFvACtv4F1TYmTdsQv7RJUz9VqwgIShXkfr9fB29YFf0T&#13;
+mrbJ+XQyfc/2nXF2mRkWmdndWc5JnizwiXnmPWf2956zGxbGBx988MGH2WPJdZdrDXtF+NCThYS3&#13;
+u/InqhyOtexnLk9fGBMUAUS2u5xim8s5+Utubhz+LZyLU68wJicKiGbSGK0FTuFMZuY6JpKLU68y&#13;
+Jmw5ECtJ8xIXxcV5SmNVtowJA+IkYf2fHXS/thQ4p06lpydwcU9HOE4/VmWrgRclaWR8nIubQ9oK&#13;
+4HngVUma+OSJSMbGuDgNaUzCSuAFwC5Le/zYDRkd5eI0pMUAbMHfKEubmZEhIyNcnI6012Vpjx55&#13;
+QIaHuTgVaQke0h4+nAUZGuLiVKSlyNIePFDFLe5Q0aIWpy3tz/uakMGBRS1OW9r9aV3IQH/QiVvi&#13;
+RbhJRCrSwHpgkyxtenpOSH9wiJMltbocp5tdjm/MpKlg77cN+XvO1Dt2f1e9O6/ifN6un2Rp9+75&#13;
+BOnrC6g4j46DMjgHAvHuXZ8hvb0BEycJW8pijfTPz5ytCAjinTvzgvT0+F2cskXDcuBq+Y7fvm0Z&#13;
+SHe3X8UpWzSr2JNMlnbrlqVwi/u00C/ilC0a1p9PlKVNTVkO0tXlF3GStNndBmHSkpDODtPFKVs0&#13;
+LDgny9ImJywL6Wg3VZx2cJ4YtzSkvc00cdpxZnzM8pC2VlPEaUsbGw0JSGuL4eK0pY2OhAykhYk7&#13;
+YJg4bWkjwyEFaWkW+w8aI05b2vBQyEGamwwRpy1taDAkIU03FyxOW9rgQMhCbjZ6iJvv2RFtaf19&#13;
+IQvt7hKFE2Xu62wrcP51Li9vJ+bviIVJ6+sNSWhXJwg7Lh20+ftUWpoTc/cKRbU9o7TenpCDQi4V&#13;
+yv8X1pLv+Kc0JaWQ5W0gHh0s9WWKakvr6Q4pKORRSVhzvuPfIru9BK53O9vdx9wdu3BpMO9DBQo5&#13;
+VCg/Jgvbb7OdgGvNAd4yttJg7ocCFPKnUPZU2Ac221dwnXuALGAz8Ipxa1pnp+WhrZ7C9tlsJ+Ea&#13;
+9wLsabkNSMIqizXm6dnRYWko5E0VYQ4UlgpswLWMtfmjjXmfBuuAVaEQl4Syo3rC7Hi9z2Gr36BE&#13;
+AGuBFaEQk4Tj5gnTlwblbTVoY6PpwvSlQYlbCdpwA4QdMV2YvjQoc6tAb1wXhWP+EaYrbeb01wFB&#13;
+bGyYF/SPehBW6jdhurtRATsAA9PMV2j9NVE46l9hqvue53J2/vrz29m/nd2RWVmRnVH9Y1b6lR+y&#13;
+0mvN5PvM7XWyNJhqvkCvXQ2IMNUddiANyAVcwD5gP/CRCXwMfAIcAIpkaTDd5oLW1YKwkoAIUz3L&#13;
+AWwBMlEcixys35RvMAV4U94D3mc3RpYGU04PWntFFI4ETpjqqSGMF1uw4jIw2GYbzA68yF3Au0yi&#13;
+LO1qnSa0pgaEFQdUmOr5NFzbEvEfSGYPB/ZUNZhNeGNS8cbkyNJg6qlBa6pFoTTwwlRPQmLFrcU1&#13;
+Lh4lJhgMO5z8EnYZWHsmQ5YG088bWl0VVMJmnbnFqbocBa7EtyNGswqrOh7FpcrSoKKU0MuVIOyL&#13;
+oBI263Q3yotEokximWI5eJlNVVkaVJUErbwkCiXBKSy4PkdQddkNvXTREsKC4xMrUF309wuiUHyY&#13;
+C/NVGr1wngubrzSh+HPvTRAuzJdGAW6zfanYBFn0wryleXyymAn7MCmpHLfZuDAdaRulowKFdnsp&#13;
+/P4ORq1tXJh6S4oljw3sMMrh5ORDWF0sWr2BOZgL8+quSN/LkXhy61bWhnoT2YxJYR0X5vkmWvkN&#13;
+MOtREjuM8ho2DOK5MO2WVAxWWwKGePYap9j55sJUWlLRGKdYxa3B6ooJm+dRgcVWbd6dlWhsU3Fh&#13;
+OtUW4dVRiQzj39Tnc0tKCf9OyGdoSfHBBx988GHS+A94ylirRYg7EgAAAABJRU5ErkJggg==</y:Resource>
+      <y:Resource id="2" type="java.awt.image.BufferedImage">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</y:Resource>
+      <y:Resource id="3" type="java.awt.image.BufferedImage">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</y:Resource>
+      <y:Resource id="4" type="java.awt.image.BufferedImage">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</y:Resource>
+    </y:Resources>
+  </data>
+</graphml>
