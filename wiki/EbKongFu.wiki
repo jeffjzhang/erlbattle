@@ -30,3 +30,12 @@
 
  http://erlbattle.googlecode.com/files/KF1-CYJJ.png
 
+<br>
+== 招式1：侧翼截击 ==
+ http://erlbattle.googlecode.com/files/KF2-ZMYJ.png
+ 上图中列出了两种情况， T时刻，蓝方原地wait 状态，发现红方在T+2,或者T+1 将到达自己面前。 此时蓝方果断出刀。这一刀会在T+1被系统接收， T+3 生效。 
+
+ 如果红方T+2 到，上方那个图，蓝方会永远多砍一刀
+ 
+ 如果红方T+1 到，下方那个图，红方及时在T+1时间也砍出一刀，双方对等，蓝方不占便宜。
+
