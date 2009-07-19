@@ -178,6 +178,8 @@ Subversion 是开放源代码软件，请参阅 http://subversion.tigris.org/ �
   - 处理“file”方案
 }}}
 
+
+
 === 下载代码 ===
 {{{
 $ svn checkout http://erlbattle.googlecode.com/svn/trunk/ erlbattle-read-only
@@ -213,6 +215,23 @@ don't kill us , we are poor farmers
 don't kill us , we are poor farmers 
 ...
 }}}
+
+==== Linux 中使用虚拟机 ====
+`经过测试，发觉eb0 当前只能运行在 R13B01 版本中！如果 在Linux 中无法编译成功的话，只能使用虚拟机进行体验`
+
+ * 正常的下载和安装官方 for M$ 的 [http://erlang.org/download/otp_win32_R13B.exe otp_win32_R13B.exe]
+ * 使用默认配置:
+http://erlbattle.googlecode.com/files/2009-07-19-211114_385x299_scrot.png
+
+*注意！*
+ * 默认安装后， cmd 中无法识别 erl/erlc 等等命令
+ * *必须手工在环境变量 path 中追加当前 erlang 的执行程序目录*
+http://erlbattle.googlecode.com/files/2009-07-19-213447_1274x602_scrot.png
+ * 然后就可以按照前述步骤进行配置/测试了...
+http://erlbattle.googlecode.com/files/2009-07-19-214212_659x477_scrot.png
+ * 可惜当前 r369 版本的 eb0 无法运行
+http://erlbattle.googlecode.com/files/2009-07-19-214548_504x486_scrot.png
+
 
 == in M$ ==
 
