@@ -1,5 +1,5 @@
 #summary EB 掺合成员列表
-#labels Phase-QA,member
+#labels Featured,member
 
 = 2009 =
 
@@ -22,3 +22,4 @@
  # Hou Ming Yuan
  # LOGOLS
  # zhang.hao
+ # lzy.dev
