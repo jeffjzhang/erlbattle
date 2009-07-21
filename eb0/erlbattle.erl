@@ -16,7 +16,7 @@ start(BlueArmy, RedArmy, Sleep) ->
     
 	io:format("Battle Begin ....~n", []),
 	
-	%% 初始化random
+	%% 初始化random 
 	{A,B,C} = now(),
 	random:seed(A,B,C),
 	
