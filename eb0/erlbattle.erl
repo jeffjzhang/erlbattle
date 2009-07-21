@@ -18,7 +18,7 @@ start(BlueArmy, RedArmy, Sleep) ->
 	
 	%% 初始化random 
 	{A,B,C} = now(),
-	random:seed(A,B,C),
+	random:seed(A, B, C),
 	
 	%% 创建一个战场时钟表，并置为零
 	ets:new(battle_timer, [set, protected, named_table]),
