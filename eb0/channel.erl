@@ -45,6 +45,7 @@ loop(BattleField, Commander, Queue,CommandId) ->
 						soldier_id = '_',
 						name = '_',
 						execute_time = '_',
+						execute_seq = '_',
 						seq_id = SeqId},
 					ets:match_delete(Queue, Pattern)
 				end,
