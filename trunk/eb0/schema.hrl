@@ -19,12 +19,13 @@
 		%% 转向 turnSouth, turnNorth, turnWest,turnEast
 		%% 攻击 attack
 		%% 原地待命 wait 
+		%% 格式为字符串
 		action,
 		
 		%%动作生效时间
 		act_effect_time,
 		
-		%%行动次序(目前未理解其作用)
+		%%行动次序
 	    act_sequence	
 	}).
 
@@ -34,16 +35,17 @@
 		%% 战士号，不用带side
 		soldier_id, 
 		
-		%% 指令名称
+		%% 指令名称，格式为字符串
 		name,
 		
 		%% 要求执行时间
 		execute_time,
 		
-		%% 任务执行次序
+		%% 行动次序 = 战士的行动次序
 		execute_seq,
 		
 		%% 任务序号，用于识别哪些指令被执行过，以便清除
+    %% 指挥官不用设置此字段，这个是管理程序使用的。
 		seq_id
 		
 		
