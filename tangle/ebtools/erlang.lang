@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE language SYSTEM "language.dtd">
+<language _name="Erlang" version="1.0" _section="Sources" mimetypes="text/x-erlang">
+
+<!--
+Helpful links:
+http://www.erlang.org/doc/doc-5.4.13/doc/reference_manual/part_frame.html
+http://www.regular-expressions.info/reference.html
+-->
+
+	<escape-char>\</escape-char>
+
+	<line-comment _name = "Line Comment" style= "Comment">
+		<start-regex>%</start-regex>
+	</line-comment>
+
+	<pattern-item _name = "Number" style = "Decimal">
+		<regex>\b([0-9]+)\b</regex>
+	</pattern-item>
+	
+	<!-- e.g. 10#312*321, base is from 2 to 36 -->
+	<pattern-item _name = "base#value" style = "Base-N Integer">
+		<regex>\b([2-9]|[1-3][0-9])#([0-9a-zA-Z]*)\b</regex>
+	</pattern-item>
+	
+	<!-- e.g. $1, $#, $=, etc. -->
+	<!-- TODO this does not work for $" or $', use $\" or $\' instead. -->
+	<pattern-item _name = "$char" style = "Base-N Integer">
+		<regex>\B\$(\\.|.)</regex>
+	</pattern-item>
+	
+	<string _name = "Double Quoted String" style = "String" end-at-line-end = "FALSE">
+		<start-regex>&quot;</start-regex>
+		<end-regex>&quot;</end-regex>
+	</string>
+
+	<string _name = "Single Quoted String" style = "String" end-at-line-end = "TRUE">
+		<start-regex>&apos;</start-regex>
+		<end-regex>&apos;</end-regex>
+	</string>
+	
+	<keyword-list _name = "Reserved Words" style = "Keyword" case-sensitive="TRUE">
+		<keyword>after</keyword>
+		<keyword>and</keyword>
+		<keyword>andalso</keyword>
+		<keyword>band</keyword>
+		<keyword>begin</keyword>
+		<keyword>bnot</keyword>
+		<keyword>bor</keyword>
+		<keyword>bsl</keyword>
+		<keyword>bsr</keyword>
+		<keyword>bxor</keyword>
+		<keyword>case</keyword>
+		<keyword>catch</keyword>
+		<keyword>cond</keyword>
+		<keyword>div</keyword>
+		<keyword>end</keyword>
+		<keyword>fun</keyword>
+		<keyword>if</keyword>
+		<keyword>let</keyword>
+		<keyword>not</keyword>
+		<keyword>of</keyword>
+		<keyword>or</keyword>
+		<keyword>orelse</keyword>
+		<keyword>query</keyword>
+		<keyword>receive</keyword>
+		<keyword>rem</keyword>
+		<keyword>try</keyword>
+		<keyword>when</keyword>
+		<keyword>xor</keyword>
+	</keyword-list>
+
+	<syntax-item _name = "Module Attributes" style = "Preprocessor">
+		<start-regex>^-\w+</start-regex>
+	         <end-regex>\B</end-regex>
+	</syntax-item>
+	
+	<pattern-item _name = "Variables" style = "Data Type">
+		<regex>\b[A-Z_][0-9a-zA-Z_@]*(&apos;|#)*</regex>
+	</pattern-item>
+	
+	<pattern-item _name = "Symbols" style = "Keyword">
+	    <regex>-&gt;|==|\/=|=&lt;|&lt;|&gt;=|&gt;|=:=|=/=</regex>
+	</pattern-item>
+	
+	<pattern-item _name = "Functions" style = "Function">
+	    <regex>^\w*\b</regex>
+	</pattern-item>
+
+	<!-- Thes following settings work, but are too much.
+	<pattern-item _name = "Operators" style = "Keyword">
+	    <regex>\+|\-|\*|\/|==|\/=|=&lt;|&lt;|&gt;=|&gt;|=:=|=/=</regex>
+	</pattern-item>
+	
+	<pattern-item _name = "Brackets" style = "Keyword">
+	    <regex>\{|\[|\(|\}|\]|\)</regex>
+	</pattern-item>
+	-->
+</language>
