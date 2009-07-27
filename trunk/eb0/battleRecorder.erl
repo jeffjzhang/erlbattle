@@ -34,9 +34,6 @@ recordBattle() ->
 	ets:delete(battle_record),
 	
 	%% open file
-	%% Modified by Evan, 2009-07-21
-	%% 回放器读取的log文件为warfield.txt，因此直接生成，避免每次改名的麻烦。
-	%%{_Ok, Io} = file:open("erlbattle.warlog",[write]),
 	{_Ok, Io} = file:open("warfield.txt",[write]),		
 	
 	%% 初始化战场

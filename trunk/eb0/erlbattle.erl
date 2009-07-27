@@ -1,5 +1,6 @@
 -module(erlbattle).
--export([start/0,start/2,start/3,takeAction/1,getTime/0,calcDestination/3,testSpeed/0]).
+-export([start/0,start/1,start/2,start/3,takeAction/1,getTime/0,calcDestination/3,testSpeed/0]).
+-export([actionValid/1,soldierValid/1]).
 -include("schema.hrl").
 -include("test.hrl").
 
@@ -7,6 +8,9 @@
 start() ->
 	start(feardFarmers,englandArmy, none).
 
+start(1) ->
+	start(englandArmy,madDog,100).
+	
 %% 指定队伍，测速入口程序
 start(BlueArmy, RedArmy) ->
 	start(BlueArmy, RedArmy, none).
@@ -112,7 +116,7 @@ loop(BlueSide, RedSide, BlueQueue, RedQueue, Sleep) ->
 			%% 判读是否超过了战斗最大轮次
 			if	
 				Time == MaxTurn ->
-
+					
 					%% 计算胜负
 					io:format("Sun goes down, battle finished!~n", []),
 
@@ -124,7 +128,7 @@ loop(BlueSide, RedSide, BlueQueue, RedQueue, Sleep) ->
 						{winner,Winner} ->
 							io:format("~p army win the battle!! ~n", [Winner]),
 							record({result, Winner ++ " army win the battle!!"});
-						_ -> none
+						_ELSE -> none
 					end,
 					
 					%% 退出清理
@@ -163,13 +167,19 @@ command([Soldier | T], Queue, Time) ->
 		%% 找到指令
 		{command, Command} ->
 			
-			%% 更新战士动作
-			NewSoldier = Soldier#soldier{action = Command#command.name, 
-				act_effect_time = Time + calcActionTime(Command#command.name),
-				act_sequence = Command#command.execute_seq},
-			ets:insert(battle_field, NewSoldier),
+			%% 校验command 合法性，如果不合法，则忽略
+			case actionValid(Command#command.name) of
+				
+				true ->
+					%% 更新战士动作
+					NewSoldier = Soldier#soldier{action = Command#command.name, 
+						act_effect_time = Time + calcActionTime(Command#command.name),
+						act_sequence = Command#command.execute_seq},
+					ets:insert(battle_field, NewSoldier);
+				_Else -> none
+			end,
 			
-			%% 记录指令序号
+			%% 记录指令序号; 注意被忽略的仍然记录ID，需要被清除
 			ID = [Command#command.seq_id];
 		
 		%% 没找到指令
@@ -193,8 +203,9 @@ getNextCommand(Soldier,Queue,Time) ->
 		execute_seq = '_',
 		seq_id = '_'},
 
+
 	Command = ets:match_object(Queue, Pattern),
-	
+
 	if
 		length(Command) == 0 -> none;
 		true ->
@@ -287,9 +298,11 @@ getActingSoldier(Army, Side, Time) ->
 		fun(Soldier) ->
 			{_Id, MySide} = Soldier#soldier.id,
 			if
-				%% 过滤wait 状态的， 生效时间大于当前的，非本方的战士
+				%% 过滤wait 状态的，生效时间大于当前的，非本方的战士
 				Soldier#soldier.act_effect_time =< Time andalso 
-					MySide == Side andalso Soldier#soldier.action /= "wait" -> true ;
+					MySide == Side andalso 
+					Soldier#soldier.action /= "wait" -> true andalso
+					actionValid(Soldier#soldier.action);	%指令必须是合法的，否则就过滤掉，不去执行
 				true -> false
 			end
 		end,
@@ -312,6 +325,14 @@ getActingSoldier(Army, Side, Time) ->
 			lists:nth(random:uniform(length(MinSeqArmy)), MinSeqArmy)
 	end.
 
+%% 动作合法性判断	
+actionValid(Action) ->
+	ValidActions = ["attack","forward","back","turnWest","turnEast","turnNorth","turnSouth","wait"],
+	lists:member(Action, ValidActions).
+
+soldierValid(Soldier) ->
+	ValidSoldiers = [1,2,3,4,5,6,7,8,9,10],
+	lists:member(Soldier, ValidSoldiers).
 
 %%转向动作, 不受别人影响
 actTurn(Soldier, Direction, Time) ->
@@ -531,12 +552,10 @@ cleanUp(BlueSide, RedSide) ->
 	exit(RedSide, normal),
 	exit(BlueSide, normal),
 	exit(whereis(recorder), normal),
-	
-	%% 等其他进程都死掉，然后开始清理动作
-	tools:sleep(3000),
+	tools:sleep(1000),
 	ets:delete(battle_field),
 	ets:delete(battle_timer).	
-
+	
 %% 由于每台机器的运算速度不同，会造成不同的算法在不同的机器上表现不同。 
 %% 解决方案是测试某机器运算某个标准行为需要多少时间， 然后以他的倍数来决定主战场sleep 时间	
 %% 返回毫秒

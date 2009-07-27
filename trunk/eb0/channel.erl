@@ -17,22 +17,26 @@ start(BattleField, Side, ArmyName) ->
 	
 	loop(BattleField, Commander, Queue,1).
 	
-
-	
 %% 消息循环，将指令放到队列中
 loop(BattleField, Commander, Queue,CommandId) ->
 	
 	receive
 		
 		{command,Command,Soldier,Time,Seq} ->
-			%% 生成一个command 记录
-			CmdRec = #command{
-					soldier_id = Soldier,
-					name = Command,
-					execute_time = Time,
-					execute_seq = Seq,
-					seq_id = CommandId},
-			ets:insert(Queue, CmdRec),
+			
+			%% 生成一个command 记录; 指令必须合法，否则忽略
+			case erlbattle:actionValid(Command) andalso erlbattle:soldierValid(Soldier) of
+
+				true ->
+					CmdRec = #command{
+							soldier_id = Soldier,
+							name = Command,
+							execute_time = Time,
+							execute_seq = Seq,
+							seq_id = CommandId},
+					ets:insert(Queue, CmdRec);
+				_Else -> none
+			end,					
 			loop(BattleField, Commander, Queue,CommandId +1);
 
 		%% 主程序运行完后，会发出清除已经使用过的命令的消息，需要将其清除，避免重复命令
@@ -54,7 +58,7 @@ loop(BattleField, Commander, Queue,CommandId) ->
 			loop(BattleField, Commander, Queue,CommandId);
 			
 		%% 主程序开始杀我，我就杀玩家进程
-		{'EXIT', _, _} ->
+		{'EXIT', _A, _B} ->
 			exit(Commander, finish), %杀决策进程, 决策进程如果不捕捉，就自动退出
 			tools:sleep(500),
 			ets:delete(Queue) % 清除队列
