@@ -81,7 +81,7 @@ beginWar(BlueSide, RedSide, BlueQueue, RedQueue, Sleep) ->
 loop(BlueSide, RedSide, BlueQueue, RedQueue, Sleep) ->
 
 	%% 战场最多运行的次数 
-	MaxTurn = 55,
+	MaxTurn = 45,
 
 	%%获得当前时钟， 战场从 第一秒 开始
 	Time = ets:update_counter(battle_timer, clock, 1),
