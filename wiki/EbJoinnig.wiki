@@ -3,14 +3,16 @@
 
 = 2009 =
 
-
 `革命不分先后，排名只是历史 ;-)`
  # 老范
  # Fung Max
  # ZoomQuiet
  # Karl　Ma
  # wolfgang amadeus
+ # Hou Ming Yuan
  # 郎咸武 
+ # Evan Tao
+ # LOGOLS
  # 苏勇
  # Suger China
  # Ken Zhao
@@ -19,9 +21,6 @@
  # weiguo_1987
  # Michael Lee
  # 杨寅飞
- # Hou Ming Yuan
- # LOGOLS
  # zhang.hao
  # lzy.dev
- # Evan Tao
  # wu junping
