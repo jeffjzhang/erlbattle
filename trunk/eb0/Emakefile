@@ -9,3 +9,10 @@
         {outdir, "ebin"}
         ]
 }.
+
+{'hwh/*',
+	[
+	{i, "hwh"},
+	{outdir, "hwh"}
+	]
+}.
