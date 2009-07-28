@@ -166,7 +166,7 @@ getNextMoveCommand(Soldier, Destination) ->
 
 %% 从战场中抽取出战士
 getSoldier(Soldiers, Side, SoldierId)->
-	lists:keyfind({SoldierId,Side}, 2, Soldiers).
+	tools:keyfind({SoldierId,Side}, 2, Soldiers).	
 
 %% 从战场上找到和自己最近的一个敌人	
 getNearestEnemy(Side, SoldierId, Soldiers) ->
@@ -241,7 +241,7 @@ checkEnemy(Side, SoldierId, EnemySide, EnemyId,Soldiers) ->
 %% 没找到该人，返回false
 getSoldierFutureStatus(Side, SoldierId, Soldiers) -> 
 
-	case lists:keyfind({SoldierId,Side} , 2, Soldiers) of
+	case tools:keyfind({SoldierId,Side} , 2, Soldiers) of
 	
 		false -> false;
 		
@@ -251,7 +251,7 @@ getSoldierFutureStatus(Side, SoldierId, Soldiers) ->
 			S2 = lists:keydelete(NewSoldier#soldier.id , 2 , NewSoldiers),
 			%% 看看有没有人在同一格的，有就是状态不确定
 			%% 这里没有考虑 act_sequece 抢占问题
-			case lists:keysearch(NewSoldier#soldier.position, 3 ,S2) of
+			case lists:keyfind(NewSoldier#soldier.position, 3 ,S2) of
 				false -> NewSoldier;
 				_ -> uncertain
 			end
