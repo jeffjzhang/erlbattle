@@ -1,0 +1,2 @@
+erl.exe -make
+pause
