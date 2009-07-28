@@ -10,7 +10,7 @@
  * 3. 用svn下载代码到你的机器上。 http://erlbattle.googlecode.com/svn/trunk
  * 4. window 运行 config.bat, linux 运行 config
  * 5. 进入 eb0 目录； windows 用 nmake test   ; linux 用 make test (nmake 下载：http://erlbattle.googlecode.com/files/nmake.exe )
- * 5.5 或者上面的4和5都不做。直接进入eb0目录，执行make.bat(M$)/make.sh(linux)
+ * ^5.5 或者上面的4和5都不做。直接进入eb0目录，执行make.bat(M$)/make.sh(linux)^
  * 6. 在命令行中输入`erl`进入Erlang shell 环境
  * 7. 启动游戏: `erlbattle:start().`
   * 有3种启动模式:
