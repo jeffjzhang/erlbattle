@@ -88,7 +88,7 @@ class replayer:
     def exp_ebf(self):
         """export ebf list as string...
         """
-        exp = ""
+        exp = VERSION+"\n"
         for line in self.ebf:
             exp += "".join(line)
             exp += "\n"

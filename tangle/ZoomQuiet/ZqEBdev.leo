@@ -9,7 +9,7 @@
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="zoomq.20090728225613.1" str_leo_pos="2,0,1,6"><vh>@chapters</vh></v>
+<v t="zoomq.20090728225613.1" str_leo_pos="2,0,1,2"><vh>@chapters</vh></v>
 <v t="zoomq.20090728225824.1"><vh>stuff</vh>
 <v t="zoomq.20090728225824.2"><vh>logging.conf</vh></v>
 <v t="zoomq.20090728225824.3"><vh>dict sort</vh></v>
@@ -2586,7 +2586,7 @@ logging.basicConfig(level=logging.DEBUG,
 <t tx="zoomq.20090728225824.110">def exp_ebf(self):
     """export ebf list as string...
     """
-    exp = ""
+    exp = VERSION+"\n"
     for line in self.ebf:
         exp += "".join(line)
         exp += "\n"
