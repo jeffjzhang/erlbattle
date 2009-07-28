@@ -1,0 +1,8 @@
+%% 放在快捷方式里的起始目录中
+%% 或者当前目录下
+%io:format("consulting .erlang in ~p~n",
+%[element(2, file:get_cwd())]).
+%% Edit to the directory where you store your code
+%c:cd("E:/Downloads/ERLANG/ErlBattle/src/eb0/baiqi" ).
+code:add_path("./ebin").
+io:format("Now in:~p~n", [element(2,file:get_cwd())]).

@@ -1,0 +1,11 @@
+{'*', [
+      debug_info,
+      {outdir, "ebin"}
+      ]
+}.
+
+{'example_army/*',
+        [debug_info,
+        {outdir, "ebin"}
+        ]
+}.
