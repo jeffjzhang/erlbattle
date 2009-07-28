@@ -2,14 +2,14 @@
 <?xml-stylesheet ekr_test?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="0" clone_windows="0"/>
-<globals body_outline_ratio="0.216535433071">
-	<global_window_position top="0" left="8" height="716" width="1270"/>
+<globals body_outline_ratio="0.211023622047">
+	<global_window_position top="0" left="0" height="716" width="1278"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="zoomq.20090728225613.1" str_leo_pos="2,0,1,0"><vh>@chapters</vh></v>
+<v t="zoomq.20090728225613.1" str_leo_pos="2,0,1,6"><vh>@chapters</vh></v>
 <v t="zoomq.20090728225824.1"><vh>stuff</vh>
 <v t="zoomq.20090728225824.2"><vh>logging.conf</vh></v>
 <v t="zoomq.20090728225824.3"><vh>dict sort</vh></v>
@@ -126,13 +126,20 @@
 </v>
 </v>
 <v t="zoomq.20090728225613.2" a="E"><vh>PyEBreplay</vh>
-<v t="zoomq.20090728225824.89" a="E" tnodeList="zoomq.20090728225824.89,zoomq.20090728225824.90,zoomq.20090728225824.91,zoomq.20090728225824.92,zoomq.20090728225824.95,zoomq.20090728225824.106,zoomq.20090728225824.108,zoomq.20090728225824.107"><vh>@nosent eb0replayer.py</vh>
+<v t="zoomq.20090728225824.89" a="E" tnodeList="zoomq.20090728225824.89,zoomq.20090728225824.90,zoomq.20090728225824.91,zoomq.20090728225824.92,zoomq.20090728225824.113,zoomq.20090728225824.112,zoomq.20090728225824.95,zoomq.20090728225824.110,zoomq.20090729011307.1,zoomq.20090728225824.109,zoomq.20090728225824.106,zoomq.20090728225824.108,zoomq.20090728225824.111,zoomq.20090728225824.107"><vh>@nosent eb0replayer.py</vh>
 <v t="zoomq.20090728225824.90"><vh>&lt;&lt; declarations &gt;&gt;</vh></v>
 <v t="zoomq.20090728225824.91" a="E"><vh>class replayer</vh>
-<v t="zoomq.20090728225824.92"><vh>__init__</vh></v>
-<v t="zoomq.20090728225824.95"><vh>play</vh></v>
+<v t="zoomq.20090728225824.92"><vh>__init__</vh>
+<v t="zoomq.20090728225824.113"><vh>eb</vh></v>
+<v t="zoomq.20090728225824.112"><vh>ui</vh></v>
+</v>
+<v t="zoomq.20090728225824.95"><vh>init_ebf</vh></v>
+<v t="zoomq.20090728225824.110"><vh>exp_ebf</vh></v>
+<v t="zoomq.20090729011307.1"><vh>_rewar</vh></v>
+<v t="zoomq.20090728225824.109"><vh>play</vh></v>
 <v t="zoomq.20090728225824.106"><vh>run2</vh></v>
 <v t="zoomq.20090728225824.108"><vh>run1</vh></v>
+<v t="zoomq.20090728225824.111"><vh>_draw_screen</vh></v>
 <v t="zoomq.20090728225824.107"><vh>run0</vh></v>
 </v>
 </v>
@@ -2427,9 +2434,14 @@ for his in historicPage:
 if __name__ == '__main__':
     """base usage
     """
-    rep = replayer()
-    ## for Baidu ...
-    rep.play()
+    if 2 != len(sys.argv):
+        print """ %s usage::
+        $ python eb0replayer.py 'path/to/warfield.txt' 
+        """ % VERSION
+    else:
+        warlog = sys.argv[1]
+        rep = replayer(warlog)
+        rep.play()
     ## for google...
     #mappingyk.mapall()
     #mappingyk.genidx()
@@ -2464,30 +2476,34 @@ logging.basicConfig(level=logging.DEBUG,
     """
 	@others
 </t>
-<t tx="zoomq.20090728225824.92">def __init__(self):
+<t tx="zoomq.20090728225824.92">def __init__(self,warlog):
     """ini all
     """
-    self.ui = urwid.curses_display.Screen()
-    self.ui.register_palette( [
-        ('banner', 'black', 'light gray', ('standout', 'underline')),
-        ('streak', 'black', 'dark red', 'standout'),
-        ('bg', 'black', 'dark blue'),
-        ] )
-
-    self.ebfp = " ."
-    self.ebfl = self.ebfp*15*3+"\n"
-    self.ebf = self.ebfl*15
+    self.grid = 15
+    self.showmetre = 0.5
+    @others
+    self.ebf  = []
+    self.ebfp = "   "
+    self.ebfe = " ~ "*self.grid+"\n"
+    self.init_ebf()
     #print self.ebf
+    #print self.exp_ebf()
+    self.war = open(warlog).readlines()
+    #print self.war
+
 
 </t>
-<t tx="zoomq.20090728225824.95">def play(self):
-    """replay all
+<t tx="zoomq.20090728225824.95">def init_ebf(self):
+    """init ebf dict for replay
     """
-    self.ui.run_wrapper(self.run)
-
+    self.ebf  = []
+    for i in range(self.grid):
+        self.ebf.append([self.ebfp for j in range(self.grid)])
+    pass
+    #return self.ebf
 
 </t>
-<t tx="zoomq.20090728225824.106">def run(self):
+<t tx="zoomq.20090728225824.106">def run2(self):
     """replay all
     """	
     cols, rows = self.ui.get_cols_rows()
@@ -2521,21 +2537,147 @@ logging.basicConfig(level=logging.DEBUG,
 
 
 </t>
-<t tx="zoomq.20090728225824.108">def run1(self):
+<t tx="zoomq.20090728225824.108">def run(self):
     """replay all
     """	
     cols, rows = self.ui.get_cols_rows()
 
-	txt = urwid.Text(self.ebf, align="center")
-	fill = urwid.Filler( txt )
-
-	canvas = fill.render( (cols, rows) )
-	self.ui.draw_screen( (cols, rows), canvas )
+    metrefl = []
+    metre = "0"
+    loop = 0
+    for act in self.war:
+        al = act.split(",")
+        #print al[0]
+        if "plan"==al[0]:
+            pass
+        else:
+            if metre == al[0]:
+                metrefl.append(act)
+            else:
+                #print len(metrefl)
+                self._rewar(metrefl)
+                #print self.exp_ebf()
+                ptxt = self.exp_ebf()
+                self._draw_screen(ptxt)
+                ## next metre show
+                time.sleep(self.showmetre)
+                if 0==loop%2:
+                    self.init_ebf()
+                else:
+                    pass
+                loop += 1
+                metre = al[0]
+                metrefl = []
+                metrefl.append(act)
 
 	while not self.ui.get_input():
 		pass
 
 
+
+</t>
+<t tx="zoomq.20090728225824.109">def play(self):
+    """replay all
+    """
+    self.ui.run_wrapper(self.run)
+
+
+</t>
+<t tx="zoomq.20090728225824.110">def exp_ebf(self):
+    """export ebf list as string...
+    """
+    exp = ""
+    for line in self.ebf:
+        exp += "".join(line)
+        exp += "\n"
+        exp += self.ebfe
+
+    return exp
+
+</t>
+<t tx="zoomq.20090728225824.111">def _draw_screen(self,ptxt):
+    """replay all
+    """	
+    cols, rows = self.ui.get_cols_rows()
+	txt = urwid.Text(ptxt, align="center")
+	fill = urwid.Filler( txt )
+	canvas = fill.render( (cols, rows) )
+	self.ui.draw_screen( (cols, rows), canvas )
+
+
+
+</t>
+<t tx="zoomq.20090728225824.112">self.ui = urwid.curses_display.Screen()
+self.ui.register_palette( [
+    ('banner', 'black', 'light gray', ('standout', 'underline')),
+    ('streak', 'black', 'dark red', 'standout'),
+    ('bg', 'black', 'dark blue'),
+    ] )
+</t>
+<t tx="zoomq.20090728225824.113">##tpl for soldier point
+self.ebsp = " %s%s" # self+action code
+#eb0 read soldier: #math code ∧ ∨
+self.ebrs={"w":"&lt;"
+    ,"e":"&gt;"
+    ,"s":"∨"
+    ,"n":"∧"
+    }
+#eb0 blue soldier: ← ↑ → ↓
+self.ebbs={"w":"←"
+    ,"e":"→"
+    ,"s":"↓"
+    ,"n":"↑"
+    }
+#eb0 soldier turn: ↖ ↗ ↘ ↙ turnWest, turnEast, turnSouth, turnNorth
+self.ebst={"turnWest":"↖"
+    ,"turnEast":"↗"
+    ,"turnSouth":"↘"
+    ,"turnNorth":"↗"
+    }
+#eb0 soldier fight:▲►▼◄
+self.ebsf={"w":"◄"
+    ,"e":"►"
+    ,"s":"▼"
+    ,"n":"▲"
+    }
+#eb0 soldier act:walk stand status fight back plan
+self.ebsa={"walk":"."
+    ,"stand":"_"
+    ,"status":"!"
+    ,"back":"r"
+    ,"plan":"?"
+    }
+</t>
+<t tx="zoomq.20090729011307.1">def _rewar(self,metrefl):
+    """re understand EB war
+        - metre fight list
+    """
+    attack_is = ""
+    trun_is = ""
+    other_is = ""
+    self.init_ebf()
+    for act in metrefl:
+        al = act.split(",")
+        move=al[1]
+        y=int(al[2])
+        x=int(al[3])
+        sid=al[4]
+        face=al[5]
+        #print len(self.ebf[2])        
+        if "fight"==move:
+            attack_is = self.ebsf[face]
+        elif "turn" in move:
+            trun_is = self.ebst[move]
+        else:
+            other_is =self.ebsa[move]
+        action=attack_is+trun_is+other_is
+        if 10&lt;int(sid):
+            #blue team fight
+            #print x,y
+            self.ebf[x][y]=self.ebsp%(self.ebrs[face],action)
+        else:
+            #red team
+            self.ebf[x][y]=self.ebsp%(self.ebbs[face],action)
 
 </t>
 </tnodes>
