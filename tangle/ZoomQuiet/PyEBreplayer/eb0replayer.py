@@ -186,7 +186,8 @@ class replayer:
                     metre = al[0]
                     metrefl = []
                     metrefl.append(act)
-
+        ptxt = "that all! any key can leave me ;-)\n"+self.exp_ebf()
+        self._draw_screen(ptxt)
     	while not self.ui.get_input():
     		pass
 
