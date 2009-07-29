@@ -1,2 +1,2 @@
-erl -noshell -s erlbattle startneoe
+erl -noshell -s erlbattle start
 rem pause

@@ -9,6 +9,11 @@
         {outdir, "ebin"}
         ]
 }.
+{'neoedmund/*',
+        [debug_info,
+        {outdir, "ebin"}
+        ]
+}.
 
 {'hwh/*',
 	[
