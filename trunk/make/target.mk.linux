@@ -1,36 +1,23 @@
-.SUFFIXES: .erl .app
+ERLC = erlc
+CP = cp
 
-EBIN = .\
-
-TmpObjs0 = $(MODULES: =.beam )
-TmpObjs1 = $(TmpObjs0).beam
-TmpObjs2 = $(TmpObjs1: = .\)
-
-TARGETS = $(EBIN)\$(TmpObjs2)
-
-!IFDEF CONFIG_FILE
-TARGETS = $(EBIN)\$(TmpObjs2) $(EBIN)\$(CONFIG_FILE)
-!ELSE
-!ENDIF
-
-#!MESSAGE $(TARGETS)
-EBIN = $(EBIN:/=\)
-#!MESSAGE $(EBIN)
-
+EBIN = ./ebin
+ERL_COMPILE_FLAGS += -W +debug_info
+ERL_FILES = $(MODULES:%=%.erl)
+TARGET_FILES= $(MODULES:%=$(EBIN)/%.beam)
+TARGET_CONFIG_FILES = $(CONFIG_FILE:%=$(EBIN)/%)
 all: compile
+
+compile:$(TARGET_CONFIG_FILES) $(TARGET_FILES)
 
 test: clean compile
 	erl -nologo -noshell -s testAll test -s init stop
 
-compile: $(TARGETS)
+$(EBIN)/%.beam: ./%.erl
+	$(ERLC) $(ERL_COMPILE_FLAGS) -o$(EBIN) $<
 
-.app{$(EBIN)}.app:
-	copy $< $@
-
-ERLC_FLAGS = -W
-
-.erl{$(EBIN)}.beam:
-	erlc $(ERLC_FLAGS) -o $(EBIN) $<
+$(EBIN)/%.app: ./%.app
+	$(CP) $< $@
 
 clean:
-	del $(TARGETS)
+	rm -rf $(TARGET_FILES) $(TARGET_CONFIG_FILES)
