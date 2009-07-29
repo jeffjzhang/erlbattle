@@ -8,7 +8,10 @@ TARGET_FILES= $(MODULES:%=$(EBIN)/%.beam)
 TARGET_CONFIG_FILES = $(CONFIG_FILE:%=$(EBIN)/%)
 all: compile
 
+ERLC_FLAGS = $(ERLC_FLAGS) $(COMPILE_FLAG)
+
 compile:$(TARGET_CONFIG_FILES) $(TARGET_FILES)
+	 $(SUBDIR_CMD)
 
 test: clean compile
 	erl -nologo -noshell -s testAll test -s init stop
@@ -21,3 +24,4 @@ $(EBIN)/%.app: ./%.app
 
 clean:
 	rm -rf $(TARGET_FILES) $(TARGET_CONFIG_FILES)
+	 $(SUBDIR_CMD)

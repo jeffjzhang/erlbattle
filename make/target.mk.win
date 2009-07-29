@@ -22,16 +22,24 @@ all: compile
 test: clean compile
 	erl -nologo -noshell -s testAll test -s init stop
 
-compile: $(TARGETS)
+compile: $(TARGETS)	 	
+	 $(SUBDIR_CMD)
 
 .app{$(EBIN)}.app:
 	copy $< $@
 
 ERLC_FLAGS = -W
 
+!IFDEF COMPILE_FLAG
+ERLC_FLAGS = $(ERLC_FLAGS) $(COMPILE_FLAG)
+!ELSE
+!ENDIF
+
 .erl{$(EBIN)}.beam:
 	erlc $(ERLC_FLAGS) -o $(EBIN) $<
 
 clean:
 	del $(TARGETS)
+	 $(SUBDIR_CMD)
+
 
