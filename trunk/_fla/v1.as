@@ -196,7 +196,7 @@ function moveChar(ob) {
 			ob.action = "stand";
 			ob.clip.mc.gotoAndStop(ob.action + ob.dir);
 			//trace("id="+ob.id);
-			_root.actions = "next";
+			if (player == "play")	_root.actions = "next";
 			return;
 		}
 		//trace(ob.action + ob.dir);
@@ -242,11 +242,12 @@ function work() {
 	}
 	if(	_root.actions == "pause_next"){
 		pt++;
-		next_step()
+		next_step();
 	}
 	if (moving) loop_move_char();
 }
 function next_step(){
+		//trace(pt)
 	if (moving) {
 		return ;
 	}
@@ -314,7 +315,7 @@ function next_step(){
 	}
 	if (ob.action == "back") {
 		switch(dir){
-			case "n":
+			case "s":
 				ob.dir = "_d";
 				ob.clip.mc._xscale = 80;
 				break;
@@ -322,7 +323,7 @@ function next_step(){
 				ob.dir = "_l";
 				ob.clip.mc._xscale = 80;
 				break;
-			case "s":
+			case "n":
 				ob.dir = "_l";
 				ob.clip.mc._xscale = -80;
 				break;
@@ -332,8 +333,12 @@ function next_step(){
 				break;
 		}
 	}
-	//播放mc，针对stand，fight
-	ob.clip.mc.gotoAndPlay(ob.action + ob.dir);
+	if (action == "status") {
+		ob.clip.mc.gotoAndPlay(action + ob.dir);
+	}else{
+		//播放mc，针对stand，fight
+		ob.clip.mc.gotoAndPlay(ob.action + ob.dir);
+	}
 	//ob.clip.mc.gotoAndPlay(ob.action + ob.dir);
 	//trace(ob.id);
 	//血量减少显示
@@ -366,10 +371,10 @@ function next_step(){
 	if (blood == 0){
 		ob.clip._visible = false;
 	}
-	if (( ob.action == "stand") && player == "play") next_step2();
+	if (( ob.action == "stand") && player == "play" && action != "status") next_step2();
 }
 function next_step2(){
-	_root.actions = "next";
+	if (player == "play") _root.actions = "next";
 	return;
 }
 //init
