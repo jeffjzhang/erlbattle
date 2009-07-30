@@ -247,11 +247,11 @@ getSoldierFutureStatus(Side, SoldierId, Soldiers) ->
 		
 		Soldier ->  
 			NewSoldiers = getSoldiersFutureStatus(Soldiers, Soldier#soldier.act_effect_time),
-			NewSoldier = lists:keyfind({SoldierId,Side} , 2, NewSoldiers),  %此时不可能找不到
+			NewSoldier = tools:keyfind({SoldierId,Side} , 2, NewSoldiers),  %此时不可能找不到
 			S2 = lists:keydelete(NewSoldier#soldier.id , 2 , NewSoldiers),
 			%% 看看有没有人在同一格的，有就是状态不确定
 			%% 这里没有考虑 act_sequece 抢占问题
-			case lists:keyfind(NewSoldier#soldier.position, 3 ,S2) of
+			case tools:keyfind(NewSoldier#soldier.position, 3 ,S2) of
 				false -> NewSoldier;
 				_ -> uncertain
 			end
