@@ -18,6 +18,6 @@
 {'hwh/*',
 	[
 	{i, "hwh"},
-	{outdir, "hwh"}
+	{outdir, "ebin/hwh"}
 	]
 }.
