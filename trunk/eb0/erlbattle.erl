@@ -4,13 +4,15 @@
 -include("schema.hrl").
 -include("test.hrl").
 
+-define(MaxEBTurn, 55).   %% 战场最多运行的次数 
+
 %% 默认战场入口程序
 start() ->
-	start(feardFarmers,englandArmy, {none,50}).
+	start(feardFarmers,englandArmy, {none, ?MaxEBTurn}).
 	
 %% 指定队伍，测速入口程序
 start(BlueArmy, RedArmy) ->
-	start(BlueArmy, RedArmy, {none,50}).
+	start(BlueArmy, RedArmy, {none, ?MaxEBTurn}).
 	
 %% 参数化战场入口程序
 start(BlueArmy, RedArmy, Context) ->
