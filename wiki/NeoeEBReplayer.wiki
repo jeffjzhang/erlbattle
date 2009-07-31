@@ -19,3 +19,6 @@ EbReplay 里的播放器比较华丽。 这个比较简陋，但是便于快速�
  * 5. 程序会生成一组PNG图片文件到_你的目录_/warpic/
  * 6. 浏览
 http://erlbattle.googlecode.com/files/t10.png
+
+改程序还在进一步改进中。
+src：  http://erlbattle.googlecode.com/svn/tangle/neoedmund/neoe-ebrep
