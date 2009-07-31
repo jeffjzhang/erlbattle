@@ -20,8 +20,8 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 
 public class Pic {
-	static int R = 30;
-	static int R2 = 30 * 15;
+	static int R = 40;
+	static int R2 = R * 15;
 	private static Image ICON_STOP;
 	private static Image ICON_MOVE;
 	private static Image ICON_ATTACK;
@@ -37,28 +37,20 @@ public class Pic {
 
 	public static class P2 extends JComponent {
 		Map m;
-
 		public P2(List<String[]> cell, List<String[]> plan) {
 			m = toMap(new HashMap(), cell, plan);
 		}
 
 		private Dimension dim = new Dimension(R2, R2);
-
-		@Override
 		public int getHeight() {
 			return R2;
 		}
-
-		@Override
 		public Dimension getPreferredSize() {
 			return dim;
 		}
-
-		@Override
 		public int getWidth() {
 			return R2;
 		}
-
 		protected void paintComponent(Graphics g) {
 			xdraw2(g, m, "0");
 		}
@@ -81,7 +73,7 @@ public class Pic {
 			g.translate(R * x, R * y);
 			xdraw((Graphics2D) g, w1[5],
 					i(w1[4]) > 10 ? Color.BLUE : Color.RED, i(id), i(w1[6]),
-					i(w1[7]), w1[1]);
+					i(w1[7]), w1[1], (w2==null)?"-":w2[2]);
 			g.translate(-R * x, -R * y);
 		}
 		g.setFont(Font24);
@@ -120,6 +112,7 @@ public class Pic {
 		}
 		if (w1 != null) {
 			r[0] = w1;
+			r[1] = null;
 		}
 		if (w2 != null) {
 			r[1] = w2;
@@ -136,7 +129,7 @@ public class Pic {
 
 		@Override
 		protected void paintComponent(Graphics g) {
-			xdraw((Graphics2D) g, "w", Color.RED, 3, 90, 10, "walk");
+			xdraw((Graphics2D) g, "w", Color.RED, 3, 90, 10, "walk", "turnWest");
 		}
 
 		@Override
@@ -157,7 +150,7 @@ public class Pic {
 	}
 
 	private static void xdraw(Graphics2D g, String dir, Color color, int id,
-			int hp, int damage, String act) {
+			int hp, int damage, String act, String plan) {
 		if (hp<=0){
 			return;
 		}
@@ -177,6 +170,7 @@ public class Pic {
 		} else if ("s".equals(dir)) {
 			g.fillArc(0, 0, R, R, 270 - a2, a);
 		}
+		
 		Image img;
 		if ("walk".equals(act)) {
 			img = ICON_MOVE;
@@ -188,18 +182,26 @@ public class Pic {
 			img = ICON_NONE;
 		}
 		g.drawImage(img, 1, 1, 15, 15, null);
-		int x = R / 2;
-		int y = R / 2;
-		g.setFont(Font12);
+		
+		g.setFont(Font12);		
+		g.setColor(Color.BLACK);
+		String p = plan.split("@")[0];
+		g.drawString(p, R/2, R/4);
+		
+		int x = R/2;
+		int y = R/2+6;		
 		g.setColor(Color.BLACK);
 		g.drawString("" + hp, x - 1, y - 1);
 		g.setColor(Color.GREEN);
 		g.drawString("" + hp, x, y);
-		y += R / 2 - 2;
+		
+		x = R / 2;
+		y = R;
 		g.setColor(Color.BLACK);
 		g.drawString("" + damage, x - 1, y - 1);
 		g.setColor(Color.RED);
 		g.drawString("" + damage, x, y);
+		
 	}
 
 	public Pic() {
@@ -225,7 +227,7 @@ public class Pic {
 	private void test2() {
 		BufferedImage im = new BufferedImage(R, R, BufferedImage.TYPE_INT_ARGB);
 		xdraw((Graphics2D) im.getGraphics(), "w", Color.BLUE, 2, 99, 88,
-				"fight");
+				"fight","plan");
 		try {
 			ImageIO.write(im, "PNG", new File("test2.png"));
 		} catch (IOException e) {
