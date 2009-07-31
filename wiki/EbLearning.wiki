@@ -3,7 +3,6 @@
 
 = 老范随笔 =
 
-
 == erlang 的 if  ==
 
 {{{
@@ -39,4 +38,43 @@ c("laofan/abc").
 
 其中 abc  的module 要定义为：   `laofan.abc`
 
+== 如何开发第一个指挥程序 ==
+[http://groups.google.com/group/ecug/browse_thread/thread/3f382d7b7b3cf6aa 饿狼战役：如何开发第一个指挥程序] ^- ECUG~erlang中文用户组 | Google 网上论坛^
 
+=== 问题 ===
+ZoomQuiet::  比如说，老范是如何从无到有开发 MadDog 的？
+ * - 如何先自行调试,组合行动指挥的?
+ * - 如何再结合 erlbattle 进行对战调试的?
+
+=== 体验 ===
+第一次编写指挥程序的步骤
+
+ #  首先务必要把自己的环境搞好， 能够运行 erlbattle:start()  ,   让农民和英格兰卫兵打一场。 然后观看录像
+ #  试着运行erlbattle:start(englandArmy, englandArmy)  , 让英格兰卫兵互相打一场
+ #  （现在可以了） 试着运行 erlbattle:start(englandArmy,  madDog)   让英格兰卫兵和疯狗战阵打一场，看看效果
+ #  按照以下顺序阅读【feardFarmers】---> 【englandArmy】----->【madDog】 代码
+  * （如果有兴趣还可以去看看wiki 上各篇文档，不看文档也行）
+ #  模仿现有的这几个开始编写你自己的指挥程序。 可以稍微改一点，看看效果，然后再改一点。。。直到做出来。 不要先想的过于复杂，先从简单入手
+
+
+erlbattle 接口非常非常简单。 
+ * 就是有一个battle_field 表可以查战场状态，（ 一个clock 表查时钟。 一个queue
+表查自己已经发出的指令。 这两个其实不查都可以，疯狗就没用）。  
+ * 然后就一个用于发送消息指令的通道。 你把你的指令算好，通过通道发出去就行了。
+
+=== 调试疯狗的过程： ===
+
+我现在还不知道erlang 如何做debug,  所以代码写好了，都是一点点写io:format(...) 去调试的。  直到全部调试通过。
+还是蛮花时间的。
+
+ * 调试都是打： erlbattle:start(englandArmy,  madDog)   这个命令，去调试的。
+ * 最后都通了， englandArmy 被全部干掉了。 程序也就好了。没什么技巧。
+
+老范 
+
+
+= ZQ 记要 =
+
+
+= Discuss =
+`常见其它开发/语法/理解问题...`
