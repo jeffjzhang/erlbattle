@@ -34,6 +34,8 @@ D:\erlbattle>nmake
 #make 
 
 3 运行
+3.0 最快速启动
+   erl -nologo -noshell -pz ebin -s erlbattle start
 3.1 启动erl
 >erl
 
