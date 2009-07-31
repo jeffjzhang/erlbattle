@@ -1,10 +1,10 @@
 .SUFFIXES: .erl .app
 
-EBIN = .\
+EBIN = ..\..\ebin\
 
 TmpObjs0 = $(MODULES: =.beam )
 TmpObjs1 = $(TmpObjs0).beam
-TmpObjs2 = $(TmpObjs1: = .\)
+TmpObjs2 = $(TmpObjs1: = ..\..\ebin\)
 
 TARGETS = $(EBIN)\$(TmpObjs2)
 
