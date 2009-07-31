@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <jardesc>
-    <jar path="C:/tmp/ebrep/neoeebrep.jar"/>
-    <options buildIfNeeded="true" compress="true" descriptionLocation="/neoe-ebrep/makejar.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="false" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+    <jar path="C:/Documents and Settings/neoe/My Documents/ダウンロード/ebrep/ebrep/neoeebrep.jar"/>
+    <options buildIfNeeded="true" compress="true" descriptionLocation="/ebrep/makejar.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="false" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
     <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
     <selectedProjects/>
-    <manifest generateManifest="true" mainClassHandleIdentifier="=neoe-ebrep/src&lt;neoe.ebrep{Main.java[Main" manifestLocation="" manifestVersion="1.0" reuseManifest="false" saveManifest="false" usesManifest="true">
+    <manifest generateManifest="true" mainClassHandleIdentifier="=ebrep/src&lt;neoe.ebrep{Main.java[Main" manifestLocation="" manifestVersion="1.0" reuseManifest="false" saveManifest="false" usesManifest="true">
         <sealing sealJar="true">
             <packagesToSeal/>
             <packagesToUnSeal/>
         </sealing>
     </manifest>
     <selectedElements exportClassFiles="true" exportJavaFiles="true" exportOutputFolder="false">
-        <javaElement handleIdentifier="=neoe-ebrep/src"/>
+        <javaElement handleIdentifier="=ebrep/src&lt;neoe.ebrep"/>
+        <javaElement handleIdentifier="=ebrep/src&lt;neoe"/>
     </selectedElements>
     <fatjar builder="org.eclipse.jdt.ui.plain_jar_builder" launchConfig=""/>
 </jardesc>

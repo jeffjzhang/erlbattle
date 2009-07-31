@@ -43,7 +43,7 @@ public class Main {
 					st = 0;
 					addCell(w);
 				}
-			} else if (w.length == 3) {
+			} else if (w.length == 3 && w[0].equalsIgnoreCase("plan")) {
 				st = 1;
 				addPlan(w);
 			}

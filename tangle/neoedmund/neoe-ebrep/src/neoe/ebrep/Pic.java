@@ -26,6 +26,8 @@ public class Pic {
 	private static Image ICON_MOVE;
 	private static Image ICON_ATTACK;
 	private static Image ICON_NONE;
+	private static Font Font12=new Font("Serif", Font.PLAIN, 12);
+	private static Font Font24=new Font("Serif", Font.BOLD, 24);
 	static {
 		ICON_STOP = new ImageIcon("icon/E_Wood03.png").getImage();
 		ICON_MOVE = new ImageIcon("icon/A_Shoes04.png").getImage();
@@ -58,12 +60,12 @@ public class Pic {
 		}
 
 		protected void paintComponent(Graphics g) {
-			xdraw2(g, m);
+			xdraw2(g, m, "0");
 		}
 
 	}
 
-	private static void xdraw2(Graphics g, Map m) {
+	private static void xdraw2(Graphics g, Map m, String time) {
 		// S/ystem.out.println("draw " + m.keySet().size());
 		for (Object id : m.keySet()) {
 			Object[] r = (Object[]) m.get(id);
@@ -82,6 +84,11 @@ public class Pic {
 					i(w1[7]), w1[1]);
 			g.translate(-R * x, -R * y);
 		}
+		g.setFont(Font24);
+		g.setColor(Color.WHITE);		
+		g.drawString("Time:"+time, 10+1, 30+1);
+		g.setColor(Color.BLACK);		
+		g.drawString("Time:"+time, 10, 30);
 	}
 
 	public static Map toMap(Map m, List<String[]> cell, List<String[]> plan) {
@@ -183,7 +190,7 @@ public class Pic {
 		g.drawImage(img, 1, 1, 15, 15, null);
 		int x = R / 2;
 		int y = R / 2;
-		g.setFont(new Font("Serif", Font.PLAIN, 12));
+		g.setFont(Font12);
 		g.setColor(Color.BLACK);
 		g.drawString("" + hp, x - 1, y - 1);
 		g.setColor(Color.GREEN);
@@ -238,7 +245,11 @@ public class Pic {
 	public void write(List<String[]> cell, List<String[]> plan, String fn) {
 		BufferedImage im = new BufferedImage(R2, R2,
 				BufferedImage.TYPE_INT_ARGB);
-		xdraw2(im.getGraphics(), toMap(bfm, cell, plan));
+		String time=null;
+		if (cell.size()>0){
+			time=cell.get(0)[0];
+		}
+		xdraw2(im.getGraphics(), toMap(bfm, cell, plan), time);
 		try {
 			ImageIO.write(im, "PNG", new File(fn));
 		} catch (IOException e) {
