@@ -18,3 +18,4 @@ EbReplay 里的播放器比较华丽。 这个比较简陋，但是便于快速�
  * 4. 运行run.cmd
  * 5. 程序会生成一组PNG图片文件到_你的目录_/warpic/
  * 6. 浏览
+http://erlbattle.googlecode.com/files/t10.png
