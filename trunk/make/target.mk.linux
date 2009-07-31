@@ -2,7 +2,7 @@ ERLC = erlc
 CP = cp
 
 EBIN = $(EB_TOP)ebin
-ERL_COMPILE_FLAGS += -W +debug_info -I$(EB_TOP)eb0/engine
+ERL_COMPILE_FLAGS += -W +debug_info -I$(EB_TOP)core/engine
 ERL_FILES = $(MODULES:%=%.erl)
 TARGET_FILES= $(MODULES:%=$(EBIN)/%.beam)
 TARGET_CONFIG_FILES = $(CONFIG_FILE:%=$(EBIN)/%)
