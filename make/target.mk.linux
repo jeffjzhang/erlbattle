@@ -34,7 +34,7 @@ compile:$(TARGET_CONFIG_FILES) $(TARGET_FILES)
 	 $(SUBDIR_CMD)
 
 test: clean compile
-	erl -nologo -noshell -s testAll test -s init stop
+	erl -nologo -noshell -pz ebin -s testAll test -s init stop
 
 $(EBIN)/%.beam: ./%.erl
 	$(ERLC) $(ERL_COMPILE_FLAGS) -o$(EBIN) $<

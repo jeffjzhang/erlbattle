@@ -26,7 +26,7 @@ SUBDIR_CMD = for %%1 in ($(SUBDIRS)) do cd %%1 && $(MAKE) $@ && cd ..
 all: compile
 
 test: clean compile
-	erl -nologo -noshell -s testAll test -s init stop
+	erl -nologo -noshell -pz ebin -s testAll test -s init stop
 
 compile: $(TARGETS)	 	
 	 $(SUBDIR_CMD)
