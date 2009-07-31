@@ -6,6 +6,4 @@ EB_TOP=../
 MODULES = erlbattle battlefield tools channel battleRecorder\
 			testAll testBattleFieldCreate testErlBattleTakeAction testErlBattleGetTime
 
-SUBDIR_CMD = cd example_army && $(MAKE) $@ && cd ..
-
-include ../make/target.mk 
+include ../../make/target.mk 
