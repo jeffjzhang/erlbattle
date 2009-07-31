@@ -11,7 +11,7 @@ run(Channel, Side, Queue) ->
 
 loop(Channel, Side, Queue) ->
 	
-	Army = [1,2,3,4,5,6,7,8,9,10],
+	Army = ?PreDef_army,
 	
 	lists:foreach(
 		fun(Soldier) ->   % 一直朝前， 直到碰到人，然后开始砍	
