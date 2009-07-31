@@ -2,11 +2,13 @@
 
 EBIN = ..\..\ebin\
 
+!IFDEF MODULES
 TmpObjs0 = $(MODULES: =.beam )
 TmpObjs1 = $(TmpObjs0).beam
 TmpObjs2 = $(TmpObjs1: = ..\..\ebin\)
 
 TARGETS = $(EBIN)\$(TmpObjs2)
+!ENDIF
 
 !IFDEF CONFIG_FILE
 TARGETS = $(EBIN)\$(TmpObjs2) $(EBIN)\$(CONFIG_FILE)
@@ -16,6 +18,10 @@ TARGETS = $(EBIN)\$(TmpObjs2) $(EBIN)\$(CONFIG_FILE)
 #!MESSAGE $(TARGETS)
 EBIN = $(EBIN:/=\)
 #!MESSAGE $(EBIN)
+
+!IFDEF SUBDIRS
+SUBDIR_CMD = for %%1 in ($(SUBDIRS)) do cd %%1 && $(MAKE) $@ && cd ..
+!ENDIF
 
 all: compile
 
@@ -28,7 +34,7 @@ compile: $(TARGETS)
 .app{$(EBIN)}.app:
 	copy $< $@
 
-ERLC_FLAGS = -W
+ERLC_FLAGS = -W -I$(EB_TOP)/eb0/engine
 
 !IFDEF COMPILE_FLAG
 ERLC_FLAGS = $(ERLC_FLAGS) $(COMPILE_FLAG)
@@ -38,8 +44,11 @@ ERLC_FLAGS = $(ERLC_FLAGS) $(COMPILE_FLAG)
 .erl{$(EBIN)}.beam:
 	erlc $(ERLC_FLAGS) -o $(EBIN) $<
 
+!IFDEF TARGETS
+DEL_CMD = del $(TARGETS)
+!ENDIF
 clean:
-	del $(TARGETS)
-	 $(SUBDIR_CMD)
+	$(DEL_CMD)
+	$(SUBDIR_CMD)
 
 
