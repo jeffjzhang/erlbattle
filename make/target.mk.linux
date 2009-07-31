@@ -1,14 +1,34 @@
 ERLC = erlc
 CP = cp
 
-EBIN = ./ebin
-ERL_COMPILE_FLAGS += -W +debug_info
+EBIN = $(EB_TOP)ebin
+ERL_COMPILE_FLAGS += -W +debug_info -I$(EB_TOP)eb0/engine
 ERL_FILES = $(MODULES:%=%.erl)
 TARGET_FILES= $(MODULES:%=$(EBIN)/%.beam)
 TARGET_CONFIG_FILES = $(CONFIG_FILE:%=$(EBIN)/%)
 all: compile
 
 ERLC_FLAGS = $(ERLC_FLAGS) $(COMPILE_FLAG)
+
+SUBDIR_CMD = @set -e ; \
+            for d in $(SUBDIRS); do                    \
+            if test -f $$d/SKIP ; then                                  \
+                echo "=== Skipping subdir $$d, reason:" ;               \
+                cat $$d/SKIP ;                                          \
+                echo "===" ;                                            \
+            else                                                        \
+                if test ! -d $$d ; then                                 \
+                    echo "=== Skipping subdir $$d, it is missing" ;     \
+                else                                                    \
+                    xflag="" ;                                          \
+                    if test -f $$d/ignore_config_record.inf; then       \
+                        xflag=$$tflag ;                                 \
+                    fi ;                                                \
+                    (cd $$d && $(MAKE) $$xflag $@) || exit $$? ;        \
+                fi ;                                                    \
+            fi ;                                                        \
+        done ;                                                          \
+      
 
 compile:$(TARGET_CONFIG_FILES) $(TARGET_FILES)
 	 $(SUBDIR_CMD)
