@@ -19,11 +19,12 @@ public class Main {
 
 	final static String picDir = "warpic";
 	int picid;
+	Pic pic;
 
 	private void run() throws Exception {
 		picid = 1;
 		new File(picDir).mkdirs();
-
+		pic = new Pic();
 		BufferedReader in = new BufferedReader(new FileReader("warfield.txt"));
 		int st = 0;
 		while (true) {
@@ -33,7 +34,6 @@ public class Main {
 				break;
 			}
 
-			
 			String[] w = line.split(",");
 			if (w.length == 8) {
 				if (st == 0) {
@@ -53,22 +53,23 @@ public class Main {
 	private void outputText() throws Exception {
 		String fn = picDir + "/t" + (picid++) + ".png";
 		System.out.println(fn);
-//		BufferedWriter out = new BufferedWriter(new FileWriter(fn));
-//		for (String[] w : cell) {
-//			out.write(Arrays.toString(w));
-//			out.write("\n");
-//		}
-//		for (String[] w : plan) {
-//			out.write(Arrays.toString(w));
-//			out.write("\n");
-//		}
-//		out.close();
-//		JFrame f = new JFrame();
-//		f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-//		f.add(new P2(new ArrayList<String[]>(cell),new ArrayList<String[]>(plan)));
-//		f.pack();
-//		f.setVisible(true);
-		new Pic().write(cell,plan,fn);
+		// BufferedWriter out = new BufferedWriter(new FileWriter(fn));
+		// for (String[] w : cell) {
+		// out.write(Arrays.toString(w));
+		// out.write("\n");
+		// }
+		// for (String[] w : plan) {
+		// out.write(Arrays.toString(w));
+		// out.write("\n");
+		// }
+		// out.close();
+		// JFrame f = new JFrame();
+		// f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		// f.add(new P2(new ArrayList<String[]>(cell),new
+		// ArrayList<String[]>(plan)));
+		// f.pack();
+		// f.setVisible(true);
+		pic.write(cell, plan, fn);
 		cell.clear();
 		plan.clear();
 	}

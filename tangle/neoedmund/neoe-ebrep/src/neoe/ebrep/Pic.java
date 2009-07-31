@@ -37,11 +37,8 @@ public class Pic {
 		Map m;
 
 		public P2(List<String[]> cell, List<String[]> plan) {
-			m=toMap(cell,plan);
-			
+			m = toMap(new HashMap(), cell, plan);
 		}
-
-		
 
 		private Dimension dim = new Dimension(R2, R2);
 
@@ -61,48 +58,51 @@ public class Pic {
 		}
 
 		protected void paintComponent(Graphics g) {
-			xdraw2(g,m);
-			}
+			xdraw2(g, m);
+		}
 
-		
 	}
+
 	private static void xdraw2(Graphics g, Map m) {
-		//S/ystem.out.println("draw " + m.keySet().size());
+		// S/ystem.out.println("draw " + m.keySet().size());
 		for (Object id : m.keySet()) {
 			Object[] r = (Object[]) m.get(id);
 			String[] w1 = (String[]) r[0];
 			String[] w2 = (String[]) r[1];
 			if (w1 == null) {
-				System.out.println("invalid plan for "+id+" maybe already dead.");
+				System.out.println("invalid plan for " + id
+						+ " maybe already dead.");
 				continue;
 			}
 			int x = i(w1[2]), y = i(w1[3]);
-			//S/ystem.out.println("x"+x+",y"+y);
+			// S/ystem.out.println("x"+x+",y"+y);
 			g.translate(R * x, R * y);
-			xdraw((Graphics2D) g, w1[5], i(w1[4]) > 10 ? Color.BLUE
-					: Color.RED, i(id), i(w1[6]), i(w1[7]), w1[1]);
+			xdraw((Graphics2D) g, w1[5],
+					i(w1[4]) > 10 ? Color.BLUE : Color.RED, i(id), i(w1[6]),
+					i(w1[7]), w1[1]);
 			g.translate(-R * x, -R * y);
-		}			
+		}
 	}
-	public static Map toMap(List<String[]> cell, List<String[]> plan) {
-		Map m = new HashMap();
+
+	public static Map toMap(Map m, List<String[]> cell, List<String[]> plan) {
 		for (String[] w : cell) {
-			setv1(m,w[4], w);
+			setv1(m, w[4], w);
 		}
 		for (String[] w : plan) {
-			setv2(m,w[1], w);
+			setv2(m, w[1], w);
 		}
 		return m;
 	}
-	private static void setv2(Map m,String id, String[] w) {
-		setv(m,id, null, w);
+
+	private static void setv2(Map m, String id, String[] w) {
+		setv(m, id, null, w);
 	}
 
-	private static void setv1(Map m,String id, String[] w) {
-		setv(m,id, w, null);
+	private static void setv1(Map m, String id, String[] w) {
+		setv(m, id, w, null);
 	}
 
-	private static void setv(Map m,String id, String[] w1, String[] w2) {
+	private static void setv(Map m, String id, String[] w1, String[] w2) {
 		Object o = m.get(id);
 		Object[] r;
 		if (o == null) {
@@ -118,6 +118,7 @@ public class Pic {
 			r[1] = w2;
 		}
 	}
+
 	static int i(Object o) {
 		return Integer.parseInt(o.toString());
 	}
@@ -150,6 +151,9 @@ public class Pic {
 
 	private static void xdraw(Graphics2D g, String dir, Color color, int id,
 			int hp, int damage, String act) {
+		if (hp<=0){
+			return;
+		}
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
 		g.setColor(Color.BLACK);
@@ -191,6 +195,10 @@ public class Pic {
 		g.drawString("" + damage, x, y);
 	}
 
+	public Pic() {
+		bfm = new HashMap();
+	}
+
 	/**
 	 * @param args
 	 */
@@ -199,6 +207,8 @@ public class Pic {
 
 	}
 
+	private Map bfm;
+
 	private void run() {
 		test1();
 		test2();
@@ -206,15 +216,15 @@ public class Pic {
 	}
 
 	private void test2() {
-		BufferedImage im = new BufferedImage(R,R,BufferedImage.TYPE_INT_ARGB);
-		xdraw((Graphics2D)im.getGraphics(), "w", Color.BLUE, 2, 99, 88, "fight");
+		BufferedImage im = new BufferedImage(R, R, BufferedImage.TYPE_INT_ARGB);
+		xdraw((Graphics2D) im.getGraphics(), "w", Color.BLUE, 2, 99, 88,
+				"fight");
 		try {
 			ImageIO.write(im, "PNG", new File("test2.png"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	private void test1() {
@@ -226,13 +236,14 @@ public class Pic {
 	}
 
 	public void write(List<String[]> cell, List<String[]> plan, String fn) {
-		BufferedImage im = new BufferedImage(R2,R2,BufferedImage.TYPE_INT_ARGB);
-		xdraw2(im.getGraphics(),toMap(cell, plan));
+		BufferedImage im = new BufferedImage(R2, R2,
+				BufferedImage.TYPE_INT_ARGB);
+		xdraw2(im.getGraphics(), toMap(bfm, cell, plan));
 		try {
 			ImageIO.write(im, "PNG", new File(fn));
 		} catch (IOException e) {
 			e.printStackTrace();
-		}		
+		}
 	}
 
 }
