@@ -2,7 +2,7 @@
 % 
 
 -module(neoe).
--include("../schema.hrl").
+-include("schema.hrl").
 -export([run/3]).
 
 debug(S) ->

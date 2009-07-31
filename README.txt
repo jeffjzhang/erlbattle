@@ -4,8 +4,10 @@ root
 │  ├─docpicture
 │  ├─kongfu
 │  └─logo
-├─eb0             源代码目录，除了erlang源代码和Makefile之外，不要放入其他任何文件
-│  ├─engine       引擎目录
++--core
+|  +-engine       引擎目录
+|
+├─army             源代码目录，除了erlang源代码和Makefile之外，不要放入其他任何文件
 │  ├─evan.tao     以下是各人AI目录，如果你要新建中AI，建一个目录，写一个Makefile
 │  ├─example_army
 │  ├─hwh

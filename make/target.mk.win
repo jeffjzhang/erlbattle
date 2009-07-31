@@ -34,7 +34,7 @@ compile: $(TARGETS)
 .app{$(EBIN)}.app:
 	copy $< $@
 
-ERLC_FLAGS = -W -I$(EB_TOP)/eb0/engine
+ERLC_FLAGS = -W -I$(EB_TOP)/core/engine
 
 !IFDEF COMPILE_FLAG
 ERLC_FLAGS = $(ERLC_FLAGS) $(COMPILE_FLAG)
