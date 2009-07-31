@@ -3,6 +3,6 @@ EB_TOP=../../
 # ----------------------------------------------------
 # Target Specs 。
 # ----------------------------------------------------
-MODULES = englandArmy feardFarmers
+MODULES = neoe
 
 include ../../make/target.mk 
