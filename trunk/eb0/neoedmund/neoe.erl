@@ -2,7 +2,7 @@
 % 
 
 -module(neoe).
--include("schema.hrl").
+-include("../schema.hrl").
 -export([run/3]).
 
 debug(S) ->
@@ -10,13 +10,13 @@ debug(S) ->
 
 	
 run(Com, Side, Queue) ->
-	debug({'my side is ', list_to_atom(Side)}),
+	debug({'燕人张飞在此my side is ', list_to_atom(Side)}),
 	%% register(nextNum, spawn( fun() -> nextNum(0) end)),
 	lists:foreach(
 		fun(Man) ->   
 			spawn(fun()-> go(Man, Com) end)
 		end,
-		[1,2,3,4,5,6,7,8,9,10]),
+		? PreDef_army),
 	debug('10 man is alive').
 
 	
@@ -26,14 +26,26 @@ nextNum(Num) ->
 			Pidx ! Num,
 			nextNum(Num+1)
 	end.		
-
+com(Com, C) ->
+	debug({'send ', C}),
+	Com ! C.
+	
 go(Man, Com) ->
 	% Com ! {command,"attack",Man,0,0},
-	Com ! {command,"forward",Man,0,0},
-	% debug({'send command ',Man}),
+	% Com ! {command,"forward",Man,2,0},
+	X1 = isFacingEnemy(),
+	if 
+		X1 == true ->		
+			com(Com, {command,"attack",Man,0,0});
+		true ->
+			com(Com, {command,"forward",Man,0,0})
+	end,		
 	sleep(1000),
 	go(Man, Com).
-
+	
+	
+isFacingEnemy() ->
+	true.
 
 sleep(T) ->
 	receive
