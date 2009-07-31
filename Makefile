@@ -1,5 +1,5 @@
 EB_TOP=./
 
-SUBDIRS = eb0 army
+SUBDIRS = core army
 
 include ./make/target.mk 
