@@ -11,7 +11,7 @@ create() ->
 	init_soldier("blue",14,1,"west").
 
 init_soldier(Army,X,Y,Direction)->
-	Soldiers=[1,2,3,4,5,6,7,8,9,10],
+	Soldiers=?PreDef_army,
 	lists:foreach(
 		fun(Id) ->
 			Soldier=#soldier{
