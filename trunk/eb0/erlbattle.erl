@@ -204,7 +204,6 @@ getNextCommand(Soldier,Queue,Time) ->
 		execute_seq = '_',
 		seq_id = '_'},
 
-
 	Command = ets:match_object(Queue, Pattern),
 
 	if
