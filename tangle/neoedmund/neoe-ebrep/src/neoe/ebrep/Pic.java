@@ -161,13 +161,13 @@ public class Pic {
 		g.setColor(color);
 		int a = 30;
 		int a2 = 15;
-		if ("n".equals(dir)) {
+		if ("s".equals(dir)) {
 			g.fillArc(0, 0, R, R, 90 - a2, a);
 		} else if ("w".equals(dir)) {
 			g.fillArc(0, 0, R, R, 180 - a2, a);
 		} else if ("e".equals(dir)) {
 			g.fillArc(0, 0, R, R, -a2, a);
-		} else if ("s".equals(dir)) {
+		} else if ("n".equals(dir)) {
 			g.fillArc(0, 0, R, R, 270 - a2, a);
 		}
 		
@@ -201,6 +201,13 @@ public class Pic {
 		g.drawString("" + damage, x - 1, y - 1);
 		g.setColor(Color.RED);
 		g.drawString("" + damage, x, y);
+		
+		x = 8;
+		y = R*3/4+6;
+		g.setColor(Color.BLACK);
+		g.drawString("" + id, x - 1, y - 1);
+		g.setColor(Color.BLUE);
+		g.drawString("" + id, x, y);
 		
 	}
 
