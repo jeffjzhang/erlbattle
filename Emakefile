@@ -1,6 +1,5 @@
 %% 战场引擎
 {'core/engine/*', [
-      debug_info,
       {outdir, "ebin"}
       ]
 }.
@@ -26,5 +25,12 @@
 	[
 	{i, "core"},
 	{outdir, "ebin/hwh"}
+	]
+}.
+
+{'army/maddog/*',
+	[
+	{i, "core/engine"},
+	{outdir, "ebin"}
 	]
 }.
