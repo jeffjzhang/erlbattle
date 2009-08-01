@@ -29,6 +29,6 @@
 
  参考::
   * *[EbInterface EB:接口定义]*^玩家指挥程序编写指南^
-  * *[EbStepByStepInUbuntu.wiki EB:在Ubuntu中一步步来]* ^为自由OS系统的用户提供详细指引^
+  * *[EbStepByStepInUbuntu EB:在Ubuntu中一步步来]* ^为自由OS系统的用户提供详细指引^
 
 

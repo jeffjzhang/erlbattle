@@ -80,7 +80,7 @@ Erlang (BEAM) emulator version 5.5.5 [source] [async-threads:0] [kernel-poll:fal
 Eshell V5.5.5  (abort with ^G)
 }}}
 
-`即 R11B`
+`即 R11B5`
 
 ==== CEAN ====
 *[http://cean.process-one.net/doc/ Comprehensive Erlang Archive Network]*
@@ -124,44 +124,6 @@ Eshell V5.6.4  (abort with ^G)
 cean:install(erlbattle).
 }}}
 
-==== 编译最新版本 ====
-可能有问题::
- 根据:[http://magixyu.javaeye.com/blog/268998 Erlang 安装手记 - magixyu？magixyu！]
- * 配置时依然..
-{{{
-*********************************************************************
-**********************  APPLICATIONS DISABLED  **********************
-*********************************************************************
-
-odbc           : ODBC library - link check failed
-
-*********************************************************************
-*********************************************************************
-**********************  APPLICATIONS INFORMATION  *******************
-*********************************************************************
-
-wx             : Can not link the wx driver, wx will NOT be useable
-
-*********************************************************************
-}}}
- * 强行编译将:
-{{{
-...
-23 problems (5 errors, 18 warnings)
-make[4]: *** [/usr/local/tmp/0day/otp_src_R13B01/lib/jinterface/priv/com/ericsson/otp/erlang/OtpErlangExit.class] 错误 1
-make[4]:正在离开目录 `/usr/local/tmp/0day/otp_src_R13B01/lib/jinterface/java_src/com/ericsson/otp/erlang'
-make[3]: *** [opt] 错误 2
-make[3]:正在离开目录 `/usr/local/tmp/0day/otp_src_R13B01/lib/jinterface/java_src'
-make[2]: *** [opt] 错误 2
-make[2]:正在离开目录 `/usr/local/tmp/0day/otp_src_R13B01/lib/jinterface'
-make[1]: *** [opt] 错误 2
-make[1]:正在离开目录 `/usr/local/tmp/0day/otp_src_R13B01/lib'
-make: *** [fourth_bootstrap_build] 错误 2
-}}}
-
- 解决::
-  * [ http://argan.javaeye.com/blog/424110 在ubuntu上编译erlang with wx - 阿干的个人博客 - JavaEye技术网站]
-  * [http://groups.google.com/group/erlang-china/browse_thread/thread/acd8efea64e35e2 问下UTF-8 编码的erl 文件如何编译和运行 - Erlang China | Google 网上论坛]
 
 
 === 安装 svn ===
@@ -243,4 +205,50 @@ http://erlbattle.googlecode.com/files/2009-07-19-214212_659x477_scrot.png
  * 可惜当前 r369 版本的 eb0 无法运行
 http://erlbattle.googlecode.com/files/2009-07-19-214548_504x486_scrot.png
 
+
+== 编译问题 ==
+`eb0当前只能支持 R12B5 以上版本 erl`所以,可能需要自行编译安装:
+ 
+ 参考::
+  * [ http://argan.javaeye.com/blog/424110 在ubuntu上编译erlang with wx - 阿干的个人博客 - JavaEye技术网站]
+  * [http://groups.google.com/group/erlang-china/browse_thread/thread/acd8efea64e35e2 问下UTF-8 编码的erl 文件如何编译和运行 - Erlang China | Google 网上论坛]
+  * 根据:[http://magixyu.javaeye.com/blog/268998 Erlang 安装手记 - magixyu？magixyu！]
+
+=== 失败情景 ===
+ * 配置时依然..
+{{{
+$ ./configure
+...
+*********************************************************************
+**********************  APPLICATIONS DISABLED  **********************
+*********************************************************************
+
+odbc           : ODBC library - link check failed
+
+*********************************************************************
+*********************************************************************
+**********************  APPLICATIONS INFORMATION  *******************
+*********************************************************************
+
+wx             : Can not link the wx driver, wx will NOT be useable
+
+*********************************************************************
+}}}
+ * 强行编译将:
+{{{
+...
+23 problems (5 errors, 18 warnings)
+make[4]: *** [/usr/local/tmp/0day/otp_src_R13B01/lib/jinterface/priv/com/ericsson/otp/erlang/OtpErlangExit.class] 错误 1
+make[4]:正在离开目录 `/usr/local/tmp/0day/otp_src_R13B01/lib/jinterface/java_src/com/ericsson/otp/erlang'
+make[3]: *** [opt] 错误 2
+make[3]:正在离开目录 `/usr/local/tmp/0day/otp_src_R13B01/lib/jinterface/java_src'
+make[2]: *** [opt] 错误 2
+make[2]:正在离开目录 `/usr/local/tmp/0day/otp_src_R13B01/lib/jinterface'
+make[1]: *** [opt] 错误 2
+make[1]:正在离开目录 `/usr/local/tmp/0day/otp_src_R13B01/lib'
+make: *** [fourth_bootstrap_build] 错误 2
+}}}
+
+=== 只能R12B5 ===
+逐一尝试 R13B1/R13B/R12B5 的本地编译后,确认只能成功 R12B5,虽然期间有N多,有关JAVA 的编译错误...
 
