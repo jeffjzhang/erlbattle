@@ -43,7 +43,7 @@
 
 3. 指挥你的部队
 
-    Channel ! {command,"attack",Soldier,0};  向Channel 发送你的指令
+    Channel ! {command,"attack",Soldier,0,0};  向Channel 发送你的指令
 
 4. 战斗结束后收尾
 
@@ -94,11 +94,13 @@
 
 3. 命令消息
 
-    {command , 指令, 发起的战士，发动时间}
+    {command , 指令, 发起的战士，发动时间, 发动次序}
 
  其中指令为：    前进 forward, 后退 back, 转向（turnSouth, turnNorth, turnWest,turnEast), 攻击 attack, 原地待命 wait 
 
  发动时间：指希望该动作在哪个时间点发动。 比如我们希望部队在统一时间向前前进一步。而不希望他们乱走。  发动时间如果是 0  则表示希望立刻发动该动作。
+
+ 发动次序：控制同一轮内，哪些动作优先发动。 数值越小，越会优先发生。详见[http://code.google.com/p/erlbattle/wiki/EbSeqAtSameRound 同一轮动作优先级判定] 一文
 
  你如果一个节拍发送多个指令，前面的指令会被冲掉。主程序每个节拍会对于当前没有任务的战士取一次指令，取完后会删掉。 未被取走的指令留在那里，直到被冲掉，或者被取走；
 
