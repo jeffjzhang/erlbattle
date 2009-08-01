@@ -24,13 +24,13 @@ loop(Channel, Side, Queue,N) ->
                                              true ->
                                                   io:format("left Side=~p Soldier=~p.......
                                                      ...........................~n",[Side,Soldier]),
-                                                  Channel!{command,"turnSouth",Soldier,0,random:uniform(5)};
+                                                  Channel!{command,"turnNorth",Soldier,0,random:uniform(5)};
                                              false -> 
                                                    case someone_right(Soldier,Side) of
                                                             true ->
                                                                   io:format("right Side=~p Soldier=~p.......
                                                                      ............................~n",[Side,Soldier]),
-                                                                  Channel!{command,"turnNorth",Soldier,0,random:uniform(5)};
+                                                                  Channel!{command,"turnSouth",Soldier,0,random:uniform(5)};
                                                             false -> none
                                                     end%%none
                                         end,
