@@ -5,15 +5,64 @@
 <wiki:toc/>
 
 = EB:维基索引 =
+`根据知识分类索引所有文章::`
+ * EbIndex              ~ 本文
+
+== EB:社区 ==
+`EB 活动和组织相关文章`
+
+ * EbZhuLu              ~ EB:《逐鹿中原》对战大赛
+ * EbJoinnig            ~ EB:成员列表
+  * ZoomQuiet            ~ ZoomQuiet 个人维基入口
+ * ErlBattleTasks       ~ EB:开发任务列表
+  * EbTaskDoc            ~ EB:临时任务文档
+ * EbNowPath            ~ eb0:当前开发路径
 
 == EB:了解 ==
+`面对新人的基础性介绍文章`
+ * ErlBattle            ~ EB:释义
+  * EbWhatItIs           ~ EB:是什么?
+  * EbFaq                ~ EB:FAQ
+ * ErlBattleRule        ~ EB:世界规则
+  * EbMaxStory           ~ EB:情景故事^by MAX^
+ * EbStepByStep         ~ EB:一步步来^for M$^
+  * EbStepByStepInUbuntu ~ EB:一步步来^for Ubuntu^
 
 == EB:开发 ==
+`针对掺合的详细技术文档`
+
+*设计::*
+ * ErlBattleFieldDesign ~ EB:主战场设计
+  * EbSequenceDesign     ~ EB:节拍和指令实现结构设计
+  * EbSameResult         ~ EB:同节拍行动先后判定算法
+   * EbSeqAtSameRound     ~ act_sequence 详解^同一节拍中仍然动作先后判定^
+
+*规范::*
+ * EbInterface          ~ EB:开发接口规范
+  * EbReplay             ~ EB:回放器文件格式定义
+
+*体验::*
+ * EbKongFu             ~ EB:功夫
+  * EbMoveIsDifficult    ~ EB:移动士兵很难
+
+*工具::*
+ * NeoeEBReplayer       ~ Neoe回放器^for JAVA^
 
 == EB:规划 ==
+`各种对EB未来整体发展的思考`
+ * EbUserSuggestion     ~ EB:开放讨论
+ * EbGoal               ~ EB:目标畅想
+  * EbRoadMap            ~ EB:发展线路图
+  * EbStory              ~ EB:世界背景故事
+  * EbFigure             ~ EB:形象设计
+  * EbRoles              ~ EB:角色设定
+ * EbGlossary           ~ EB:术语表
 
-== EB:图书 ==
-
+=== EB:图书 ===
+`准备就EB 的成长历史,撰写一部 erlnag 学习的图书`
+ * EbLearning           ~ EB:学习笔记
+ * EbHistoryBook        ~ EBHB:史书
+  * EbHbErlDebug         ~ EBHB:开发调试
 
 = TODO =
  * 使用 [http://code.google.com/p/support/wiki/WikiSyntax#Localizing_Wiki_Content 国际化标准] 准备面向外国朋友的文档!]
