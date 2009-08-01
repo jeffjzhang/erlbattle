@@ -1,5 +1,5 @@
+#summary 另一个warfield.txt播放器
 #labels 播放器
-# 另一个warfield.txt播放器
 
 = Introduction =
 另一个battlelog播放器，把warfield.txt转成一组图片进行浏览。
