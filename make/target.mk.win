@@ -23,13 +23,16 @@ EBIN = $(EBIN:/=\)
 SUBDIR_CMD = for %%1 in ($(SUBDIRS)) do cd %%1 && $(MAKE) $@ && cd ..
 !ENDIF
 
-all: compile
+all: compile .erlmake
 
 test: clean compile
 	erl -nologo -noshell -pz ebin -s testAll test -s init stop
 
 compile: $(TARGETS)	 	
 	 $(SUBDIR_CMD)
+
+.erlmake:
+	erl -make
 
 .app{$(EBIN)}.app:
 	copy $< $@
