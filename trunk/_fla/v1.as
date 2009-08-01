@@ -175,7 +175,7 @@ function moveChar(ob) {
 			//trace(ob.action);
 			if (ob.action == "back") {
 				switch(ob.face){
-					case "n":
+					case "s":
 						ob.dir = "_l";
 						ob.clip.mc._xscale = -80;
 						break;
@@ -183,7 +183,7 @@ function moveChar(ob) {
 						ob.dir = "_d";
 						ob.clip.mc._xscale = -80;
 						break;
-					case "s":
+					case "n":
 						ob.dir = "_d";
 						ob.clip.mc._xscale = 80;
 						break;
@@ -296,7 +296,7 @@ function next_step(){
 	if (action == "fight") ob.action = "fight1";
 	ob.face = dir;
 	switch(dir){
-		case "n":
+		case "s":
 			ob.dir = "_l";
 			ob.clip.mc._xscale = -80;
 			break;
@@ -304,7 +304,7 @@ function next_step(){
 			ob.dir = "_d";
 			ob.clip.mc._xscale = -80;
 			break;
-		case "s":
+		case "n":
 			ob.dir = "_d";
 			ob.clip.mc._xscale = 80;
 			break;
@@ -315,7 +315,7 @@ function next_step(){
 	}
 	if (ob.action == "back") {
 		switch(dir){
-			case "s":
+			case "n":
 				ob.dir = "_d";
 				ob.clip.mc._xscale = 80;
 				break;
@@ -323,7 +323,7 @@ function next_step(){
 				ob.dir = "_l";
 				ob.clip.mc._xscale = 80;
 				break;
-			case "n":
+			case "s":
 				ob.dir = "_l";
 				ob.clip.mc._xscale = -80;
 				break;
