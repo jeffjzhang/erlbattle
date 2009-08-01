@@ -31,3 +31,5 @@
   * *[EbInterface EB:接口定义]*^玩家指挥程序编写指南^
 
 
+<br><br><br><br><br><br><br><br>
+-------
