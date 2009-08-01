@@ -6,7 +6,14 @@
 
 目标: 说明，并建议以后各届逐鹿比赛成果的记录和宣传方式;-)
 
-== 目录约定 ==
+== 播放说明 ==
+逐鹿中原比赛战斗录像
+
+观看前，将需要看的比赛更名为  warfield.txt
+
+将v1.swf 拖到浏览器中即可播放
+
+== 目录建议 ==
 /tasks/ (http://erlbattle.googlecode.com/svn/tasks)
 +-- eb0ZhuLu9.08.1      EB核心版本+ZhuLu+比赛日期版本(使用Ubuntu 形式的版本号)
     +-- evan.tao        使用 /trunk/army 一样的子目录规范
