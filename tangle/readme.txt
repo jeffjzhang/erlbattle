@@ -16,6 +16,9 @@ http://erlbattle.googlecode.com/svn/tangle
 |   Erlang 程序设计 图书代码,原始下载:The Pragmatic Bookshelf | Source Code
 |    http://www.pragprog.com/titles/jaerlang/source_code
 +-- EBdesign        设计专用目录
+|   
++-- EvanTao         黑黑的空间
+|   `-- baiqi       【战神白起】
 `-- readme.txt      本文自个儿
 
 
