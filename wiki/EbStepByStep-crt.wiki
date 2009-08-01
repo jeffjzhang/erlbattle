@@ -6,6 +6,7 @@
 
 = erl v5.7.2(R13B1) =
 *ERLANG 环境： 5.7.2  （部分语法老版本不支持，需要用这个版本以上）* ^这是缺憾,修订中...^
+
  * 1. [http://erlbattle.googlecode.com/files/war-2.zip 播放器和战斗录像下载]^内有readme.txt^
  * 2. 观看录像，获得饿狼战役战斗的直观感觉
  * 3. 用svn下载代码到你的机器上。 http://erlbattle.googlecode.com/svn/trunk
