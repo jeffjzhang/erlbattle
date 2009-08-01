@@ -1,6 +1,9 @@
 #summary 逐鹿中原
+#labels Phase-Support,log
 
 == 总排名 == 
+[http://groups.google.com/group/ecug/browse_thread/thread/98b4a2439313be25 饿狼战役：第一届饿狼大赛《逐鹿中原》顺利闭幕]^ - ECUG~erlang中文用户组 | Google 网上论坛^
+
 ----
 || *指挥官* || *参赛队伍* || *战术特点* || *得分* ||
 ||hwh||【triple】||3打1|| 10 ||
