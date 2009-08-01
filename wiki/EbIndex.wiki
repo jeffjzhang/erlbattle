@@ -1,0 +1,21 @@
+#summary EB:维基索引 所有关键维基文章
+#labels Phase-Support,FAQ,Index
+
+
+<wiki:toc/>
+
+= EB:维基索引 =
+
+== EB:了解 ==
+
+== EB:开发 ==
+
+== EB:规划 ==
+
+== EB:图书 ==
+
+
+= TODO =
+ * 使用 [http://code.google.com/p/support/wiki/WikiSyntax#Localizing_Wiki_Content 国际化标准] 准备面向外国朋友的文档!]
+ * 运用 [http://code.google.com/p/support/wiki/WorkingWithGoogleGadgets WorkingWithGoogleGadgets] 令任务和文档一齐工作!
+ 
