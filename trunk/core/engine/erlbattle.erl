@@ -4,7 +4,7 @@
 -include("schema.hrl").
 -include("test.hrl").
 
--define(MaxEBTurn, 55).   %% 战场最多运行的次数 
+-define(MaxEBTurn, 1000).   %% 战场最多运行的次数 
 
 %% 默认战场入口程序
 start() ->
@@ -86,8 +86,8 @@ loop(BlueSide, RedSide, BlueQueue, RedQueue, Context) ->
 
 	%%获得当前时钟， 战场从 第一秒 开始
 	Time = ets:update_counter(battle_timer, clock, 1),
-	io:format("~n~n~n--------------Time = ~p s --------------~n", [Time]),
-	io:format("Battle Field Status Report ~n ~p ~n", [ets:tab2list(battle_field)]),
+	%%io:format("~n--------------Time = ~p s --------------~n", [Time]),
+	%%io:format("Battle Field Status Report ~n ~p ~n", [ets:tab2list(battle_field)]),
 
 	%% 睡一会，让指挥程序可以考虑
 	tools:sleep(Sleep),
@@ -552,7 +552,7 @@ cleanUp(BlueSide, RedSide) ->
 	exit(RedSide, normal),
 	exit(BlueSide, normal),
 	exit(whereis(recorder), normal),
-	tools:sleep(1000),
+	tools:sleep(2000),
 	ets:delete(battle_field),
 	ets:delete(battle_timer).	
 	
