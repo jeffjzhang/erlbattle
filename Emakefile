@@ -1,28 +1,30 @@
-%% Õ½³¡ÒıÇæ
+%% æˆ˜åœºå¼•æ“
 {'core/engine/*', [
       debug_info,
       {outdir, "ebin"}
       ]
 }.
 
-%% ¸÷¸öÕ½¶Ó
-%% ×Ô´øÀı×Ó
+%% å„ä¸ªæˆ˜é˜Ÿ
+%% è‡ªå¸¦ä¾‹å­
 {'army/example_army/*',
         [debug_info,
+	{i, "core/engine"},
         {outdir, "ebin"}
         ]
 }.
 
-%% ÆäËûÎª¸÷ÈË×Ô¼º¿ª·¢
+%% å…¶ä»–ä¸ºå„äººè‡ªå·±å¼€å‘
 {'army/neoedmund/*',
         [debug_info,
+	{i, "core/engine"},
         {outdir, "ebin"}
         ]
 }.
 
 {'army/hwh/*',
 	[
-	{i, "hwh"},
-	{outdir, "ebin"}
+	{i, "core"},
+	{outdir, "ebin/hwh"}
 	]
 }.
