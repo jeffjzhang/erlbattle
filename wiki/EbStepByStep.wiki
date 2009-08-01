@@ -1,7 +1,7 @@
 #summary 一步步来玩 EB
 #labels Phase-Support,FAQ
 
-<wiki:toc/>
+ 
 最快的开始...^假设你已经安装了erl 环境，并且会用svn, 使用M$ 或者 linux 环境^
 
 = erl v5.7.2(R13B1) =
@@ -30,5 +30,3 @@
  参考::
   * *[EbInterface EB:接口定义]*^玩家指挥程序编写指南^
   * *[EbStepByStepInUbuntu EB:在Ubuntu中一步步来]* ^为自由OS系统的用户提供详细指引^
-
-
