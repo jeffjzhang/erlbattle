@@ -23,15 +23,24 @@ root
 需要: erl-otpR12B-5， 下载地址[http://www.erlang.org/download.html]
 
 2.1 Windows
+2.1.1 gnu make
 需要: nmake, 下载地址[http://erlbattle.googlecode.com/files/nmake.exe]
 执行下面两个命令
 D:\erlbattle>configure
 D:\erlbattle>nmake
 
+2.1.2 erl make
+执行以下命令
+>make.bat
+
 2.2 Linux
+2.2.1 gnu make
 需要gnumake
 #./configure
 #make 
+
+2.2.2 erl make
+#make.sh
 
 3 运行
 3.0 最快速启动
