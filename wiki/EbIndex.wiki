@@ -46,7 +46,7 @@
   * EbMoveIsDifficult    ~ EB:移动士兵很难
 
 *工具::*
- * NeoeEBReplayer       ~ Neoe回放器^for JAVA^
+ * [NeoeEBReplayer       ~ Neoe回放器]^for JAVA^
 
 == EB:规划 ==
 `各种对EB未来整体发展的思考`
