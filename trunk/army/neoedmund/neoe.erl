@@ -10,14 +10,29 @@ debug(S) ->
 
 	
 run(Com, Side, Queue) ->
-	debug({'燕人张飞在此my side is ', list_to_atom(Side)}),
+	process_flag(trap_exit, true),
+	
+	debug({'燕人张飞在此 my side is ', list_to_atom(Side)}),
 	%% register(nextNum, spawn( fun() -> nextNum(0) end)),
+	[A|B]=? PreDef_army,
+	debug(A),
+	debug(B),
+	% one man is go out
+	spawn(fun() -> go1(A, Com, Side) end),
+	% the others hold
 	lists:foreach(
 		fun(Man) ->   
-			spawn(fun()-> go(Man, Com) end)
+			spawn(fun()-> go2(Man, Com,Side) end)
 		end,
-		? PreDef_army),
-	debug('10 man is alive').
+		B),
+	debug('10 man is alive'),
+	% kill myself
+	receive
+		{'EXIT', _Where, _Reason} ->  
+			debug({'game is over.', _Where, _Reason})
+		% AnyThing -> debug(AnyThing)	
+	end.		
+			
 
 	
 nextNum(Num) ->
@@ -29,10 +44,55 @@ nextNum(Num) ->
 com(Com, C) ->
 	debug({'send ', C}),
 	Com ! C.
-	
+go1(Man, Com, Side) ->
+	turnBack(Man, Com, Side),
+	case someoneAhead1(Man,Side) of
+		true ->
+			com(Com, {command,"attack",Man,0,0});
+		false ->
+			com(Com, {command,"forward",Man,0,0});
+		_ ->
+			none
+	end,
+	waitSec(),
+	go1(Man, Com,Side).
+go2(Man, Com, Side) ->
+	turnBack(Man, Com, Side),
+	case someoneAhead2(Man,Side) of
+		true ->
+			com(Com, {command,"attack",Man,0,0});
+		false ->
+			com(Com, {command,"forward",Man,0,0});
+		_ ->
+			none
+	end,
+	waitSec(),
+	go2(Man, Com,Side).	
+turnBack(Man, Com, Side) ->
+	A=battlefield:get_soldier(Man,Side),
+	if A /= none ->
+		{X1,Y1}=A#soldier.position,
+		D=A#soldier.facing,
+		debug({list_to_atom(D),X1,Y1}),
+		if (D=="west") and (X1==0) ->
+				com(Com, {command,"turnSouth",Man,0,0}),
+				waitSec(),
+				com(Com, {command,"turnEast",Man,0,0}),
+				waitSec();
+		true ->
+			if (D=="east") and (X1==14) ->
+				com(Com, {command,"turnSouth",Man,0,0}),
+				waitSec(),
+				com(Com, {command,"turnWest",Man,0,0}),
+				waitSec();
+			true -> none	
+			end
+		end;
+	true->none	
+	end.
+		
+		
 go(Man, Com) ->
-	% Com ! {command,"attack",Man,0,0},
-	% Com ! {command,"forward",Man,2,0},
 	X1 = isFacingEnemy(),
 	if 
 		X1 == true ->		
@@ -40,10 +100,20 @@ go(Man, Com) ->
 		true ->
 			com(Com, {command,"forward",Man,0,0})
 	end,		
-	sleep(1000),
+	waitSec(),
 	go(Man, Com).
 	
-	
+waitSec() ->
+	T1 = erlbattle:getTime(),
+	waitSec(T1+1).
+waitSec(T1) ->
+	T2 = erlbattle:getTime(),
+	if T2<T1 ->
+		sleep(100),
+		waitSec(T1);
+	true -> none
+	end.
+
 isFacingEnemy() ->
 	true.
 
@@ -51,4 +121,45 @@ sleep(T) ->
 	receive
 	after T -> true
 	end.
+	
+someoneAhead1(SoldierId,Side) ->
+	
+	case battlefield:get_soldier(SoldierId,Side) of
+		
+		none ->  % 角色不存在（已经挂掉了）
+			none;
+		
+		Soldier when is_record(Soldier,soldier) ->  % 找到角色
+
+			Position = erlbattle:calcDestination(Soldier#soldier.position, Soldier#soldier.facing, 1),
+
+			case battlefield:get_soldier_by_position(Position) of 
+				none ->  		%前面没人
+					false;
+				_Found ->		%有人
+					true
+			end;
+		_->
+			none
+	end.	
+someoneAhead2(SoldierId,Side) ->
+	
+	case battlefield:get_soldier(SoldierId,Side) of
+		
+		none ->  % 角色不存在（已经挂掉了）
+			none;
+		
+		Soldier when is_record(Soldier,soldier) ->  % 找到角色
+
+			Position1 = erlbattle:calcDestination(Soldier#soldier.position, Soldier#soldier.facing, 1),
+			Position2 = erlbattle:calcDestination(Soldier#soldier.position, Soldier#soldier.facing, 2),
+			A = battlefield:get_soldier_by_position(Position1),
+			B = battlefield:get_soldier_by_position(Position2),
+			if (A /= none) or (B /= none) ->
+				true;
+			true -> false
+			end;
+		_->
+			none
+	end.		
 
