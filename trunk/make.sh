@@ -1,2 +1,0 @@
-#!/bin/sh
-erl -make
