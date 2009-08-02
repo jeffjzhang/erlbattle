@@ -44,6 +44,7 @@
 *体验::*
  * EbKongFu             ~ EB:功夫
   * EbMoveIsDifficult    ~ EB:移动士兵很难
+ * EbAI									~ EB:战队AI
 
 *工具::*
  * [NeoeEBReplayer       ~ Neoe回放器]^for JAVA^
