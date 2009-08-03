@@ -68,6 +68,7 @@
 
 = 目前最强的队伍 =
 neoe (到 rev.601 为止)
+欢迎不断挑战
 
 = TODO =
  * 使用 [http://code.google.com/p/support/wiki/WikiSyntax#Localizing_Wiki_Content 国际化标准] 准备面向外国朋友的文档!]
