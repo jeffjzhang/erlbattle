@@ -29,7 +29,7 @@
 ||hwh||俺是LOGOLS|| 小打小闹，改些小问题||
 ||KarlMa||战场时间表，指令消息接收等||核心程序维护||
 ||wolfgang||初始化战场||核心程序维护||
-||zoomq||为大家默默服务，整理各类文档||EB开发流程推动者;ECUG 社区联系人;创建 code.google 工程环境;介绍Issue提案管理流程;规划EB发展图景;引入yEd 统一图谱工具...||
+||zoomq||为大家默默服务，整理各类文档||EB开发流程推动者;ECUG 社区联系人;创建 code.google 工程环境;介绍Issue提案管理流程;规划EB发展图景: [EbRoles 角色]/[EbRoadMap 路线]/[EbGoal 宗旨]/[http://share.xmind.net/zoomquiet/xmind-950304/ 设想];引入yEd 统一图谱工具...||
 
  # 参加每次饿狼大赛并获得前三名的人员
   * 第一届获奖者是 `hwh, 老范，和 neoedmund`
