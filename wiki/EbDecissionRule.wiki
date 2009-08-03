@@ -20,7 +20,7 @@
 ||老范||发起eb,并开发了较多的代码|| 
 ||maxFung||做了漂亮的回放器||
 ||HouMinYuan||重新规划了整个编译体系||
-||hwh||(是Hou MingYuan 吗？）||
+||hwh||俺，俺是LOGOLS||
 ||KarlMa||战场时间表，指令消息接收等||
 ||wolfgang||初始化战场||
 ||EvenTao||着手引入emake||
