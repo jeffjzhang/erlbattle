@@ -21,6 +21,18 @@
         ]
 }.
 
+{'army/laofun/*',
+        [debug_info,
+	{i, "core/engine"},
+        {outdir, "ebin"}
+        ]
+}.
+{'army/karlcpp.random_army/*',
+        [debug_info,
+	{i, "core/engine"},
+        {outdir, "ebin"}
+        ]
+}.
 {'army/hwh/*',
 	[
 	{i, "core"},
