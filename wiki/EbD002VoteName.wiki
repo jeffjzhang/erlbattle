@@ -1,9 +1,7 @@
 #summary 管委会名称投票
-
 #labels Phase-Support,Rule,EBD
 
 
-<wiki:toc/>
 
 参考::
  * [EbDecissionRule EBD:饿狼决策委员会筹备]
