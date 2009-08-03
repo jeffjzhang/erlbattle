@@ -21,18 +21,13 @@
         ]
 }.
 
-{'army/laofun/*',
-        [debug_info,
-	{i, "core/engine"},
-        {outdir, "ebin"}
-        ]
-}.
 {'army/karlcpp.random_army/*',
         [debug_info,
 	{i, "core/engine"},
         {outdir, "ebin"}
         ]
 }.
+
 {'army/hwh/*',
 	[
 	{i, "core"},
@@ -41,6 +36,28 @@
 }.
 
 {'army/maddog/*',
+	[
+	{i, "core/engine"},
+	{outdir, "ebin"}
+	]
+}.
+
+{'army/langxianzhe/*',
+	[
+	{i, "core/engine"},
+	{outdir, "ebin"}
+	]
+}.
+
+{'army/laofan/*',
+	[
+	{i, "core/engine"},
+	{outdir, "ebin"}
+	]
+}.
+
+
+{'army/zoomquiet/*',
 	[
 	{i, "core/engine"},
 	{outdir, "ebin"}
