@@ -1,5 +1,5 @@
 #summary 饿狼决策委员会筹备
-#labels Phase-Support,Rule
+#labels Phase-Support,Rule,EBD
 
 
 <wiki:toc/>

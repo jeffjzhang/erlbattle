@@ -1,7 +1,19 @@
 #summary 管委会名称投票
 
-neoedmund 提议：  狼议会
+#labels Phase-Support,Rule,EBD
 
-karlcpp 提议：“恶狼战役委员会”，简称“恶委会” 
 
-hwh提议：恶狼轩
+<wiki:toc/>
+
+参考::
+ * [EbDecissionRule EBD:饿狼决策委员会筹备]
+
+= EBD-002:委员会名称 =
+
+|| 序号 || 命名 || 提议 ||备注|| 投票 ||
+|| 0 || 狼议会 || neoedmund || ~|| +1 ||
+|| 1 || 恶委会 || karlcpp || 恶狼战役委员会|| +1 ||
+|| 2 || 恶狼轩 || hwh || ~ ||+3 ||
+|| 3 || 恶决委 || ZoomQUiet || 全称:恶狼战役核心事务决策委员会/ 缩写:EBD || +1 ||
+|| 序号 || 命名 || 提议 || 备注||投票 ||
+

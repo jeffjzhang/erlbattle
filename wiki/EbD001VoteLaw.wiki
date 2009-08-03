@@ -1,5 +1,5 @@
 #summary 宪法章程投票表决
-#labels Phase-Support,Rule
+#labels Phase-Support,Rule,EBD
 
 
 <wiki:toc/>
