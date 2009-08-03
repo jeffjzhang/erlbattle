@@ -40,6 +40,7 @@
 *规范::*
  * EbInterface          ~ EB:开发接口规范
   * EbReplay             ~ EB:回放器文件格式定义
+ * EbMakefile            ~ EB:EB中Makefile的原理以及使用
 
 *体验::*
  * EbKongFu             ~ EB:功夫
