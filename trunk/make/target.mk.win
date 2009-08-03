@@ -1,57 +1,22 @@
-.SUFFIXES: .erl .app
 
-EBIN = ..\..\ebin\
+EBIN = .\ebin\ 
 
-!IFDEF MODULES
-TmpObjs0 = $(MODULES: =.beam )
-TmpObjs1 = $(TmpObjs0).beam
-TmpObjs2 = $(TmpObjs1: = ..\..\ebin\)
+DEL = del /Q
 
-TARGETS = $(EBIN)\$(TmpObjs2)
-!ENDIF
 
-!IFDEF CONFIG_FILE
-TARGETS = $(EBIN)\$(TmpObjs2) $(EBIN)\$(CONFIG_FILE)
-!ELSE
-!ENDIF
 
-#!MESSAGE $(TARGETS)
-EBIN = $(EBIN:/=\)
-#!MESSAGE $(EBIN)
+all: compile
 
-!IFDEF SUBDIRS
-SUBDIR_CMD = for %%1 in ($(SUBDIRS)) do cd %%1 && $(MAKE) $@ && cd ..
-!ENDIF
 
-all: compile .erlmake
+compile:
+	for %%1 in ($(ARMY_DIRS)) do if not exist $(EBIN)%%1 mkdir $(EBIN)%%1
+	erl -make
+
+
+clean:
+	$(DEL) $(EBIN)
+	for %%1 in ($(ARMY_DIRS)) do $(DEL) $(EBIN)%%1
+
 
 test: clean compile
 	erl -nologo -noshell -pz ebin -s testAll test -s init stop
-
-compile: $(TARGETS)	 	
-	 $(SUBDIR_CMD)
-
-.erlmake:
-	erl -make
-
-.app{$(EBIN)}.app:
-	copy $< $@
-
-ERLC_FLAGS = -W -I$(EB_TOP)/core/engine
-
-!IFDEF COMPILE_FLAG
-ERLC_FLAGS = $(ERLC_FLAGS) $(COMPILE_FLAG)
-!ELSE
-!ENDIF
-
-.erl{$(EBIN)}.beam:
-	erlc $(ERLC_FLAGS) -o $(EBIN) $<
-
-!IFDEF TARGETS
-DEL_CMD = del $(TARGETS)
-!ENDIF
-clean:
-	$(DEL_CMD)
-	$(SUBDIR_CMD)
-
-
