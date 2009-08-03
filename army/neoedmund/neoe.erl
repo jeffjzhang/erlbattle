@@ -74,14 +74,14 @@ turnBack(Man, Com, Side) ->
 		{X1,Y1}=A#soldier.position,
 		D=A#soldier.facing,
 		debug({list_to_atom(D),X1,Y1}),
-		if (D=="west") and (X1==0) ->
-				com(Com, {command,"turnSouth",Man,0,0}),
+		if (D=="west") and (X1==1) ->
+				com(Com, {command,"turnEast",Man,0,0}),
 				waitSec(),
 				com(Com, {command,"turnEast",Man,0,0}),
 				waitSec();
 		true ->
-			if (D=="east") and (X1==14) ->
-				com(Com, {command,"turnSouth",Man,0,0}),
+			if (D=="east") and (X1==13) ->
+				com(Com, {command,"turnWest",Man,0,0}),
 				waitSec(),
 				com(Com, {command,"turnWest",Man,0,0}),
 				waitSec();
@@ -153,9 +153,11 @@ someoneAhead2(SoldierId,Side) ->
 
 			Position1 = erlbattle:calcDestination(Soldier#soldier.position, Soldier#soldier.facing, 1),
 			Position2 = erlbattle:calcDestination(Soldier#soldier.position, Soldier#soldier.facing, 2),
+			Position3 = erlbattle:calcDestination(Soldier#soldier.position, Soldier#soldier.facing, 3),
 			A = battlefield:get_soldier_by_position(Position1),
 			B = battlefield:get_soldier_by_position(Position2),
-			if (A /= none) or (B /= none) ->
+			C = battlefield:get_soldier_by_position(Position3),
+			if (A /= none) or (B /= none) or (C /= none)->
 				true;
 			true -> false
 			end;
