@@ -49,6 +49,17 @@
 === 初回 ===
 [http://groups.google.com/group/ecug/browse_thread/thread/2829f2f9a5c9e2bb 恶狼战役：【英格兰卫兵】 对 【恐惧的农民】 战况实录 - ECUG~erlang中文用户组]
 
+ * [http://groups.google.com/group/ecug/browse_thread/thread/5a0ebaff3760cb13 饿狼战役：议题投票 ]^- ECUG~erlang中文用户组 | Google 网上论坛^
+{{{
+我参加erlbattle一是觉得erlang值得学习，
+二是喜欢和大伙一起讨论技术问题，
+也喜欢游戏，看到对技术喜爱的同类感到高兴。
+  至于为erlbattle做贡献，我说算了吧。 
+  你们从小受教育要为祖国做贡献，工作了为公司做贡献。 
+  我不接受洗脑，我只为自己做贡献。 
+}}}
+
+
 == eb1:智能的释放 ==
 
 == eb2:并发的威力 ==
