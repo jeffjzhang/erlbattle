@@ -108,7 +108,7 @@ command_decision(Facing, Status) ->
 		    %% 找一个没人的地儿
 		    case lists:filter(fun({_D, P}) -> P=:=nobody end, Status) of
 			%% 都有人,我等回再行动吧
-			[] -> "wait";
+			[] -> 'wait';
 			Any -> random_action(Facing, Any)
 		    end
 	    end

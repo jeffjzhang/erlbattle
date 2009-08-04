@@ -233,7 +233,7 @@ getNextMoveCommand(Soldier, Destination) ->
 		X1 < X2 -> X3 = X1 - 1, Y3 = Y1, F = 'east', Action = 'turnEast';
 		Y1 > Y2 -> X3 = X1 , Y3 = Y1 +1, F = 'south', Action = 'turnSouth';
 		Y1 < Y2 -> X3 = X1 , Y3 = Y1 -1, F = 'north', Action = 'turnNorth';
-		true -> X3 = X1 , Y3 = Y1, F= "none", Action = "wait"
+		true -> X3 = X1 , Y3 = Y1, F= "none", Action = 'wait'
 	end,
 
 	%% 如果位置相同，就结束动作
@@ -355,7 +355,7 @@ getFutureStatus(Soldier,Time) ->
 			case Soldier#soldier.action of
 
 				'forward' -> Soldier#soldier{position = calcDestination(Soldier#soldier.position, Soldier#soldier.facing, 1)};
-				"back" -> Soldier#soldier{position = calcDestination(Soldier#soldier.position, Soldier#soldier.facing, -1)};
+				'back' -> Soldier#soldier{position = calcDestination(Soldier#soldier.position, Soldier#soldier.facing, -1)};
 				'turnWest' -> Soldier#soldier{facing = 'west'};
 				'turnEast' -> Soldier#soldier{facing = 'east'};
 				'turnSouth' -> Soldier#soldier{facing = 'south'};

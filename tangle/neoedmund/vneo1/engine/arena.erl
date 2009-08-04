@@ -15,8 +15,8 @@ run() ->
 			% spawn(erlbattle,start,[A,B,{none,10,Fn}]) % you cannot use it now because ets name table
 			_Node=lists:concat(["N",atom_to_list(A), "_", atom_to_list(B), "@localhost"]),
 			% rpc:call(Node, erlbattle,start,[A,B,{none,10,Fn}])
-			io:fwrite(Io,"erl -pz ebin -eval erlbattle:start(~w,~w,{none,10,~w})~n" , [A,B,Fn])
-			% io:fwrite(Io,"start java -cp ../ebrep-bin/neoeebrep.jar neoe.ebrep.Main " , [A,B,Fn])
+			io:fwrite(Io,"erl -pz ebin -eval erlbattle:start(~w,~w,{none,10,~w})~n" , [A,B,Fn]),
+			io:fwrite(Io,"start java -cp ../ebrep-bin/neoeebrep.jar neoe.ebrep.Main ~w ~w ~w~n" , [A,B,Fn])
 			
 			end)
 		end),

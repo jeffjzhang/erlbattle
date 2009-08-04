@@ -28,6 +28,7 @@ loop(BattleField, Commander, Queue,CommandId) ->
 			case erlbattle:actionValid(Command) andalso erlbattle:soldierValid(Soldier) of
 
 				true ->
+				%	io:format("get command ~w~n",[Command]),
 					CmdRec = #command{
 							soldier_id = Soldier,
 							name = Command,
@@ -35,7 +36,9 @@ loop(BattleField, Commander, Queue,CommandId) ->
 							execute_seq = Seq,
 							seq_id = CommandId},
 					ets:insert(Queue, CmdRec);
-				_Else -> none
+				_Else ->
+					io:format("bad command ~w~n",[Command]), 
+					error3
 			end,					
 			loop(BattleField, Commander, Queue,CommandId +1);
 
@@ -65,6 +68,7 @@ loop(BattleField, Commander, Queue,CommandId) ->
 			ets:delete(Queue); % 清除队列
 			
 		_Else ->
+			io:format("bad msg ~w~n",[_Else]), 
 			loop(BattleField, Commander, Queue,CommandId)
 		
 	end.

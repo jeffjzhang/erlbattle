@@ -36,9 +36,9 @@ recordBattle() ->
 	ets:delete(battle_record),
 	%% open file
 	[{_,FileName}]=ets:lookup(br_local,filename),
-	io:format("writting to ~w~n",[list_to_atom(FileName)]),
+	io:format("writting to ~w~n",[FileName]),
 	{_Ok, Io} = file:open(FileName,[write, {encoding, utf8}]),
-	io:format("res ~w~w~n",[_Ok, Io]),
+	io:format("res ~w~w ~n",[_Ok, Io]),
 
 	%% 初始化战场
 	initBattleField(Io),
@@ -54,7 +54,7 @@ recordBattle() ->
 					io:fwrite(Io,"~p,~p,~p,~p,~p,~p,~p,0~n" , [Time, changeAction(Action), X, Y, uniqueId(Id), simpleDirection(Facing), Hp]);
 				{plan, Id, Action, ActionEffectTime} ->
 					if
-						Action == "wait"  ->
+						Action == 'wait'  ->
 							io:fwrite(Io,"plan,~p,[]~n" , [uniqueId(Id)]);
 						true ->
 							io:fwrite(Io,"plan,~p,~p@~p~n" , [uniqueId(Id), changeAction(Action), ActionEffectTime])
@@ -64,15 +64,15 @@ recordBattle() ->
 					io:fwrite(Io,"~p,~p,~p,~p,~p,~p,~p,~p~n" , [Time,'status', X,Y, uniqueId(Id), simpleDirection(Facing), Hp, HpLost]);
 				{result, Result}->
 					io:fwrite(Io,"result,~p~n" , [Result]);
-				_ ->
-					none
+				_A ->
+					io:format("?~w~n",[_A])
 				end
 			end,
 			Records),
 
 	%% close file
 	file:close(Io),
-	io:format("~w saved~n",[list_to_atom(FileName)]),
+	io:format("~w saved~n",[FileName]),
 	io:format("proc ~w~n",[processes()]),
 	halt().
 

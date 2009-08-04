@@ -67,7 +67,9 @@ get_soldier_by_side(Side) ->
 				act_sequence = '_'
 			},
 	
-	ets:match_object(battle_field,Pattern).
+	X=ets:match_object(battle_field,Pattern),
+	%io:format("side ~w ~w ~n",[Side,X]),
+	X.
 
 %%获得某方所有处于wait 状态的战士列表
 get_idle_soldier(Side) ->
