@@ -8,5 +8,5 @@
 = Details =
 
 
-  * 最后几百所有对手的程序： neoe.erl [http://code.google.com/p/erlbattle/source/browse/trunk/army/neoedmund/neoe.erl?spec=svn587&r=587 r587]
+  * 最后击败所有对手的程序： neoe.erl [http://code.google.com/p/erlbattle/source/browse/trunk/army/neoedmund/neoe.erl?spec=svn587&r=587 r587]
   * 能击败擂主程序但是不能击败所有对手的程序： 无
