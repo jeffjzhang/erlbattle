@@ -12,20 +12,24 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception {
-		new Main().run();
+		if (args.length!=2){
+			System.out.println("args: picdir, logfile");
+		}
+		new Main().run(args[0],args[1]);
 		System.out.println("program end.");
 
 	}
 
-	final static String picDir = "warpic";
+	String picDir = "warpic";
 	int picid;
 	Pic pic;
 
-	private void run() throws Exception {
+	private void run(String picdir, String logfile) throws Exception {
+		this.picDir=picdir;
 		picid = 1;
 		new File(picDir).mkdirs();
 		pic = new Pic();
-		BufferedReader in = new BufferedReader(new FileReader("warfield.txt"));
+		BufferedReader in = new BufferedReader(new FileReader(logfile));
 		int st = 0;
 		while (true) {
 			String line = in.readLine();
