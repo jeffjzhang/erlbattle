@@ -3,12 +3,13 @@
 -export([create/0,get_soldier/2,get_soldier_by_position/1,get_soldier_by_side/1,get_idle_soldier/1]).
 -include("schema.hrl").
 
+
 create() ->
 	%%创建战场信息表，用于查找战士信息，及某坐标点信息
 	ets:new(battle_field,[named_table,protected,{keypos,#soldier.id}]),
-    %%初始化士兵及位置
-	init_soldier("red",0,1,"east"),
-	init_soldier("blue",14,1,"west").
+	%%初始化士兵及位置
+	init_soldier('red',0,1,'east'),
+	init_soldier('blue',14,1,'west').
 
 init_soldier(Army,X,Y,Direction)->
 	Soldiers=?PreDef_army,
@@ -19,7 +20,7 @@ init_soldier(Army,X,Y,Direction)->
 				position={X,Y+Id},
 				hp=100,
 				facing = Direction,
-				action="wait",
+				action= none,
 				act_effect_time = 0,
 				act_sequence =0
 			},
@@ -38,14 +39,13 @@ get_soldier(Id,Side) ->
 
 %%得到某个坐标点上战士全部信息
 get_soldier_by_position(Position) ->
-	Pattern=#soldier{
-				id='_',
-				position=Position,
-				hp='_',
-				facing='_',
-				action='_',
-				act_effect_time = '_',
-				act_sequence = '_'
+	Pattern=#soldier{   id='_',
+			position=Position,
+			hp='_',
+			facing='_',
+			action='_',
+			act_effect_time = '_',
+			act_sequence = '_'
 			},
 	
 	case ets:match_object(battle_field,Pattern) of
@@ -76,7 +76,7 @@ get_idle_soldier(Side) ->
 				position='_',
 				hp='_',
 				facing='_',
-				action="wait",
+				action='wait',
 				act_effect_time = '_',
 				act_sequence = '_'
 			},

@@ -1,0 +1,22 @@
+%% 战场引擎
+{'engine/*', [
+      {outdir, "ebin"}
+      ]
+}.
+
+%% 各个战队
+{'army/*',
+        [debug_info,
+	{i, "engine"},
+        {outdir, "ebin"}
+        ]
+}.
+
+{'army/hwh/*',
+        [debug_info,
+	{i, "engine"},
+        {outdir, "ebin/hwh"}
+        ]
+}.
+
+
