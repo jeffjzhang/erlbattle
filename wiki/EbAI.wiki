@@ -24,5 +24,4 @@
 
 = 视线追逐算法 =
  在砖块环境中，从一点移动到另外一点，简单有效的直线算法，就是Bresenham算法了。
- *[http://erlbattle.googlecode.com/files/ai.7z 这里]*
- [这里http://erlbattle.googlecode.com/files/ai.7z]做了一个简单的实现。
+ http://erlbattle.googlecode.com/files/ai.7z 这里做了一个简单的实现。
