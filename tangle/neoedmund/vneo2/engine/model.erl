@@ -1,10 +1,9 @@
 -module(model).
 
--define(PreDef_army, [1,2,3,4,5,6,7,8,9,10]).
-
 -record(chess,{
 		id,
 		army,
+		type, % 兵种：步兵 footman 骑兵 knight 弓弩兵 archer 
 		x,y,
 		hp,
 %north,west,south,east
