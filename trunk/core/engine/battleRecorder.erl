@@ -1,4 +1,5 @@
 -module(battleRecorder).
+-include("schema.hrl").
 -export([start/1]).
 
 start(Pid) ->
@@ -34,7 +35,7 @@ recordBattle() ->
 	ets:delete(battle_record),
 	
 	%% open file
-	{_Ok, Io} = file:open("warfield.txt",[write]),		
+	{_Ok, Io} = file:open(?EbBattleLogFile,[write]),		
 	
 	%% 初始化战场
 	initBattleField(Io),
@@ -44,21 +45,21 @@ recordBattle() ->
 		fun(RawRecord) ->
 			{_Seq, Record} = RawRecord,
 			case Record of 
-				{action, Time, Id, Action, Position, Facing, Hp}->
+				{?LogCmdAction, Time, Id, Action, Position, Facing, Hp}->
 					{X,Y} = Position,
 
 					io:fwrite(Io,"~p,~p,~p,~p,~p,~p,~p,0~n" , [Time, changeAction(Action), X, Y, uniqueId(Id), simpleDirection(Facing), Hp]);
-				{plan, Id, Action, ActionEffectTime} ->
+				{?LogCmdPlan, Id, Action, ActionEffectTime} ->
 					if 
-						Action == "wait"  ->
+						Action == ?ActionWait  ->
 							io:fwrite(Io,"plan,~p,[]~n" , [uniqueId(Id)]);
 						true ->
 							io:fwrite(Io,"plan,~p,~p@~p~n" , [uniqueId(Id), changeAction(Action), ActionEffectTime])
 					end;
-				{status,Time, Id, Position, Facing, Hp, HpLost} ->
+				{?LogCmdStatus,Time, Id, Position, Facing, Hp, HpLost} ->
 					{X,Y} = Position,
 					io:fwrite(Io,"~p,~p,~p,~p,~p,~p,~p,~p~n" , [Time,'status', X,Y, uniqueId(Id), simpleDirection(Facing), Hp, HpLost]);
-				{result, Result}->
+				{?LogCmdResult, Result}->
 					io:fwrite(Io,"result,~p~n" , [list_to_atom(Result)]);
 				_ ->
 					none
@@ -72,9 +73,9 @@ recordBattle() ->
 %% 输出指令，让双方部队进入战场	
 initBattleField(Io) ->
 
-	Army = [1,2,3,4,5,6,7,8,9,10],
-	
-	%% 准备红方位置
+	Army = ?PreDef_army,
+
+    %% 准备红方位置
 	lists:foreach(
 		fun(Id) ->
 			io:fwrite(Io,"~p,~p,~p,~p,~p,~p,~p,~p~n" , [0,'stand', 0,1+Id, Id, 'e', 100, 0])
@@ -95,7 +96,7 @@ uniqueId(Id) ->
 	{Sid, Side} = Id,
 	
 	if 
-		Side == "blue" ->
+		Side == ?BlueSide ->
 			Sid + 10;
 		true ->
 			Sid
@@ -104,14 +105,14 @@ uniqueId(Id) ->
 %% 动作转码	
 changeAction(Action) ->	
 	if
-		Action == "move" -> 'walk';
-		Action == "forward" -> 'walk';
-		Action == "attack" -> 'fight';
-		Action == "back" -> 'back';
-		Action == "turnEast" -> 'turnEast';
-		Action == "turnWest" -> 'turnWest';
-		Action == "turnSouth" -> 'turnSouth';
-		Action == "turnNorth" -> 'turnNorth';
+		Action == ?ActionMove -> 'walk';
+		Action == ?ActionForward -> 'walk';
+		Action == ?ActionAttack -> 'fight';
+		Action == ?ActionBack -> 'back';
+		Action == ?ActionTurnEast -> 'turnEast';
+		Action == ?ActionTurnWest -> 'turnWest';
+		Action == ?ActionTurnSouth -> 'turnSouth';
+		Action == ?ActionTurnNorth -> 'turnNorth';
 		true -> list_to_atom(Action)
 	end.
 	
@@ -120,9 +121,9 @@ changeAction(Action) ->
 simpleDirection(Facing) ->
 
 	if
-		Facing == "west" ->'w';
-		Facing == "east" ->'e';
-		Facing == "north" ->'n';
-		Facing == "south" ->'s'
+		Facing == ?DirWest ->'w';
+		Facing == ?DirEast ->'e';
+		Facing == ?DirNorth ->'n';
+		Facing == ?DirSouth ->'s'
 	end.
 	
