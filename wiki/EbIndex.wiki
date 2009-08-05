@@ -17,8 +17,8 @@
  * EbNowPath            ~ eb0:当前开发路径
 
 `EB 对战大赛`^EBR:Erl Battle Race^
- * EbZhuLu              ~ EBR:逐鹿中原 对战大赛
- * EbZhengFeng   ~ EBR:谁与争锋 比赛规则 
+ # EbZhuLu              ~ EBR:逐鹿中原 对战大赛
+ # EbZhengFeng   ~ EBR:谁与争锋 比赛规则 
  
 === EBD:决策委员会 ===
  * EbDecissionRule  ~ 饿狼决策委员会筹备
