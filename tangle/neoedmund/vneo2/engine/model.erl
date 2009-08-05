@@ -27,13 +27,13 @@
 
 getCooldownTime(Action) ->
 	if
-		Action == forward  -> 200;
-		Action == back -> 400;
-		Action == turnSouth -> 100;
-		Action == turnWest -> 100;
-		Action == turnEast -> 100;
-		Action == turnNorth -> 100;
-		Action == attack -> 200;
+		Action == forward  -> 20;
+		Action == back -> 40;
+		Action == turnSouth -> 10;
+		Action == turnWest -> 10;
+		Action == turnEast -> 10;
+		Action == turnNorth -> 10;
+		Action == attack -> 20;
 		true ->
 			io:format("bad Action ~w~n",[Action]),
 			0
