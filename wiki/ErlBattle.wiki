@@ -10,7 +10,7 @@ SEE::[EbWhatItIs EB:是什么?]
  * 含义: 
   * 基于Erlang语言的实时技术学习平台
   * *Erlang Base actual time technic learnning environment*
- * 发源: [http://groups.google.com/group/ecug/browse_thread/thread/f132c35a21586429 恶狼战役 到底是怎么开始的?] - ［http://groups.google.com/group/ecug ECUG~erlang中文用户组］^ | Google 网上论坛^
+ * 发源: [http://groups.google.com/group/ecug/browse_thread/thread/f132c35a21586429 恶狼战役 到底是怎么开始的?] -  [http://groups.google.com/group/ecug ECUG~erlang中文用户组］^ | Google 网上论坛^
 
 
 == abt. ==
