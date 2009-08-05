@@ -1,4 +1,41 @@
+%% 战场最多运行的次数 
+-define(MaxEBTurn, 1000).   
+
+%% 战士数组
+%% 同时是战士编号
 -define(PreDef_army, [1,2,3,4,5,6,7,8,9,10]).
+
+%% 对战双方
+-define(RedSide, red).
+-define(BlueSide, blue).
+
+%% 方向
+-define(DirEast, east).
+-define(DirSouth, south).
+-define(DirWest, west).
+-define(DirNorth, north).
+
+%% 标准命令
+-define(ActionForward, forward).
+-define(ActionBack, back).
+-define(ActionTurnSouth, turnSouth).
+-define(ActionTurnWest, turnWest).
+-define(ActionTurnEast, turnEast).
+-define(ActionTurnNorth, turnNorth).
+-define(ActionAttack, attack).
+-define(ActionWait, wait).
+
+%% 记录时使用的行走命令
+-define(ActionMove, move).
+
+%% 战场日志文件名
+-define(EbBattleLogFile, "warfield.txt").
+
+%% 日志记录的消息命令字
+-define(LogCmdAction, action).
+-define(LogCmdStatus, status).
+-define(LogCmdPlan, plan).
+-define(LogCmdResult, result).
 
 -record(soldier,{
 		

@@ -4,8 +4,6 @@
 -include("schema.hrl").
 -include("test.hrl").
 
--define(MaxEBTurn, 1000).   %% 战场最多运行的次数 
-
 %% 默认战场入口程序
 start() ->
 	start(feardFarmers,englandArmy, {none, ?MaxEBTurn}).
@@ -32,8 +30,8 @@ start(BlueArmy, RedArmy, Context) ->
 	battlefield:create(),
 
 	%% 启动红方和蓝方的通讯通道
-	BlueSide = spawn_link(channel, start, [self(), "blue",BlueArmy]),
-	RedSide = spawn_link(channel, start, [self(), "red", RedArmy]),
+	BlueSide = spawn_link(channel, start, [self(), ?BlueSide,BlueArmy]),
+	RedSide = spawn_link(channel, start, [self(), ?RedSide, RedArmy]),
 
 	%% 开始等待两个channel 将queue 的句柄传回来， 要两个都收到，才能开始战斗
 	waitQueue(BlueSide, RedSide, none, none, Context, 0).
@@ -104,7 +102,7 @@ loop(BlueSide, RedSide, BlueQueue, RedQueue, Context) ->
 			io:format("~p army kills all the enemy, they win !! ~n", [Winner]),
 			
 			%% 输出结果
-			record({result, Winner ++ " army kills all the enemy, they win !!"}),
+			record({?LogCmdResult, atom_to_list(Winner) ++ " army kills all the enemy, they win !!"}),
 			
 			io:format("The battle run at ~pms per round speed ~n",[Sleep]),
 			
@@ -125,10 +123,10 @@ loop(BlueSide, RedSide, BlueQueue, RedQueue, Context) ->
 					
 						none -> 
 							io:format("no army win the battle!! ~n", []),
-							record({result, "no army win the battle!!"});
+							record({?LogCmdResult, "no army win the battle!!"});
 						{winner,Winner} ->
 							io:format("~p army win the battle!! ~n", [Winner]),
-							record({result, Winner ++ " army win the battle!!"});
+							record({?LogCmdResult, Winner ++ " army win the battle!!"});
 						_ELSE -> none
 					end,
 					
@@ -141,12 +139,12 @@ loop(BlueSide, RedSide, BlueQueue, RedQueue, Context) ->
 				true ->
 
 					%% 取红方处于wait 状态的战士的新的动作，执行，并将该指令从队列中删除
-					RedIdleSoldiers = battlefield:get_idle_soldier("red"),
+					RedIdleSoldiers = battlefield:get_idle_soldier(?RedSide),
 					RedUsedCommand = command(RedIdleSoldiers,RedQueue,Time),
 					RedSide ! {expireCommand, RedUsedCommand},
 					
 					%% 取蓝方处于wait 状态的战士的新的动作，执行，并将该指令从队列中删除					
-					BlueIdleSoldiers = battlefield:get_idle_soldier("blue"),
+					BlueIdleSoldiers = battlefield:get_idle_soldier(?BlueSide),
 					BlueUsedCommand = command(BlueIdleSoldiers,BlueQueue,Time),
 					BlueSide ! {expireCommand, BlueUsedCommand},
 
@@ -220,13 +218,13 @@ getNextCommand(Soldier,Queue,Time) ->
 calcActionTime(Action) ->
 
 	if
-		Action == "forward"  -> 2;
-		Action == "back" -> 4;
-		Action == "turnSouth" -> 1;
-		Action == "turnWest" -> 1;
-		Action == "turnEast" -> 1;
-		Action == "turnNorth" -> 1;
-		Action == "attack" -> 2;
+		Action == ?ActionForward  -> 2;
+		Action == ?ActionBack -> 4;
+		Action == ?ActionTurnSouth -> 1;
+		Action == ?ActionTurnWest -> 1;
+		Action == ?ActionTurnEast -> 1;
+		Action == ?ActionTurnNorth -> 1;
+		Action == ?ActionAttack -> 2;
 		true -> 0
 	end.
 	
@@ -257,13 +255,13 @@ act(Soldier,Time) ->
 	
 	Action = Soldier#soldier.action,
 	if 		
-		Action == "forward"  -> actMove(Soldier, 1,Time);
-		Action == "back" -> actMove(Soldier, -1,Time);
-		Action == "turnSouth" ->actTurn(Soldier,"south",Time);
-		Action == "turnWest" ->actTurn(Soldier,"west",Time);
-		Action == "turnEast" ->actTurn(Soldier,"east",Time);
-		Action == "turnNorth" ->actTurn(Soldier,"north",Time);
-		Action == "attack" -> actAttack(Soldier,Time);
+		Action == ?ActionForward  -> actMove(Soldier, 1,Time);
+		Action == ?ActionBack -> actMove(Soldier, -1,Time);
+		Action == ?ActionTurnSouth ->actTurn(Soldier,?DirSouth,Time);
+		Action == ?ActionTurnWest ->actTurn(Soldier,?DirWest,Time);
+		Action == ?ActionTurnEast ->actTurn(Soldier,?DirEast,Time);
+		Action == ?ActionTurnNorth ->actTurn(Soldier,?DirNorth,Time);
+		Action == ?ActionAttack -> actAttack(Soldier,Time);
 		true -> none
 	end.
 	
@@ -274,8 +272,8 @@ getActingSoldier(Time) ->
 	Army = ets:tab2list(battle_field),
 	
 	%% 红方和蓝方各自选一个执行sequence 最高的战士
-	BlueSoldier = getActingSoldier(Army,"blue",Time),
-	RedSoldier = getActingSoldier(Army,"red",Time),
+	BlueSoldier = getActingSoldier(Army,?BlueSide,Time),
+	RedSoldier = getActingSoldier(Army,?RedSide,Time),
 	
 	%% 随机决定双方选出来的战士谁先执行
 	if
@@ -301,7 +299,7 @@ getActingSoldier(Army, Side, Time) ->
 				%% 过滤wait 状态的，生效时间大于当前的，非本方的战士
 				Soldier#soldier.act_effect_time =< Time andalso 
 					MySide == Side andalso 
-					Soldier#soldier.action /= "wait" -> true andalso
+					Soldier#soldier.action /= ?ActionWait -> true andalso
 					actionValid(Soldier#soldier.action);	%指令必须是合法的，否则就过滤掉，不去执行
 				true -> false
 			end
@@ -327,18 +325,18 @@ getActingSoldier(Army, Side, Time) ->
 
 %% 动作合法性判断	
 actionValid(Action) ->
-	ValidActions = ["attack","forward","back","turnWest","turnEast","turnNorth","turnSouth","wait"],
+	ValidActions = [?ActionAttack,?ActionForward,?ActionBack,?ActionTurnWest,?ActionTurnEast,?ActionTurnNorth,?ActionTurnSouth,?ActionWait],
 	lists:member(Action, ValidActions).
 
 soldierValid(Soldier) ->
-	ValidSoldiers = [1,2,3,4,5,6,7,8,9,10],
+	ValidSoldiers = ?PreDef_army,
 	lists:member(Soldier, ValidSoldiers).
 
 %%转向动作, 不受别人影响
 actTurn(Soldier, Direction, Time) ->
 	
-	ets:update_element(battle_field, Soldier#soldier.id, [{6, "wait"},{5, Direction}]),
-	record({action, Time, Soldier#soldier.id, addTurn(Direction), Soldier#soldier.position, Soldier#soldier.facing, Soldier#soldier.hp}).
+	ets:update_element(battle_field, Soldier#soldier.id, [{6, ?ActionWait},{5, Direction}]),
+	record({?LogCmdAction, Time, Soldier#soldier.id, addTurn(Direction), Soldier#soldier.position, Soldier#soldier.facing, Soldier#soldier.hp}).
 	
 
 %% 移动动作，需要看目标格中是否有对手
@@ -351,11 +349,11 @@ actMove(Soldier, Direction, Time) ->
 	case positionValid(DestPosition) of
 		
 		true ->  
-			ets:update_element(battle_field, Soldier#soldier.id, [{6, "wait"},{3, DestPosition}]),
+			ets:update_element(battle_field, Soldier#soldier.id, [{6, ?ActionWait},{3, DestPosition}]),
 			%% 输出行走动作
-			record({action, Time, Soldier#soldier.id, "move", DestPosition, Soldier#soldier.facing, Soldier#soldier.hp});			
+			record({?LogCmdAction, Time, Soldier#soldier.id, ?ActionMove, DestPosition, Soldier#soldier.facing, Soldier#soldier.hp});			
 		_ ->
-			ets:update_element(battle_field, Soldier#soldier.id, [{6, "wait"}])
+			ets:update_element(battle_field, Soldier#soldier.id, [{6, ?ActionWait}])
 	end.
 	
 
@@ -365,10 +363,10 @@ calcDestination(Position, Facing, Direction) ->
 	{Px, Py} = Position,
 	
 	if  
-		Facing == "west" -> {Px - Direction, Py};
-		Facing == "east" -> {Px + Direction, Py};
-		Facing == "north" -> {Px, Py + Direction};
-		Facing == "south" -> {Px, Py - Direction};
+		Facing == ?DirWest -> {Px - Direction, Py};
+		Facing == ?DirEast -> {Px + Direction, Py};
+		Facing == ?DirNorth -> {Px, Py + Direction};
+		Facing == ?DirSouth -> {Px, Py - Direction};
 		true -> {Px,Py}
 	end.
 
@@ -405,19 +403,19 @@ actAttack(Soldier,Time) ->
 				%% 只能攻击敌人，自己人不能攻击
 				MySide /= ESide ->
 					%% 输出该战士攻击动作
-					record({action, Time, ID, "attack", Position, Facing, Hp}),
+					record({?LogCmdAction, Time, ID, ?ActionAttack, Position, Facing, Hp}),
 
 					case calcHit(Soldier, Enemy) of
 						%% 如果hit 返回 0 ，表示该敌人被杀死
 						Hit when Hit == 0 ->
 							ets:match_delete(battle_field, Enemy),
 							%% 输出被攻击者状态
-							record({status, Time, Enemy#soldier.id, Enemy#soldier.position, Enemy#soldier.facing, 0, Enemy#soldier.hp});
+							record({?LogCmdStatus, Time, Enemy#soldier.id, Enemy#soldier.position, Enemy#soldier.facing, 0, Enemy#soldier.hp});
 	
 						%% Hit 大于零，扣减掉对方的血
 						Hit when Hit > 0 ->
 							ets:update_element(battle_field, EID, [{4, EHp - Hit}]),
-							record({status, Time, Enemy#soldier.id, Enemy#soldier.position, Enemy#soldier.facing, Enemy#soldier.hp - Hit, Hit})
+							record({?LogCmdStatus, Time, Enemy#soldier.id, Enemy#soldier.position, Enemy#soldier.facing, Enemy#soldier.hp - Hit, Hit})
 						end;
 
 				true -> true
@@ -428,7 +426,7 @@ actAttack(Soldier,Time) ->
 
 	
 	%% 将自己的动作结束
-	ets:update_element(battle_field, ID, [{6, "wait"}]).
+	ets:update_element(battle_field, ID, [{6, ?ActionWait}]).
 	
 	
 %% 计算攻击损伤
@@ -473,8 +471,8 @@ getTime() ->
 %% 先看剩余人数， 然后看累计血量，如果都一样就判为平局
 calcWinner() ->
 	
-	RedArmy = battlefield:get_soldier_by_side("red"),
-	BlueArmy = battlefield:get_soldier_by_side("blue"),
+	RedArmy = battlefield:get_soldier_by_side(?RedSide),
+	BlueArmy = battlefield:get_soldier_by_side(?BlueSide),
 	
 	RedCount = length(RedArmy),
 	BlueCount = length(BlueArmy),
@@ -486,28 +484,28 @@ calcWinner() ->
 			BlueBlood = calcBlood(BlueArmy),
 			if 
 				RedBlood > BlueBlood ->
-					{winner, "Red"};
+					{winner, ?RedSide};
 				RedBlood < BlueBlood ->
-					{winner, "Blue"};
+					{winner, ?BlueSide};
 				true ->
 					none
 			end;
 		RedCount < BlueCount ->
-			{winner, "Blue"};
+			{winner, ?BlueSide};
 		true ->
-			{winner, "Red"}
+			{winner, ?RedSide}
 	end.
 
 %% 检查战斗是否已经结束
 checkWinner() ->
 
-	case battlefield:get_soldier_by_side("red") of 
+	case battlefield:get_soldier_by_side(?RedSide) of 
 		[] ->
-			{winner,"blue"};
+			{winner,?BlueSide};
 		_ ->
-			case battlefield:get_soldier_by_side("blue") of
+			case battlefield:get_soldier_by_side(?BlueSide) of
 				[] ->
-					{winner, "red"};
+					{winner, ?RedSide};
 				_ ->
 					none
 			end
@@ -530,18 +528,18 @@ recordPlan(Time) ->
 	
 	lists:foreach(
 		fun(Soldier) -> 
-			record({plan, Soldier#soldier.id, Soldier#soldier.action, Soldier#soldier.act_effect_time - Time})
+			record({?LogCmdPlan, Soldier#soldier.id, Soldier#soldier.action, Soldier#soldier.act_effect_time - Time})
 		end,
 		Soldiers).
 
 %% 按照标准格式化输出turnWest 等状态	
 addTurn(Direction) ->
 	if 
-		Direction == "west" -> "turnWest";
-		Direction == "east" -> "turnEast";
-		Direction == "south" -> "turnSouth";
-		Direction == "north" -> "turnNorth";
-		true -> "wait"
+		Direction == ?DirWest -> ?ActionTurnWest;
+		Direction == ?DirEast -> ?ActionTurnEast;
+		Direction == ?DirSouth -> ?ActionTurnSouth;
+		Direction == ?DirNorth -> ?ActionTurnNorth;
+		true -> ?ActionWait
 	end.
 
 	

@@ -7,8 +7,8 @@ create() ->
 	%%创建战场信息表，用于查找战士信息，及某坐标点信息
 	ets:new(battle_field,[named_table,protected,{keypos,#soldier.id}]),
     %%初始化士兵及位置
-	init_soldier("red",0,1,"east"),
-	init_soldier("blue",14,1,"west").
+	init_soldier(?RedSide,0,1,?DirEast),
+	init_soldier(?BlueSide,14,1,?DirWest).
 
 init_soldier(Army,X,Y,Direction)->
 	Soldiers=?PreDef_army,
@@ -19,7 +19,7 @@ init_soldier(Army,X,Y,Direction)->
 				position={X,Y+Id},
 				hp=100,
 				facing = Direction,
-				action="wait",
+				action=?ActionWait,
 				act_effect_time = 0,
 				act_sequence =0
 			},
@@ -76,7 +76,7 @@ get_idle_soldier(Side) ->
 				position='_',
 				hp='_',
 				facing='_',
-				action="wait",
+				action=?ActionWait,
 				act_effect_time = '_',
 				act_sequence = '_'
 			},

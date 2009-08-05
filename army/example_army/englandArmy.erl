@@ -17,9 +17,9 @@ loop(Channel, Side, Queue) ->
 		fun(Soldier) ->   % 一直朝前， 直到碰到人，然后开始砍	
 			case someoneAhead(Soldier,Side) of
 				true ->
-					Channel!{command,"attack",Soldier,0,random:uniform(5)};
+					Channel!{command,?ActionAttack,Soldier,0,random:uniform(5)};
 				false ->
-					Channel!{command,"forward",Soldier,0,random:uniform(3)};
+					Channel!{command,?ActionForward,Soldier,0,random:uniform(3)};
 				_ ->
 					none
 			end
