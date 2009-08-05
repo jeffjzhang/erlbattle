@@ -1,3 +1,4 @@
-1. list to atom
- for values
+1. list to atom  for values
+把字符串string改成原子atom
 2. auto arena
+用runarena.cmd运行循环赛(runarena.cmd是由makearena.py生成)
