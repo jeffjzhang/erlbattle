@@ -33,3 +33,21 @@ http://hellobmw.com/wp-content/uploads/access-flickr.png
  * Pls. usage OOo to replace M$ Office. http://zh.openoffice.org
  * Pls. usage 7-zip to replace WinRAR/WinZip.  http://7-zip.org
   * You can get the truely Freedom 4 software.
+ 
+= misc =
+for erloungIII
+
+ * 一次成功的所有人都有所得的够味的技术大会至少有以下步骤:
+{{{
+0. 涉众调研
+1. 主题设计
+2. 赞助筹备
+3. 前期宣传
+4. 正式启动
+5. 预订注册
+6. 现场组织(行程／财务／录音／录像／网络转播,,,)
+7. 会后总结
+8. 持续报道
+9. 验收成果
+
+}}}
