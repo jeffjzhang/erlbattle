@@ -48,9 +48,9 @@ go1(Man, Com, Side) ->
 	turnBack(Man, Com, Side),
 	case someoneAhead1(Man,Side) of
 		true ->
-			com(Com, {command,'attack',Man,0,0});
+			com(Com, {command,attack,Man,0,0});
 		false ->
-			com(Com, {command,'forward',Man,0,0});
+			com(Com, {command,forward,Man,0,0});
 		_ ->
 			none
 	end,
@@ -60,9 +60,9 @@ go2(Man, Com, Side) ->
 	turnBack(Man, Com, Side),
 	case someoneAhead2(Man,Side) of
 		true ->
-			com(Com, {command,'attack',Man,0,0});
+			com(Com, {command,attack,Man,0,0});
 		false ->
-			com(Com, {command,'forward',Man,0,0});
+			com(Com, {command,forward,Man,0,0});
 		_ ->
 			none
 	end,
@@ -74,16 +74,16 @@ turnBack(Man, Com, Side) ->
 		{X1,Y1}=A#soldier.position,
 		D=A#soldier.facing,
 		debug({D,X1,Y1}),
-		if (D=='west') and (X1==1) ->
-				com(Com, {command,'turnEast',Man,0,0}),
+		if (D==west) and (X1==1) ->
+				com(Com, {command,turnEast,Man,0,0}),
 				waitSec(),
-				com(Com, {command,'turnEast',Man,0,0}),
+				com(Com, {command,turnEast,Man,0,0}),
 				waitSec();
 		true ->
-			if (D=='east') and (X1==13) ->
-				com(Com, {command,'turnWest',Man,0,0}),
+			if (D==east) and (X1==13) ->
+				com(Com, {command,turnWest,Man,0,0}),
 				waitSec(),
-				com(Com, {command,'turnWest',Man,0,0}),
+				com(Com, {command,turnWest,Man,0,0}),
 				waitSec();
 			true -> none	
 			end
@@ -96,9 +96,9 @@ go(Man, Com) ->
 	X1 = isFacingEnemy(),
 	if 
 		X1 == true ->		
-			com(Com, {command,'attack',Man,0,0});
+			com(Com, {command,attack,Man,0,0});
 		true ->
-			com(Com, {command,'forward',Man,0,0})
+			com(Com, {command,forward,Man,0,0})
 	end,		
 	waitSec(),
 	go(Man, Com).
@@ -109,7 +109,7 @@ waitSec() ->
 waitSec(T1) ->
 	T2 = erlbattle:getTime(),
 	if T2<T1 ->
-		sleep(100),
+		sleep(10),
 		waitSec(T1);
 	true -> none
 	end.

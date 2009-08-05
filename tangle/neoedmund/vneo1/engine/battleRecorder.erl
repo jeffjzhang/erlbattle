@@ -54,7 +54,7 @@ recordBattle() ->
 					io:fwrite(Io,"~p,~p,~p,~p,~p,~p,~p,0~n" , [Time, changeAction(Action), X, Y, uniqueId(Id), simpleDirection(Facing), Hp]);
 				{plan, Id, Action, ActionEffectTime} ->
 					if
-						Action == 'wait'  ->
+						Action == wait  ->
 							io:fwrite(Io,"plan,~p,[]~n" , [uniqueId(Id)]);
 						true ->
 							io:fwrite(Io,"plan,~p,~p@~p~n" , [uniqueId(Id), changeAction(Action), ActionEffectTime])
@@ -84,14 +84,14 @@ initBattleField(Io) ->
 	%% 准备红方位置
 	lists:foreach(
 		fun(Id) ->
-			io:fwrite(Io,"~p,~p,~p,~p,~p,~p,~p,~p~n" , [0,'stand', 0,1+Id, Id, 'e', 100, 0])
+			io:fwrite(Io,"~p,~p,~p,~p,~p,~p,~p,~p~n" , [0,stand, 0,1+Id, Id, 'e', 100, 0])
 		end,
 		Army),
 
 	%% 准备蓝方位置
 	lists:foreach(
 		fun(Id) ->
-			io:fwrite(Io,"~p,~p,~p,~p,~p,~p,~p,~p~n" , [0,'stand', 14,1+Id, Id+10, 'w', 100, 0])
+			io:fwrite(Io,"~p,~p,~p,~p,~p,~p,~p,~p~n" , [0,stand, 14,1+Id, Id+10, 'w', 100, 0])
 		end,
 		Army).
 
@@ -102,7 +102,7 @@ uniqueId(Id) ->
 	{Sid, Side} = Id,
 
 	if
-		Side == 'blue' ->
+		Side == blue ->
 			Sid + 10;
 		true ->
 			Sid
@@ -111,14 +111,14 @@ uniqueId(Id) ->
 %% 动作转码
 changeAction(Action) ->
 	if
-		Action == 'move' -> 'walk';
-		Action == 'forward' -> 'walk';
-		Action == 'attack' -> 'fight';
-		Action == 'back' -> 'back';
-		Action == 'turnEast' -> 'turnEast';
-		Action == 'turnWest' -> 'turnWest';
-		Action == 'turnSouth' -> 'turnSouth';
-		Action == 'turnNorth' -> 'turnNorth';
+		Action == move -> walk;
+		Action == forward -> walk;
+		Action == attack -> fight;
+		Action == back -> back;
+		Action == turnEast -> turnEast;
+		Action == turnWest -> turnWest;
+		Action == turnSouth -> turnSouth;
+		Action == turnNorth -> turnNorth;
 		true -> Action
 	end.
 
@@ -127,9 +127,9 @@ changeAction(Action) ->
 simpleDirection(Facing) ->
 
 	if
-		Facing == 'west' ->'w';
-		Facing == 'east' ->'e';
-		Facing == 'north' ->'n';
-		Facing == 'south' ->'s'
+		Facing == west ->'w';
+		Facing == east ->'e';
+		Facing == north ->'n';
+		Facing == sou ->'s'
 	end.
 

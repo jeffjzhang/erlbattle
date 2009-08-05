@@ -6,8 +6,8 @@
 enemy(blue) -> red;
 enemy(red) -> blue.
 
-facing(blue) -> 'west';
-facing(red) -> 'east'.
+facing(blue) -> west;
+facing(red) -> east.
 
 
 calc_area(Side) ->
@@ -61,50 +61,50 @@ path(SX, SY, DX, DY, _, _, _) when SX =:= DX andalso SY =:= DY -> stop;
 %%目标在东方
 path(SX, SY, DX, DY, Facing, Action, check) when SX < DX ->
 	path(SX, SY, DX, DY, Facing, Action, east);
-path(SX, _, DX, _, 'east', Action, east) ->
+path(SX, _, DX, _, east, Action, east) ->
 	if
-		(SX+1) =:= DX andalso Action =:= 'forward' -> none;
-		true -> 'forward'
+		(SX+1) =:= DX andalso Action =:= forward -> none;
+		true -> forward
 
 	end;
-path(_, _, _, _, _, 'turnEast', east) -> forward;
-path(_, _, _, _, _, _, east) -> 'turnEast';
+path(_, _, _, _, _, turnEast, east) -> forward;
+path(_, _, _, _, _, _, east) -> turnEast;
 %%目标在西方
 path(SX, SY, DX, DY, Facing, Action, check) when SX > DX ->
 	path(SX, SY, DX, DY, Facing, Action, west);
-path(SX, _, DX, _, 'west', Action, west) ->
+path(SX, _, DX, _, west, Action, west) ->
 	if
-		SX =:= (DX+1) andalso Action =:= 'forward' -> none;
-		true -> 'forward'
+		SX =:= (DX+1) andalso Action =:= forward -> none;
+		true -> forward
 	end;
-path(_, _, _, _, _, 'turnWest', west) -> forward;
-path(_, _, _, _, _, _, west) -> 'turnWest';
+path(_, _, _, _, _, turnWest, west) -> forward;
+path(_, _, _, _, _, _, west) -> turnWest;
 %%目标在南方
 path(SX, SY, DX, DY, Facing, Action, check) when SY > DY ->
 	path(SX, SY, DX, DY, Facing, Action, south);
-path(_, SY, _, DY, 'south', Action, south) ->
+path(_, SY, _, DY, sou, Action, south) ->
 	if
-		SY =:= (DY+1) andalso Action =:= 'forward' -> none;
-		true -> 'forward'
+		SY =:= (DY+1) andalso Action =:= forward -> none;
+		true -> forward
 	end;
-path(_, _, _, _, _, 'turnSouth', south) -> forward;
-path(_, _, _, _, _, _, south) -> 'turnSouth';
+path(_, _, _, _, _, turnSouth, south) -> forward;
+path(_, _, _, _, _, _, south) -> turnSouth;
 %%目标在北方
 path(SX, SY, DX, DY, Facing, Action, check) when SY < DY ->
 	path(SX, SY, DX, DY, Facing, Action, north);
-path(_, SY, _, DY, 'north', Action, north) ->
+path(_, SY, _, DY, north, Action, north) ->
 	if
-		(SY+1) =:= DY andalso Action =:= 'forward' -> none;
-		true -> 'forward'
+		(SY+1) =:= DY andalso Action =:= forward -> none;
+		true -> forward
 	end;
-path(_, _, _, _, _, 'turnNorth', north) -> forward;
-path(_, _, _, _, _, _, north) -> 'turnNorth'.
+path(_, _, _, _, _, turnNorth, north) -> forward;
+path(_, _, _, _, _, _, north) -> turnNorth.
 
 
-turn('east') -> 'turnEast';
-turn('west') -> 'turnWest';
-turn('north') -> 'turnNorth';
-turn('south') -> 'turnSouth'.
+turn(east) -> turnEast;
+turn(west) -> turnWest;
+turn(north) -> turnNorth;
+turn(sou) -> turnSouth.
 
 
 srand() ->
@@ -205,7 +205,7 @@ get_around(Dest, Opn, CloseList) ->
 				facing = F
 			}
 		end,
-		[{'east', 1, 0}, {'west', -1, 0}, {'north', 0, 1}, {'south', 0, -1}]),
+		[{east, 1, 0}, {west, -1, 0}, {north, 0, 1}, {sou, 0, -1}]),
 	.lists:filter(fun(O) ->
 			{X, Y} = O#opn.pos,
 			if

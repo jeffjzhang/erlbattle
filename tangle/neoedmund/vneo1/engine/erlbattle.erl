@@ -34,8 +34,8 @@ start(BlueArmy, RedArmy, Context) ->
 	battlefield:create(),
 
 	%% 启动红方和蓝方的通讯通道
-	BlueSide = spawn_link(channel, start, [self(), 'blue',BlueArmy]),
-	RedSide = spawn_link(channel, start, [self(), 'red', RedArmy]),
+	BlueSide = spawn_link(channel, start, [self(), blue,BlueArmy]),
+	RedSide = spawn_link(channel, start, [self(), red, RedArmy]),
 
 	%% 开始等待两个channel 将queue 的句柄传回来， 要两个都收到，才能开始战斗
 	waitQueue(BlueSide, RedSide, none, none, Context, 0).
@@ -77,7 +77,9 @@ beginWar(BlueSide, RedSide, BlueQueue, RedQueue, Context) ->
 		true ->
 			Context2 = Context
 	end,
-
+	{Sleep1, Maxtime1, FileName1} = Context2,
+	io:format("run sleep:~w turn:~w other:~w~n",[Sleep1, Maxtime1, FileName1]),
+	
 	%% 开始战斗
 	loop(BlueSide, RedSide,BlueQueue, RedQueue, Context2).
 
@@ -89,8 +91,8 @@ loop(BlueSide, RedSide, BlueQueue, RedQueue, Context) ->
 
 	%%获得当前时钟， 战场从 第一秒 开始
 	Time = ets:update_counter(battle_timer, clock, 1),
-	io:format("~n--------------Time = ~p s --------------~n", [Time]),
-	io:format("Battle Field Status Report ~n ~p ~n", [ets:tab2list(battle_field)]),
+	%io:format("~n--------------Time = ~p s --------------~n", [Time]),
+	%io:format("Battle Field Status Report ~n ~p ~n", [ets:tab2list(battle_field)]),
 
 	%% 睡一会，让指挥程序可以考虑
 	tools:sleep(Sleep),
@@ -104,10 +106,10 @@ loop(BlueSide, RedSide, BlueQueue, RedQueue, Context) ->
 		%% 胜负已分
 		{winner, Winner} ->
 
-			io:format("~p army kills all the enemy, they win !! ~n", [Winner]),
+			io:format("~w army kills all the enemy, they win !! ~n", [Winner]),
 
 			%% 输出结果
-			record({result, Winner ++ " army kills all the enemy, they win !!"}),
+			record({result, atom_to_list(Winner) ++ " army kills all the enemy, they win !!"}),
 
 			io:format("The battle run at ~pms per round speed ~n",[Sleep]),
 
@@ -130,8 +132,8 @@ loop(BlueSide, RedSide, BlueQueue, RedQueue, Context) ->
 							io:format("no army win the battle!! ~n", []),
 							record({result, "no army win the battle!!"});
 						{winner,Winner} ->
-							io:format("~p army win the battle!! ~n", [Winner]),
-							record({result, Winner ++ " army win the battle!!"});
+							io:format("~w army win the battle!! ~n", [Winner]),
+							record({result, atom_to_list(Winner) ++ " army win the battle!!"});
 						_ELSE -> none
 					end,
 
@@ -144,12 +146,12 @@ loop(BlueSide, RedSide, BlueQueue, RedQueue, Context) ->
 				true ->
 
 					%% 取红方处于wait 状态的战士的新的动作，执行，并将该指令从队列中删除
-					RedIdleSoldiers = battlefield:get_idle_soldier('red'),
+					RedIdleSoldiers = battlefield:get_idle_soldier(red),
 					RedUsedCommand = command(RedIdleSoldiers,RedQueue,Time),
 					RedSide ! {expireCommand, RedUsedCommand},
 
 					%% 取蓝方处于wait 状态的战士的新的动作，执行，并将该指令从队列中删除
-					BlueIdleSoldiers = battlefield:get_idle_soldier('blue'),
+					BlueIdleSoldiers = battlefield:get_idle_soldier(blue),
 					BlueUsedCommand = command(BlueIdleSoldiers,BlueQueue,Time),
 					BlueSide ! {expireCommand, BlueUsedCommand},
 
@@ -164,13 +166,13 @@ loop(BlueSide, RedSide, BlueQueue, RedQueue, Context) ->
 %% 对于处于wait 状态的战士，取出下一个指令（如果有的话），并执行之
 command([],_Queue,_Time) -> [];
 command([Soldier | T], Queue, Time) ->
-	io:format("co ~w ~w ~n",[Soldier, Queue]),
+	%io:format("co ~w ~w ~n",[Soldier, Queue]),
 	%% 寻找当前战士新指令, 并执行之
 	case getNextCommand(Soldier,Queue,Time) of
 
 		%% 找到指令
 		{command, Command} ->
-			io:format("next command ~w~n",[Command]),
+			%io:format("next command ~w~n",[Command]),
 			%% 校验command 合法性，如果不合法，则忽略
 			case actionValid(Command#command.name) of
 
@@ -223,13 +225,13 @@ getNextCommand(Soldier,Queue,Time) ->
 calcActionTime(Action) ->
 
 	if
-		Action == 'forward'  -> 2;
-		Action == 'back' -> 4;
-		Action == 'turnSouth' -> 1;
-		Action == 'turnWest' -> 1;
-		Action == 'turnEast' -> 1;
-		Action == 'turnNorth' -> 1;
-		Action == 'attack' -> 2;
+		Action == forward  -> 2;
+		Action == back -> 4;
+		Action == turnSouth -> 1;
+		Action == turnWest -> 1;
+		Action == turnEast -> 1;
+		Action == turnNorth -> 1;
+		Action == attack -> 2;
 		true ->
 			io:format("bad Action"),
 			0
@@ -261,15 +263,15 @@ act(Soldier,Time) ->
 	%% 原地待命 wait
 
 	Action = Soldier#soldier.action,
-	io:format("act ~w~n",[Action]),
+	%io:format("act ~w~n",[Action]),
 	if
-		Action == 'forward'  -> actMove(Soldier, 1,Time);
-		Action == 'back' -> actMove(Soldier, -1,Time);
-		Action == 'turnSouth' ->actTurn(Soldier,'south',Time);
-		Action == 'turnWest' ->actTurn(Soldier,'west',Time);
-		Action == 'turnEast' ->actTurn(Soldier,'east',Time);
-		Action == 'turnNorth' ->actTurn(Soldier,'north',Time);
-		Action == 'attack' -> actAttack(Soldier,Time);
+		Action == forward  -> actMove(Soldier, 1,Time);
+		Action == back -> actMove(Soldier, -1,Time);
+		Action == turnSouth ->actTurn(Soldier,sou,Time);
+		Action == turnWest ->actTurn(Soldier,west,Time);
+		Action == turnEast ->actTurn(Soldier,east,Time);
+		Action == turnNorth ->actTurn(Soldier,north,Time);
+		Action == attack -> actAttack(Soldier,Time);
 		true ->
 			io:format("bad action ~w ~n",[Action]),
 			error1
@@ -280,13 +282,13 @@ act(Soldier,Time) ->
 getActingSoldier(Time) ->
 
 	Army = ets:tab2list(battle_field),
-	io:format("a ~w~n",[Army]),
+	%io:format("a ~w~n",[Army]),
 
 	%% 红方和蓝方各自选一个执行sequence 最高的战士
-	BlueSoldier = getActingSoldier(Army,'blue',Time),
-	RedSoldier = getActingSoldier(Army,'red',Time),
-	io:format("b ~w~n",[BlueSoldier]),
-	io:format("c ~w~n",[RedSoldier]),
+	BlueSoldier = getActingSoldier(Army,blue,Time),
+	RedSoldier = getActingSoldier(Army,red,Time),
+	%io:format("b ~w~n",[BlueSoldier]),
+	%io:format("c ~w~n",[RedSoldier]),
 
 	%% 随机决定双方选出来的战士谁先执行
 	if
@@ -303,23 +305,28 @@ getActingSoldier(Time) ->
 
 %% 过滤出指定颜色的并且有马上需要执行动作的队伍
 getActingSoldier(Army, Side, Time) ->
-	io:format("army ~w ~w ~w~n",[Army, Side, Time]),
+	%io:format("army ~w ~w ~w~n",[Army, Side, Time]),
 	%% 过滤出本队伍所有需要当前执行动作的战士,并按照act_sequence 排序
 	MyArmy = lists:keysort(7, lists:filter(
 		fun(Soldier) ->
 			{_Id, MySide} = Soldier#soldier.id,
-			io:format("~w ~w ~w ~w~n",[_Id, MySide,MySide == Side,actionValid(Soldier#soldier.action)]),
+			X1=actionValid(Soldier#soldier.action),
+			%io:format("~w ~w ~w ~w~n",[_Id, MySide,MySide == Side,X1]),
 			if
 				%% 过滤wait 状态的，生效时间大于当前的，非本方的战士
-				Soldier#soldier.act_effect_time =< Time andalso
-					MySide == Side andalso
-					Soldier#soldier.action /= 'wait' -> true andalso
-					actionValid(Soldier#soldier.action);	%指令必须是合法的，否则就过滤掉，不去执行
-				true -> false
+				(Soldier#soldier.act_effect_time =< Time) andalso
+					(MySide == Side) andalso
+					(Soldier#soldier.action /= wait) andalso
+					(X1 == true) ->
+						%io:format("get acting soldier:~w~n",[Soldier]),
+						true ;	%指令必须是合法的，否则就过滤掉，不去执行
+				true -> 
+					%io:format("soldier is not acting:~w~n",[Soldier]),
+					false
 			end
 		end,
 		Army)),
-io:format("MyArmy ~w~n",[MyArmy]),
+		%io:format("MyArmy ~w~n",[MyArmy]),
 	%% 从队伍act_sequence 最小的战士中，随机取出一个
 	case length(MyArmy) > 0 of
 
@@ -339,7 +346,7 @@ io:format("MyArmy ~w~n",[MyArmy]),
 
 %% 动作合法性判断
 actionValid(Action) ->
-	ValidActions = ['attack','forward','back','turnWest','turnEast','turnNorth','turnSouth','wait'],
+	ValidActions = [attack,forward,back,turnWest,turnEast,turnNorth,turnSouth,wait],
 	X=lists:member(Action, ValidActions),
 	%io:format("~w ~w ~n",[Action,X]),
 	X.
@@ -351,14 +358,14 @@ soldierValid(Soldier) ->
 %%转向动作, 不受别人影响
 actTurn(Soldier, Direction, Time) ->
 
-	ets:update_element(battle_field, Soldier#soldier.id, [{6, 'wait'},{5, Direction}]),
+	ets:update_element(battle_field, Soldier#soldier.id, [{6, wait},{5, Direction}]),
 	record({action, Time, Soldier#soldier.id, addTurn(Direction), Soldier#soldier.position, Soldier#soldier.facing, Soldier#soldier.hp}).
 
 
 %% 移动动作，需要看目标格中是否有对手
 %% Direction : 1 向前走， -1 向后走
 actMove(Soldier, Direction, Time) ->
-	io:format("actMove ~w~n",[Direction]),
+	%io:format("actMove ~w~n",[Direction]),
 
 	DestPosition = calcDestination(Soldier#soldier.position, Soldier#soldier.facing, Direction),
 
@@ -366,11 +373,11 @@ actMove(Soldier, Direction, Time) ->
 	case positionValid(DestPosition) of
 
 		true ->
-			ets:update_element(battle_field, Soldier#soldier.id, [{6, 'wait'},{3, DestPosition}]),
+			ets:update_element(battle_field, Soldier#soldier.id, [{6, wait},{3, DestPosition}]),
 			%% 输出行走动作
-			record({action, Time, Soldier#soldier.id, 'move', DestPosition, Soldier#soldier.facing, Soldier#soldier.hp});
+			record({action, Time, Soldier#soldier.id, move, DestPosition, Soldier#soldier.facing, Soldier#soldier.hp});
 		_ ->
-			ets:update_element(battle_field, Soldier#soldier.id, [{6, 'wait'}])
+			ets:update_element(battle_field, Soldier#soldier.id, [{6, wait}])
 	end.
 
 
@@ -380,10 +387,10 @@ calcDestination(Position, Facing, Direction) ->
 	{Px, Py} = Position,
 
 	if
-		Facing == 'west' -> {Px - Direction, Py};
-		Facing == 'east' -> {Px + Direction, Py};
-		Facing == 'north' -> {Px, Py + Direction};
-		Facing == 'south' -> {Px, Py - Direction};
+		Facing == west -> {Px - Direction, Py};
+		Facing == east -> {Px + Direction, Py};
+		Facing == north -> {Px, Py + Direction};
+		Facing == sou -> {Px, Py - Direction};
 		true -> {Px,Py}
 	end.
 
@@ -420,7 +427,7 @@ actAttack(Soldier,Time) ->
 				%% 只能攻击敌人，自己人不能攻击
 				MySide /= ESide ->
 					%% 输出该战士攻击动作
-					record({action, Time, ID, 'attack', Position, Facing, Hp}),
+					record({action, Time, ID, attack, Position, Facing, Hp}),
 
 					case calcHit(Soldier, Enemy) of
 						%% 如果hit 返回 0 ，表示该敌人被杀死
@@ -443,7 +450,7 @@ actAttack(Soldier,Time) ->
 
 
 	%% 将自己的动作结束
-	ets:update_element(battle_field, ID, [{6, 'wait'}]).
+	ets:update_element(battle_field, ID, [{6, wait}]).
 
 
 %% 计算攻击损伤
@@ -488,8 +495,8 @@ getTime() ->
 %% 先看剩余人数， 然后看累计血量，如果都一样就判为平局
 calcWinner() ->
 
-	RedArmy = battlefield:get_soldier_by_side('red'),
-	BlueArmy = battlefield:get_soldier_by_side('blue'),
+	RedArmy = battlefield:get_soldier_by_side(red),
+	BlueArmy = battlefield:get_soldier_by_side(blue),
 
 	RedCount = length(RedArmy),
 	BlueCount = length(BlueArmy),
@@ -501,28 +508,28 @@ calcWinner() ->
 			BlueBlood = calcBlood(BlueArmy),
 			if
 				RedBlood > BlueBlood ->
-					{winner, 'red'};
+					{winner, red};
 				RedBlood < BlueBlood ->
-					{winner, 'blue'};
+					{winner, blue};
 				true ->
 					none
 			end;
 		RedCount < BlueCount ->
-			{winner, 'blue'};
+			{winner, blue};
 		true ->
-			{winner, 'red'}
+			{winner, red}
 	end.
 
 %% 检查战斗是否已经结束
 checkWinner() ->
 
-	case battlefield:get_soldier_by_side('red') of
+	case battlefield:get_soldier_by_side(red) of
 		[] ->
-			{winner,'blue'};
+			{winner,blue};
 		_ ->
-			case battlefield:get_soldier_by_side('blue') of
+			case battlefield:get_soldier_by_side(blue) of
 				[] ->
-					{winner, 'red'};
+					{winner, red};
 				_ ->
 					none
 			end
@@ -552,11 +559,11 @@ recordPlan(Time) ->
 %% 按照标准格式化输出turnWest 等状态
 addTurn(Direction) ->
 	if
-		Direction == 'west' -> 'turnWest';
-		Direction == 'east' -> 'turnEast';
-		Direction == 'south' -> 'turnSouth';
-		Direction == 'north' -> 'turnNorth';
-		true -> 'wait'
+		Direction == west -> turnWest;
+		Direction == east -> turnEast;
+		Direction == sou -> turnSouth;
+		Direction == north -> turnNorth;
+		true -> wait
 	end.
 
 
@@ -576,7 +583,7 @@ cleanUp(BlueSide, RedSide) ->
 %% 返回毫秒
 testSpeed() ->
 
-	Seed = 20, %可以调整这个倍数去控制速度
+	Seed = 50, %可以调整这个倍数去控制速度
 
 	Times = 10000000,  %  这个运算在w500的机器上大概是2秒。之所以要运算这么多遍，再除seed ,主要要确保每次输出的稳定性。
 
