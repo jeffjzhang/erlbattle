@@ -10,7 +10,7 @@
 
 || 序号 || 命名 || 提议 ||备注|| 投票 ||备注||
 || 0 || 狼议会 || neoedmund || ~|| +3 ||neoemund,laofan,maxfung||
-|| 1 || 恶委会 || karlcpp || 恶狼战役委员会|| +2 ||karlcpp,houmingyuan||
+|| 1 || 恶委会 || karlcpp || 恶狼战役委员会|| +3 ||karlcpp,houmingyuan,evan.tao||
 || 2 || 恶决委 || ZoomQUiet || 全称:恶狼战役核心事务决策委员会/ 缩写:EBD || +1 ||zoomq||
 || 3 || 恶狼轩 || hwh || ~ ||+4 ||hwh(冠军)||
 || 序号 || 命名 || 提议 || 备注||投票 ||备注||
