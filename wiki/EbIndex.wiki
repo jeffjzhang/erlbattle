@@ -20,10 +20,10 @@
 
 === EBD:决策委员会 ===
  * EbDecissionRule  ~ 饿狼决策委员会筹备
-  * [EbD001VoteLaw EbD-001:宪法章程表决]
-  * [EbD002VoteName EbD-002:委员会名称]
-  * [EbD003VoteObligation EbD-003:委员会的义务]
-  * [EbD004GJRight EbD-004:宪法修订案：冠军投票权]
+  * [EbD001VoteLaw EBD-001:宪法章程表决]
+  * [EbD002VoteName EBD-002:委员会名称]
+  * [EbD003VoteObligation EBD-003:委员会的义务]
+  * [EbD004GJRight EBD-004:宪法修订案：冠军投票权]
 
 == EB:了解 ==
 `面对新人的基础性介绍文章`
