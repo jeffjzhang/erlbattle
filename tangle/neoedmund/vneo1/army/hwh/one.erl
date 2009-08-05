@@ -102,7 +102,7 @@ get_fm_dest(One, PosList) ->
 acture_facing(turnEast, _) -> east;
 acture_facing(turnWest, _) -> west;
 acture_facing(turnNorth, _) -> north;
-acture_facing(turnSouth, _) -> sou;
+acture_facing(turnSouth, _) -> south;
 acture_facing(_, F) -> F.
 acture_facing(Soldier) -> acture_facing(Soldier#soldier.action, Soldier#soldier.facing).
 acture_pos(Soldier) when Soldier#soldier.action =:= forward ->
@@ -212,7 +212,7 @@ touch_around(Soldier, _) ->
 				Other -> turn_to_enemy(Soldier, Other, {Other, Facing})
 			end
 		end,
-		[east, west, north, sou]),
+		[east, west, north, south]),
 	L2 = .lists:sort(
 		fun({Other1, Facing1}, {Other2, Facing2}) ->
 			if

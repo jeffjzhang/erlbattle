@@ -123,7 +123,7 @@ left(Position, Facing, Direction) ->
 		Facing == west -> {Px, Py + Direction};
 		Facing == east -> {Px, Py - Direction};
 		Facing == north -> {Px - Direction, Py};
-		Facing == sou -> {Px + Direction, Py };
+		Facing == south -> {Px + Direction, Py };
 		true -> {Px,Py}
 	end.
 
@@ -137,7 +137,7 @@ right(Position, Facing, Direction) ->
 		Facing == west -> {Px, Py - Direction};
 		Facing == east -> {Px, Py + Direction};
 		Facing == north -> {Px + Direction, Py};
-		Facing == sou -> {Px - Direction, Py };
+		Facing == south -> {Px - Direction, Py };
 		true -> {Px,Py}
 	end.
 
@@ -203,7 +203,7 @@ ahead(Position, Facing, Direction) ->
 		Facing == west -> {Px - Direction, Py};
 		Facing == east -> {Px + Direction, Py};
 		Facing == north -> {Px, Py + Direction};
-		Facing == sou -> {Px, Py - Direction };
+		Facing == south -> {Px, Py - Direction };
 		true -> {Px,Py}
 	end.
 %%计算目标移动位置
@@ -215,7 +215,7 @@ calcDestination(Position, Facing, Direction) ->
 		Facing == west -> {Px - Direction, Py};
 		Facing == east -> {Px + Direction, Py};
 		Facing == north -> {Px, Py + Direction};
-		Facing == sou -> {Px, Py - Direction};
+		Facing == south -> {Px, Py - Direction};
 		true -> {Px,Py}
 	end.
 

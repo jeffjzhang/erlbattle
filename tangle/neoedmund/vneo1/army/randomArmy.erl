@@ -47,7 +47,7 @@ ask_commander(SoldierID, Side) ->
 	    %% 四周位置
 	    Around = [{east, {X+1, Y}},
 		      {west, {X-1, Y}},
-		      {sou, {X, Y+1}},
+		      {south, {X, Y+1}},
 		      {north, {X, Y-1}}],
 	    %% 观察四周情况
 	    Status = find_around(Around, Side, []),
@@ -132,5 +132,5 @@ random_action(Facing, Status) ->
 turn_around(east) -> turnEast;
 turn_around(west) -> turnWest;
 turn_around(north) -> turnNorth;
-turn_around(sou) -> turnSouth.
+turn_around(south) -> turnSouth.
 

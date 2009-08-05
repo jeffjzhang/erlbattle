@@ -82,7 +82,7 @@ path(_, _, _, _, _, _, west) -> turnWest;
 %%目标在南方
 path(SX, SY, DX, DY, Facing, Action, check) when SY > DY ->
 	path(SX, SY, DX, DY, Facing, Action, south);
-path(_, SY, _, DY, sou, Action, south) ->
+path(_, SY, _, DY, south, Action, south) ->
 	if
 		SY =:= (DY+1) andalso Action =:= forward -> none;
 		true -> forward
@@ -104,7 +104,7 @@ path(_, _, _, _, _, _, north) -> turnNorth.
 turn(east) -> turnEast;
 turn(west) -> turnWest;
 turn(north) -> turnNorth;
-turn(sou) -> turnSouth.
+turn(south) -> turnSouth.
 
 
 srand() ->
@@ -205,7 +205,7 @@ get_around(Dest, Opn, CloseList) ->
 				facing = F
 			}
 		end,
-		[{east, 1, 0}, {west, -1, 0}, {north, 0, 1}, {sou, 0, -1}]),
+		[{east, 1, 0}, {west, -1, 0}, {north, 0, 1}, {south, 0, -1}]),
 	.lists:filter(fun(O) ->
 			{X, Y} = O#opn.pos,
 			if

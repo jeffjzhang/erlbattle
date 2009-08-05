@@ -130,6 +130,6 @@ simpleDirection(Facing) ->
 		Facing == west ->'w';
 		Facing == east ->'e';
 		Facing == north ->'n';
-		Facing == sou ->'s'
+		Facing == south ->'s'
 	end.
 

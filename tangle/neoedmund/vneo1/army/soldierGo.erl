@@ -231,7 +231,7 @@ getNextMoveCommand(Soldier, Destination) ->
 	if
 		X1 > X2 -> X3 = X1 + 1, Y3 = Y1, F = west, Action = turnWest;
 		X1 < X2 -> X3 = X1 - 1, Y3 = Y1, F = east, Action = turnEast;
-		Y1 > Y2 -> X3 = X1 , Y3 = Y1 +1, F = sou, Action = turnSouth;
+		Y1 > Y2 -> X3 = X1 , Y3 = Y1 +1, F = south, Action = turnSouth;
 		Y1 < Y2 -> X3 = X1 , Y3 = Y1 -1, F = north, Action = turnNorth;
 		true -> X3 = X1 , Y3 = Y1, F= "none", Action = wait
 	end,
@@ -358,7 +358,7 @@ getFutureStatus(Soldier,Time) ->
 				back -> Soldier#soldier{position = calcDestination(Soldier#soldier.position, Soldier#soldier.facing, -1)};
 				turnWest -> Soldier#soldier{facing = west};
 				turnEast -> Soldier#soldier{facing = east};
-				turnSouth -> Soldier#soldier{facing = sou};
+				turnSouth -> Soldier#soldier{facing = south};
 				turnNorth -> Soldier#soldier{facing = north};
 				_Other -> Soldier  %其他包括attack 和wait  这两个都不会影响战士的位置和朝向
 			end
@@ -373,7 +373,7 @@ calcDestination(Position, Facing, Direction) ->
 		Facing == west -> {Px - Direction, Py};
 		Facing == east -> {Px + Direction, Py};
 		Facing == north -> {Px, Py + Direction};
-		Facing == sou -> {Px, Py - Direction};
+		Facing == south -> {Px, Py - Direction};
 		true -> {Px,Py}
 	end.
 	

@@ -267,7 +267,7 @@ act(Soldier,Time) ->
 	if
 		Action == forward  -> actMove(Soldier, 1,Time);
 		Action == back -> actMove(Soldier, -1,Time);
-		Action == turnSouth ->actTurn(Soldier,sou,Time);
+		Action == turnSouth ->actTurn(Soldier,south,Time);
 		Action == turnWest ->actTurn(Soldier,west,Time);
 		Action == turnEast ->actTurn(Soldier,east,Time);
 		Action == turnNorth ->actTurn(Soldier,north,Time);
@@ -390,7 +390,7 @@ calcDestination(Position, Facing, Direction) ->
 		Facing == west -> {Px - Direction, Py};
 		Facing == east -> {Px + Direction, Py};
 		Facing == north -> {Px, Py + Direction};
-		Facing == sou -> {Px, Py - Direction};
+		Facing == south -> {Px, Py - Direction};
 		true -> {Px,Py}
 	end.
 
@@ -561,7 +561,7 @@ addTurn(Direction) ->
 	if
 		Direction == west -> turnWest;
 		Direction == east -> turnEast;
-		Direction == sou -> turnSouth;
+		Direction == south -> turnSouth;
 		Direction == north -> turnNorth;
 		true -> wait
 	end.
