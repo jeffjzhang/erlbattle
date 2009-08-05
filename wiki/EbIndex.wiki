@@ -18,6 +18,13 @@
   * EbTaskDoc            ~ EB:临时任务文档
  * EbNowPath            ~ eb0:当前开发路径
 
+=== EBD:决策委员会 ===
+ * EbDecissionRule  ~ 饿狼决策委员会筹备
+  * [EbD001VoteLaw EbD-001:宪法章程表决]
+  * [EbD002VoteName EbD-002:委员会名称]
+  * [EbD003VoteObligation EbD-003:委员会的义务]
+  * [EbD004GJRight EbD-004:宪法修订案：冠军投票权]
+
 == EB:了解 ==
 `面对新人的基础性介绍文章`
  * ErlBattle            ~ EB:释义
@@ -50,6 +57,9 @@
 *工具::*
  * [NeoeEBReplayer       ~ Neoe回放器]^for JAVA^
 
+=== EB：擂台 ===
+ * EbArena 实时更新的擂台
+
 == EB:规划 ==
 `各种对EB未来整体发展的思考`
  * EbUserSuggestion     ~ EB:开放讨论
@@ -66,8 +76,6 @@
  * EbHistoryBook        ~ EBHB:史书
   * EbHbErlDebug         ~ EBHB:开发调试
 
-== EB：擂台 ==
-EbArena 实时更新的擂台
 
 = TODO =
  * 使用 [http://code.google.com/p/support/wiki/WikiSyntax#Localizing_Wiki_Content 国际化标准] 准备面向外国朋友的文档!]
