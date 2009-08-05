@@ -1,13 +1,16 @@
-#指出委员们的义务
-
-= Introduction =
-
-Add your content here.
+#summary 管委会委员义务提案和投票
+#labels Phase-Support,EBD,Rule
 
 
-= Details =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+参考::
+ * [EbDecissionRule EBD:饿狼决策委员会筹备]
+
+= EBD-003:委员会委员义务 =
+
+|| 序号 || 义务 || 提议 ||备注|| 投票 ||备注||
+|| 0 || 热爱EB || Evan || ~|| +1 ||Evan||
+|| 序号 || 义务 || 提议 || 备注||投票 ||备注||
+
+本届委员会总票数是9个人+3票（冠军）=12票。 达到6就过半数了。
+等待大家来补充啊~~~
