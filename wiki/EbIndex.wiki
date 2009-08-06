@@ -26,6 +26,7 @@
   * [EbD002VoteName EBD-002:委员会名称]
   * [EbD003VoteObligation EBD-003:委员会的义务]
   * [EbD004GJRight EBD-004:宪法修订案：冠军投票权]
+  * [EbD005SpeedUpVote EBD-005:加速决策效率]
 
 == EB:了解 ==
 `面对新人的基础性介绍文章`
@@ -82,4 +83,6 @@
 = TODO =
  * 使用 [http://code.google.com/p/support/wiki/WikiSyntax#Localizing_Wiki_Content 国际化标准] 准备面向外国朋友的文档!]
  * 运用 [http://code.google.com/p/support/wiki/WorkingWithGoogleGadgets WorkingWithGoogleGadgets] 令任务和文档一齐工作!
- 
+
+
+
