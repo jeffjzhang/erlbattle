@@ -1,8 +1,17 @@
+%% 测试
+{'core/engine/test*',
+	[debug_info,
+	{outdir, "ebin/test"}
+	]
+}.
+
 %% 战场引擎
 {'core/engine/*', [
       {outdir, "ebin"}
       ]
 }.
+
+
 
 %% 各个战队
 %% 自带例子
