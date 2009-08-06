@@ -34,4 +34,4 @@
 
 
 = 参考书籍 =
- * [http://erlbattle.googlecode.com/files/游戏开发中的人工智能.7z《游戏开发中的人工智能》]
+ * [http://erlbattle.googlecode.com/files/游戏开发中的人工智能.7z 《游戏开发中的人工智能》]
