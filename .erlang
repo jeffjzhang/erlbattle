@@ -1,1 +1,2 @@
 code:add_pathz("ebin").
+code:add_pathz("ebin/test").
