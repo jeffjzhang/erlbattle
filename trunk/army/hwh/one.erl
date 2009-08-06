@@ -99,13 +99,13 @@ get_fm_dest(One, PosList) ->
 	{PX, PY}.
 
 
-acture_facing("turnEast", _) -> "east";
-acture_facing("turnWest", _) -> "west";
-acture_facing("turnNorth", _) -> "north";
-acture_facing("turnSouth", _) -> "south";
+acture_facing(?ActionTurnEast, _) -> ?DirEast;
+acture_facing(?ActionTurnWest, _) -> ?DirWest;
+acture_facing(?ActionTurnNorth, _) -> ?DirNorth;
+acture_facing(?ActionTurnSouth, _) -> ?DirSouth;
 acture_facing(_, F) -> F.
 acture_facing(Soldier) -> acture_facing(Soldier#soldier.action, Soldier#soldier.facing).
-acture_pos(Soldier) when Soldier#soldier.action =:= "forward" ->
+acture_pos(Soldier) when Soldier#soldier.action =:= ?ActionForward ->
 	.erlbattle:calcDestination(Soldier#soldier.position, Soldier#soldier.facing, 1);
 acture_pos(Soldier) -> Soldier#soldier.position.
 %%对目标寻路，并更新自己的目标
@@ -212,7 +212,7 @@ touch_around(Soldier, _) ->
 				Other -> turn_to_enemy(Soldier, Other, {Other, Facing})
 			end
 		end,
-		["east", "west", "north", "south"]),
+		[?DirEast, ?DirWest, ?DirNorth, ?DirSouth]),
 	L2 = .lists:sort(
 		fun({Other1, Facing1}, {Other2, Facing2}) ->
 			if
@@ -244,7 +244,7 @@ army_forward(One, Phone) ->
 	X = if
 		Soldier#soldier.facing =/= Facing andalso Soldier#soldier.action =/= Action -> 
 			{Action, 0};
-		true -> {"forward", 0}
+		true -> {?ActionForward, 0}
 	end,
 	cmd(One, Phone, X),
 	loop(One, Phone).
@@ -310,12 +310,12 @@ touch_forward_soldier(Soldier, Other, 1) ->
 	{_, Side2} = Other#soldier.id,
 	if
 		Side1 =:= Side2 -> touch_around(Soldier, get(phone));
-		true -> {"attack", 0}
+		true -> {?ActionAttack, 0}
 	end;
 touch_forward_soldier(Soldier, Other, 2) ->
 	{_, Side1} = Soldier#soldier.id,
 	{_, Side2} = Other#soldier.id,
 	if
 		Side1 =:= Side2 -> touch_around(Soldier, get(phone));
-		true -> {"attack", 4}
+		true -> {?ActionAttack, 4}
 	end.
