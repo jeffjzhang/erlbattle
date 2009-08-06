@@ -45,10 +45,10 @@ ask_commander(SoldierID, Side) ->
 	Soldier ->
 	    {X, Y} = Soldier#soldier.position,
 	    %% 四周位置
-	    Around = [{"east", {X+1, Y}},
-		      {"west", {X-1, Y}},
-		      {"south", {X, Y+1}},
-		      {"north", {X, Y-1}}],
+	    Around = [{?DirEast, {X+1, Y}},
+		      {?DirWest, {X-1, Y}},
+		      {?DirSouth, {X, Y+1}},
+		      {?DirNorth, {X, Y-1}}],
 	    %% 观察四周情况
 	    Status = find_around(Around, Side, []),
 	    %% 根据周围情况进行决策
@@ -96,7 +96,7 @@ anybody_there(Position, Side) ->
 command_decision(Facing, Status) ->
     %% 对面有敌人吗? 有则攻击之
     case lists:member({Facing, enemy}, Status) of 
-	true -> "attack";
+	true -> ?ActionAttack;
 	false ->
 	    %% 旁边有敌人吗? 有则转身
 	    case lists:filter(fun({_D, P}) -> P=:=enemy end, Status) of
@@ -108,7 +108,7 @@ command_decision(Facing, Status) ->
 		    %% 找一个没人的地儿
 		    case lists:filter(fun({_D, P}) -> P=:=nobody end, Status) of
 			%% 都有人,我等回再行动吧
-			[] -> "wait";
+			[] -> ?ActionWait;
 			Any -> random_action(Facing, Any)
 		    end
 	    end
@@ -121,7 +121,7 @@ random_action(Facing, Status) ->
     Ran = random:uniform(Len),
     {Direction, _} = lists:nth(Ran, Status),
     if Direction =:= Facing ->
-	    "forward";
+	    ?ActionForward;
        true -> 
 	    turn_around(Direction)
     end.
@@ -129,8 +129,8 @@ random_action(Facing, Status) ->
 
 
 %% 转向哪里
-turn_around("east") -> "turnEast";
-turn_around("west") -> "turnWest";
-turn_around("north") -> "turnNorth";
-turn_around("south") -> "turnSouth".
+turn_around(?DirEast) -> ?ActionTurnEast;
+turn_around(?DirWest) -> ?ActionTurnWest;
+turn_around(?DirNorth) -> ?ActionTurnNorth;
+turn_around(?DirSouth) -> ?ActionTurnSouth.
 

@@ -12,7 +12,7 @@ debug(S) ->
 run(Com, Side, Queue) ->
 	process_flag(trap_exit, true),
 	
-	debug({'燕人张飞在此 my side is ', list_to_atom(Side)}),
+	debug({'燕人张飞在此 my side is ', Side}),
 	%% register(nextNum, spawn( fun() -> nextNum(0) end)),
 	[A|B]=? PreDef_army,
 	debug(A),
@@ -48,9 +48,9 @@ go1(Man, Com, Side) ->
 	turnBack(Man, Com, Side),
 	case someoneAhead1(Man,Side) of
 		true ->
-			com(Com, {command,"attack",Man,0,0});
+			com(Com, {command,?ActionAttack,Man,0,0});
 		false ->
-			com(Com, {command,"forward",Man,0,0});
+			com(Com, {command,?ActionForward,Man,0,0});
 		_ ->
 			none
 	end,
@@ -60,9 +60,9 @@ go2(Man, Com, Side) ->
 	turnBack(Man, Com, Side),
 	case someoneAhead2(Man,Side) of
 		true ->
-			com(Com, {command,"attack",Man,0,0});
+			com(Com, {command,?ActionAttack,Man,0,0});
 		false ->
-			com(Com, {command,"forward",Man,0,0});
+			com(Com, {command,?ActionForward,Man,0,0});
 		_ ->
 			none
 	end,
@@ -73,17 +73,17 @@ turnBack(Man, Com, Side) ->
 	if A /= none ->
 		{X1,Y1}=A#soldier.position,
 		D=A#soldier.facing,
-		debug({list_to_atom(D),X1,Y1}),
-		if (D=="west") and (X1==1) ->
-				com(Com, {command,"turnEast",Man,0,0}),
+		debug({D,X1,Y1}),
+		if (D==?DirWest) and (X1==1) ->
+				com(Com, {command,?ActionTurnEast,Man,0,0}),
 				waitSec(),
-				com(Com, {command,"turnEast",Man,0,0}),
+				com(Com, {command,?ActionTurnEast,Man,0,0}),
 				waitSec();
 		true ->
-			if (D=="east") and (X1==13) ->
-				com(Com, {command,"turnWest",Man,0,0}),
+			if (D==?DirEast) and (X1==13) ->
+				com(Com, {command,?ActionTurnWest,Man,0,0}),
 				waitSec(),
-				com(Com, {command,"turnWest",Man,0,0}),
+				com(Com, {command,?ActionTurnWest,Man,0,0}),
 				waitSec();
 			true -> none	
 			end
@@ -96,9 +96,9 @@ go(Man, Com) ->
 	X1 = isFacingEnemy(),
 	if 
 		X1 == true ->		
-			com(Com, {command,"attack",Man,0,0});
+			com(Com, {command,?ActionAttack,Man,0,0});
 		true ->
-			com(Com, {command,"forward",Man,0,0})
+			com(Com, {command,?ActionForward,Man,0,0})
 	end,		
 	waitSec(),
 	go(Man, Com).

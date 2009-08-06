@@ -16,26 +16,26 @@ test10()->
 	?match(none,battlefield:get_soldier(1,"sdf")),
 	%%成功取到信息
 	Soldier=#soldier{
-				id={2,"red"},
+				id={2,?RedSide},
 				position={0,1+2},
 				hp=100,
-				facing="east",
-				action="wait",
+				facing=?DirEast,
+				action=?ActionWait,
 				act_effect_time=0,
 				act_sequence=0
 			},
-	?match(Soldier,battlefield:get_soldier(2,"red")).
+	?match(Soldier,battlefield:get_soldier(2,?RedSide)).
 
 %%测试根据坐标位置查找战士属性
 test20()->
 	?match(none,battlefield:get_soldier_by_position({1,14})),
 	?match(none,battlefield:get_soldier_by_position({14,0})),
 	Soldier=#soldier{
-			id={8,"blue"},
+			id={8,?BlueSide},
 			position={14,9},
 			hp=100,
-			facing="west",
-			action="wait",
+			facing=?DirWest,
+			action=?ActionWait,
 			act_effect_time=0,
 			act_sequence=0
 			},

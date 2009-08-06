@@ -34,118 +34,118 @@ test() ->
 test1() ->	
 	ets:delete_all_objects(battle_field),
 	Soldier=#soldier{
-				id={10,"red"},
+				id={10,?RedSide},
 				position={10,10},
 				hp=100,
-				facing = "west",
-				action="forward",
+				facing = ?DirWest,
+				action=?ActionForward,
 				act_effect_time = 10,
 				act_sequence =0
 			},
 	ets:insert(battle_field,Soldier),
 	erlbattle:takeAction(10),
-	Soldier2 = Soldier#soldier{position={9,10},action="wait"},
-	Soldier3 = battlefield:get_soldier(10,"red"),
+	Soldier2 = Soldier#soldier{position={9,10},action=?ActionWait},
+	Soldier3 = battlefield:get_soldier(10,?RedSide),
 	?match(Soldier2,Soldier3).
 	
 %% 测试向后走一步
 test2() ->	
 	ets:delete_all_objects(battle_field),
 	Soldier=#soldier{
-				id={10,"red"},
+				id={10,?RedSide},
 				position={10,10},
 				hp=100,
-				facing = "north",
-				action="back",
+				facing = ?DirNorth,
+				action=?ActionBack,
 				act_effect_time = 10,
 				act_sequence =0
 			},
 	ets:insert(battle_field,Soldier),
 	erlbattle:takeAction(10),
-	Soldier2 = Soldier#soldier{position={10,9},action="wait"},
-	Soldier3 = battlefield:get_soldier(10,"red"),
+	Soldier2 = Soldier#soldier{position={10,9},action=?ActionWait},
+	Soldier3 = battlefield:get_soldier(10,?RedSide),
 	?match(Soldier2,Soldier3).	
 
 %% 测试有人挡住的时候不能走
 test3() ->	
 	ets:delete_all_objects(battle_field),
 	Soldier=#soldier{
-				id={10,"red"},
+				id={10,?RedSide},
 				position={10,10},
 				hp=100,
-				facing = "north",
-				action="back",
+				facing = ?DirNorth,
+				action=?ActionBack,
 				act_effect_time = 10,
 				act_sequence =0
 			},
 	ets:insert(battle_field,Soldier),
-	Soldier2 = Soldier#soldier{id={9,"blue"},position={10,9},action="wait"},
+	Soldier2 = Soldier#soldier{id={9,?BlueSide},position={10,9},action=?ActionWait},
 	ets:insert(battle_field,Soldier2),
 	
 	erlbattle:takeAction(10),
-	Soldier3 = battlefield:get_soldier(10,"red"),
-	Soldier4 = Soldier#soldier{action="wait"},
+	Soldier3 = battlefield:get_soldier(10,?RedSide),
+	Soldier4 = Soldier#soldier{action=?ActionWait},
 	?match(Soldier4,Soldier3).	
 	
 %% 测试超过边框不能走
 test4() ->	
 	ets:delete_all_objects(battle_field),
 	Soldier=#soldier{
-				id={10,"red"},
+				id={10,?RedSide},
 				position={14,8},
 				hp=100,
-				facing = "east",
-				action="forward",
+				facing = ?DirEast,
+				action=?ActionForward,
 				act_effect_time = 10,
 				act_sequence =0
 			},
 	ets:insert(battle_field,Soldier),
 	erlbattle:takeAction(10),
-	Soldier2 = battlefield:get_soldier(10,"red"),
-	Soldier3 = Soldier#soldier{action="wait"},
+	Soldier2 = battlefield:get_soldier(10,?RedSide),
+	Soldier3 = Soldier#soldier{action=?ActionWait},
 	?match(Soldier2,Soldier3).	
 	
 %% 测试转向
 test5() ->	
 	ets:delete_all_objects(battle_field),
 	Soldier=#soldier{
-				id={10,"red"},
+				id={10,?RedSide},
 				position={10,10},
 				hp=100,
-				facing = "east",
-				action="turnWest",
+				facing = ?DirEast,
+				action=?ActionTurnWest,
 				act_effect_time = 10,
 				act_sequence =0
 			},
 	ets:insert(battle_field,Soldier),
 	erlbattle:takeAction(10),
-	Soldier2 = battlefield:get_soldier(10,"red"),
-	Soldier3 = Soldier#soldier{action="wait",facing="west"},
+	Soldier2 = battlefield:get_soldier(10,?RedSide),
+	Soldier3 = Soldier#soldier{action=?ActionWait,facing=?DirWest},
 	?match(Soldier2,Soldier3).		
 	
 %% 正面攻击测试
 test6() ->	
 	ets:delete_all_objects(battle_field),
 	Soldier=#soldier{
-				id={10,"red"},
+				id={10,?RedSide},
 				position={10,10},
 				hp=100,
-				facing = "north",
-				action="attack",
+				facing = ?DirNorth,
+				action=?ActionAttack,
 				act_effect_time = 10,
 				act_sequence =0
 			},
 	
 	ets:insert(battle_field,Soldier),
-	Soldier2 = Soldier#soldier{id={9,"blue"},position={10,11},action="wait",facing = "south"},
+	Soldier2 = Soldier#soldier{id={9,?BlueSide},position={10,11},action=?ActionWait,facing = ?DirSouth},
 	ets:insert(battle_field,Soldier2),
 	
 	erlbattle:takeAction(10),
-	Soldier3 = battlefield:get_soldier(10,"red"),
-	Soldier4 = Soldier#soldier{action="wait"},
+	Soldier3 = battlefield:get_soldier(10,?RedSide),
+	Soldier4 = Soldier#soldier{action=?ActionWait},
 	?match(Soldier4,Soldier3),
 
-	Soldier5 = battlefield:get_soldier(9,"blue"),
+	Soldier5 = battlefield:get_soldier(9,?BlueSide),
 	Soldier6 = Soldier2#soldier{hp=90},
 	?match(Soldier6,Soldier5).		
 
@@ -153,25 +153,25 @@ test6() ->
 test7() ->
 	ets:delete_all_objects(battle_field),
 	Soldier=#soldier{
-				id={10,"red"},
+				id={10,?RedSide},
 				position={10,10},
 				hp=100,
-				facing = "north",
-				action="attack",
+				facing = ?DirNorth,
+				action=?ActionAttack,
 				act_effect_time = 10,
 				act_sequence =0
 			},
 	
 	ets:insert(battle_field,Soldier),
-	Soldier2 = Soldier#soldier{id={9,"blue"},position={10,11},action="wait"},
+	Soldier2 = Soldier#soldier{id={9,?BlueSide},position={10,11},action=?ActionWait},
 	ets:insert(battle_field,Soldier2),
 	
 	erlbattle:takeAction(10),
-	Soldier3 = battlefield:get_soldier(10,"red"),
-	Soldier4 = Soldier#soldier{action="wait"},
+	Soldier3 = battlefield:get_soldier(10,?RedSide),
+	Soldier4 = Soldier#soldier{action=?ActionWait},
 	?match(Soldier4,Soldier3),
 
-	Soldier5 = battlefield:get_soldier(9,"blue"),
+	Soldier5 = battlefield:get_soldier(9,?BlueSide),
 	Soldier6 = Soldier2#soldier{hp=80},
 	?match(Soldier6,Soldier5).	
 
@@ -179,25 +179,25 @@ test7() ->
 test8()->
 	ets:delete_all_objects(battle_field),
 	Soldier=#soldier{
-				id={10,"red"},
+				id={10,?RedSide},
 				position={10,10},
 				hp=100,
-				facing = "north",
-				action="attack",
+				facing = ?DirNorth,
+				action=?ActionAttack,
 				act_effect_time = 10,
 				act_sequence =0
 			},
 	
 	ets:insert(battle_field,Soldier),
-	Soldier2 = Soldier#soldier{id={9,"blue"},position={10,11},action="wait",facing = "east"},
+	Soldier2 = Soldier#soldier{id={9,?BlueSide},position={10,11},action=?ActionWait,facing = ?DirEast},
 	ets:insert(battle_field,Soldier2),
 	
 	erlbattle:takeAction(10),
-	Soldier3 = battlefield:get_soldier(10,"red"),
-	Soldier4 = Soldier#soldier{action="wait"},
+	Soldier3 = battlefield:get_soldier(10,?RedSide),
+	Soldier4 = Soldier#soldier{action=?ActionWait},
 	?match(Soldier4,Soldier3),
 
-	Soldier5 = battlefield:get_soldier(9,"blue"),
+	Soldier5 = battlefield:get_soldier(9,?BlueSide),
 	Soldier6 = Soldier2#soldier{hp=85},
 	?match(Soldier6,Soldier5).
 	
@@ -205,25 +205,25 @@ test8()->
 test9()->
 	ets:delete_all_objects(battle_field),
 	Soldier=#soldier{
-				id={10,"red"},
+				id={10,?RedSide},
 				position={10,10},
 				hp=100,
-				facing = "north",
-				action="attack",
+				facing = ?DirNorth,
+				action=?ActionAttack,
 				act_effect_time = 10,
 				act_sequence =0
 			},
 	
 	ets:insert(battle_field,Soldier),
-	Soldier2 = Soldier#soldier{id={9,"blue"},position={10,12},action="wait",facing = "east"},
+	Soldier2 = Soldier#soldier{id={9,?BlueSide},position={10,12},action=?ActionWait,facing = ?DirEast},
 	ets:insert(battle_field,Soldier2),
 	
 	erlbattle:takeAction(10),
-	Soldier3 = battlefield:get_soldier(10,"red"),
-	Soldier4 = Soldier#soldier{action="wait"},
+	Soldier3 = battlefield:get_soldier(10,?RedSide),
+	Soldier4 = Soldier#soldier{action=?ActionWait},
 	?match(Soldier4,Soldier3),
 
-	Soldier5 = battlefield:get_soldier(9,"blue"),
+	Soldier5 = battlefield:get_soldier(9,?BlueSide),
 	Soldier6 = Soldier2#soldier{hp=100},
 	?match(Soldier6,Soldier5).
 	
@@ -231,25 +231,25 @@ test9()->
 test10()->
 	ets:delete_all_objects(battle_field),
 	Soldier=#soldier{
-				id={10,"red"},
+				id={10,?RedSide},
 				position={10,10},
 				hp=100,
-				facing = "north",
-				action="attack",
+				facing = ?DirNorth,
+				action=?ActionAttack,
 				act_effect_time = 10,
 				act_sequence =0
 			},
 	
 	ets:insert(battle_field,Soldier),
-	Soldier2 = Soldier#soldier{id={9,"blue"},position={10,11},action="wait",facing = "east",hp=13},
+	Soldier2 = Soldier#soldier{id={9,?BlueSide},position={10,11},action=?ActionWait,facing = ?DirEast,hp=13},
 	ets:insert(battle_field,Soldier2),
 	
 	erlbattle:takeAction(10),
-	Soldier3 = battlefield:get_soldier(10,"red"),
-	Soldier4 = Soldier#soldier{action="wait"},
+	Soldier3 = battlefield:get_soldier(10,?RedSide),
+	Soldier4 = Soldier#soldier{action=?ActionWait},
 	?match(Soldier4,Soldier3),
 
-	case battlefield:get_soldier(9,"blue") of 
+	case battlefield:get_soldier(9,?BlueSide) of 
 		
 		Enemy when is_record(Enemy,soldier) ->
 			? match(Enemy, "not killed");
@@ -263,25 +263,25 @@ test10()->
 test11()->
 	ets:delete_all_objects(battle_field),
 	Soldier=#soldier{
-				id={10,"red"},
+				id={10,?RedSide},
 				position={10,10},
 				hp=100,
-				facing = "north",
-				action="attack",
+				facing = ?DirNorth,
+				action=?ActionAttack,
 				act_effect_time = 10,
 				act_sequence =0
 			},
 	
 	ets:insert(battle_field,Soldier),
-	Soldier2 = Soldier#soldier{id={9,"red"},position={10,11},action="wait",facing = "south"},
+	Soldier2 = Soldier#soldier{id={9,?RedSide},position={10,11},action=?ActionWait,facing = ?DirSouth},
 	ets:insert(battle_field,Soldier2),
 	
 	erlbattle:takeAction(10),
-	Soldier3 = battlefield:get_soldier(10,"red"),
-	Soldier4 = Soldier#soldier{action="wait"},
+	Soldier3 = battlefield:get_soldier(10,?RedSide),
+	Soldier4 = Soldier#soldier{action=?ActionWait},
 	?match(Soldier4,Soldier3),
 
-	Soldier5 = battlefield:get_soldier(9,"red"),
+	Soldier5 = battlefield:get_soldier(9,?RedSide),
 	?match(Soldier2,Soldier5).
 	
 %% 两人互砍（测试是否能够让多个角色动起来）	
@@ -289,26 +289,26 @@ test12() ->
 
 	ets:delete_all_objects(battle_field),
 	Soldier=#soldier{
-				id={10,"red"},
+				id={10,?RedSide},
 				position={10,10},
 				hp=100,
-				facing = "north",
-				action="attack",
+				facing = ?DirNorth,
+				action=?ActionAttack,
 				act_effect_time = 10,
 				act_sequence =0
 			},
 	
 	ets:insert(battle_field,Soldier),
-	Soldier2 = Soldier#soldier{id={9,"blue"},position={10,11},facing = "south"},
+	Soldier2 = Soldier#soldier{id={9,?BlueSide},position={10,11},facing = ?DirSouth},
 	ets:insert(battle_field,Soldier2),
 	
 	erlbattle:takeAction(10),
-	Soldier3 = battlefield:get_soldier(10,"red"),
-	Soldier4 = Soldier#soldier{action="wait",hp=90},
+	Soldier3 = battlefield:get_soldier(10,?RedSide),
+	Soldier4 = Soldier#soldier{action=?ActionWait,hp=90},
 	?match(Soldier4,Soldier3),
 
-	Soldier5 = battlefield:get_soldier(9,"blue"),
-	Soldier6 = Soldier2#soldier{action="wait",hp=90},
+	Soldier5 = battlefield:get_soldier(9,?BlueSide),
+	Soldier6 = Soldier2#soldier{action=?ActionWait,hp=90},
 	?match(Soldier6,Soldier5).	
 	
 	

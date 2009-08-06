@@ -17,26 +17,26 @@ loop(Channel, Side, Queue,N) ->
 		fun(Soldier) ->   % 一直朝前， 直到碰到人，然后开始砍	
 			case someone_ahead(Soldier,Side) of
 				true ->
-					Channel!{command,"attack",Soldier,0,random:uniform(5)};
+					Channel!{command,?ActionAttack,Soldier,0,random:uniform(5)};
 				false -> 
                                      
                                         case someone_left(Soldier,Side) of
                                              true ->
                                                   io:format("left Side=~p Soldier=~p.......
                                                      ...........................~n",[Side,Soldier]),
-                                                  Channel!{command,"turnNorth",Soldier,0,random:uniform(5)};
+                                                  Channel!{command,?ActionTurnNorth,Soldier,0,random:uniform(5)};
                                              false -> 
                                                    case someone_right(Soldier,Side) of
                                                             true ->
                                                                   io:format("right Side=~p Soldier=~p.......
                                                                      ............................~n",[Side,Soldier]),
-                                                                  Channel!{command,"turnSouth",Soldier,0,random:uniform(5)};
+                                                                  Channel!{command,?ActionTurnSouth,Soldier,0,random:uniform(5)};
                                                             false -> none
                                                     end%%none
                                         end,
                                         case N==0 of 
                                              true ->
-                                                Channel!{command,"forward",Soldier,0,random:uniform(3)};
+                                                Channel!{command,?ActionForward,Soldier,0,random:uniform(3)};
                                              false ->none
                                         end;
 				%%	
@@ -120,10 +120,10 @@ left(Position, Facing, Direction) ->
 	{Px, Py} = Position,
 	
 	if  
-		Facing == "west" -> {Px, Py + Direction};
-		Facing == "east" -> {Px, Py - Direction};
-		Facing == "north" -> {Px - Direction, Py};
-		Facing == "south" -> {Px + Direction, Py };
+		Facing == ?DirWest -> {Px, Py + Direction};
+		Facing == ?DirEast -> {Px, Py - Direction};
+		Facing == ?DirNorth -> {Px - Direction, Py};
+		Facing == ?DirSouth -> {Px + Direction, Py };
 		true -> {Px,Py}
 	end.
 
@@ -134,10 +134,10 @@ right(Position, Facing, Direction) ->
 	{Px, Py} = Position,
 	
 	if  
-		Facing == "west" -> {Px, Py - Direction};
-		Facing == "east" -> {Px, Py + Direction};
-		Facing == "north" -> {Px + Direction, Py};
-		Facing == "south" -> {Px - Direction, Py };
+		Facing == ?DirWest -> {Px, Py - Direction};
+		Facing == ?DirEast -> {Px, Py + Direction};
+		Facing == ?DirNorth -> {Px + Direction, Py};
+		Facing == ?DirSouth -> {Px - Direction, Py };
 		true -> {Px,Py}
 	end.
 
@@ -200,10 +200,10 @@ ahead(Position, Facing, Direction) ->
 	{Px, Py} = Position,
 	
 	if  
-		Facing == "west" -> {Px - Direction, Py};
-		Facing == "east" -> {Px + Direction, Py};
-		Facing == "north" -> {Px, Py + Direction};
-		Facing == "south" -> {Px, Py - Direction };
+		Facing == ?DirWest -> {Px - Direction, Py};
+		Facing == ?DirEast -> {Px + Direction, Py};
+		Facing == ?DirNorth -> {Px, Py + Direction};
+		Facing == ?DirSouth -> {Px, Py - Direction };
 		true -> {Px,Py}
 	end.
 %%计算目标移动位置
@@ -212,10 +212,10 @@ calcDestination(Position, Facing, Direction) ->
 	{Px, Py} = Position,
 	
 	if  
-		Facing == "west" -> {Px - Direction, Py};
-		Facing == "east" -> {Px + Direction, Py};
-		Facing == "north" -> {Px, Py + Direction};
-		Facing == "south" -> {Px, Py - Direction};
+		Facing == ?DirWest -> {Px - Direction, Py};
+		Facing == ?DirEast -> {Px + Direction, Py};
+		Facing == ?DirNorth -> {Px, Py + Direction};
+		Facing == ?DirSouth -> {Px, Py - Direction};
 		true -> {Px,Py}
 	end.
 

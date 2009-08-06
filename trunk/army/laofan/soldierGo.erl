@@ -34,7 +34,7 @@ commander(beginWar, Side, Channel) ->
 	lists:foreach(
 		fun({SoldierId, {X,Y}}) ->
 			if 
-				Side == "red" -> Position = {X,Y};
+				Side == ?RedSide -> Position = {X,Y};
 				true -> Position = {14-X, Y}  %镜像对称
 			end,
 			Sergeant ! {SoldierId, {makeLine, Position}}
@@ -108,7 +108,7 @@ processOrder(Commander, Side, Channel, Soldiers, {SoldierId, {makeLine, Destinat
 		Soldier -> 
 			
 			%%if 
-			%%	Soldier#soldier.id =:= {1,"red"} ->
+			%%	Soldier#soldier.id =:= {1,?RedSide} ->
 			%%		io:format("soldier = ~p, Destination = ~p,  Action =~p ~n", [Soldier, Destination, getNextMoveCommand(Soldier, Destination)]);
 			%%	true -> none
 			%%end,
@@ -156,7 +156,7 @@ processOrder(Commander, Side, Channel, Soldiers, {SoldierId, {kill, EnemySide, E
 				NewEnemyId -> {SoldierId, {kill, EnemySide, NewEnemyId}} %否则就进攻这个新的敌人
 			end;
 		ahead -> 	%在正前方
-			sendMessage(Channel, SoldierId, "attack"),
+			sendMessage(Channel, SoldierId, ?ActionAttack),
 			{SoldierId, {kill, EnemySide, EnemyId}};		
 		{near, Direction} ->	%在边上
 			sendMessage(Channel, SoldierId, {turn, Direction}),
@@ -229,11 +229,11 @@ getNextMoveCommand(Soldier, Destination) ->
 	
 	%% 按照先横向接近，再纵向接近的方式计算下一格是什么位置
 	if
-		X1 > X2 -> X3 = X1 + 1, Y3 = Y1, F = "west", Action = "turnWest";
-		X1 < X2 -> X3 = X1 - 1, Y3 = Y1, F = "east", Action = "turnEast";
-		Y1 > Y2 -> X3 = X1 , Y3 = Y1 +1, F = "south", Action = "turnSouth";
-		Y1 < Y2 -> X3 = X1 , Y3 = Y1 -1, F = "north", Action = "turnNorth";
-		true -> X3 = X1 , Y3 = Y1, F= "none", Action = "wait"
+		X1 > X2 -> X3 = X1 + 1, Y3 = Y1, F = ?DirWest, Action = ?ActionTurnWest;
+		X1 < X2 -> X3 = X1 - 1, Y3 = Y1, F = ?DirEast, Action = ?ActionTurnEast;
+		Y1 > Y2 -> X3 = X1 , Y3 = Y1 +1, F = ?DirSouth, Action = ?ActionTurnSouth;
+		Y1 < Y2 -> X3 = X1 , Y3 = Y1 -1, F = ?DirNorth, Action = ?ActionTurnNorth;
+		true -> X3 = X1 , Y3 = Y1, F= "none", Action = ?ActionWait
 	end,
 
 	%% 如果位置相同，就结束动作
@@ -243,7 +243,7 @@ getNextMoveCommand(Soldier, Destination) ->
 		{X1,Y1} =:= {X3,Y3} -> arrived;
 		true ->
 			if
-				Soldier#soldier.facing =:= F -> "forward";
+				Soldier#soldier.facing =:= F -> ?ActionForward;
 				true -> Action
 			end
 	end.
@@ -291,8 +291,8 @@ getDistance({X1,Y1},{X2,Y2}) ->
 %% 获得敌方的颜色
 getEnemySide(Side) ->
 	if
-		Side == "red" -> "blue";
-		true -> "red"
+		Side == ?RedSide -> ?BlueSide;
+		true -> ?RedSide
 	end.
 
 %% 判断目标地点的相对位置
@@ -354,12 +354,12 @@ getFutureStatus(Soldier,Time) ->
 		true ->
 			case Soldier#soldier.action of
 
-				"forward" -> Soldier#soldier{position = calcDestination(Soldier#soldier.position, Soldier#soldier.facing, 1)};
-				"back" -> Soldier#soldier{position = calcDestination(Soldier#soldier.position, Soldier#soldier.facing, -1)};
-				"turnWest" -> Soldier#soldier{facing = "west"};
-				"turnEast" -> Soldier#soldier{facing = "east"};
-				"turnSouth" -> Soldier#soldier{facing = "south"};
-				"turnNorth" -> Soldier#soldier{facing = "north"};
+				?ActionForward -> Soldier#soldier{position = calcDestination(Soldier#soldier.position, Soldier#soldier.facing, 1)};
+				?ActionBack -> Soldier#soldier{position = calcDestination(Soldier#soldier.position, Soldier#soldier.facing, -1)};
+				?ActionTurnWest -> Soldier#soldier{facing = ?DirWest};
+				?ActionTurnEast -> Soldier#soldier{facing = ?DirEast};
+				?ActionTurnSouth -> Soldier#soldier{facing = ?DirSouth};
+				?ActionTurnNorth -> Soldier#soldier{facing = ?DirNorth};
 				_Other -> Soldier  %其他包括attack 和wait  这两个都不会影响战士的位置和朝向
 			end
 	end.
@@ -370,20 +370,20 @@ calcDestination(Position, Facing, Direction) ->
 	{Px, Py} = Position,
 	
 	if  
-		Facing == "west" -> {Px - Direction, Py};
-		Facing == "east" -> {Px + Direction, Py};
-		Facing == "north" -> {Px, Py + Direction};
-		Facing == "south" -> {Px, Py - Direction};
+		Facing == ?DirWest -> {Px - Direction, Py};
+		Facing == ?DirEast -> {Px + Direction, Py};
+		Facing == ?DirNorth -> {Px, Py + Direction};
+		Facing == ?DirSouth -> {Px, Py - Direction};
 		true -> {Px,Py}
 	end.
 	
 %% 发出战场指令
 sendMessage(Channel, SoldierId , {turn,Direction}) ->
 	case Direction of 
-		west -> sendMessage(Channel, SoldierId, "turnWest");
-		east -> sendMessage(Channel, SoldierId, "turnEast");
-		north -> sendMessage(Channel, SoldierId, "turnNorth");
-		south -> sendMessage(Channel, SoldierId, "turnSouth");
+		west -> sendMessage(Channel, SoldierId, ?ActionTurnWest);
+		east -> sendMessage(Channel, SoldierId, ?ActionTurnEast);
+		north -> sendMessage(Channel, SoldierId, ?ActionTurnNorth);
+		south -> sendMessage(Channel, SoldierId, ?ActionTurnSouth);
 		_Other -> none
 	end;
 sendMessage(Channel, SoldierId, Action) ->
