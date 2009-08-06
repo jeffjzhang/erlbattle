@@ -34,7 +34,7 @@ calc_poslist(Side, Type) ->
 	L = hwh.fm_box:type(Type),
 	Offset = .random:uniform(3),
 	if
-		Side =:= "red" -> .lists:map(fun({ID, X, Y}) -> {ID, X+Offset, Y} end, L);
+		Side =:= ?RedSide -> .lists:map(fun({ID, X, Y}) -> {ID, X+Offset, Y} end, L);
 		true -> .lists:map(fun({ID, X, Y}) -> {ID, 14-X-Offset, Y} end, L)
 	end.
 
