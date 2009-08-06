@@ -1,5 +1,13 @@
 #summary 加速决策效率
+#labels Phase-Support,Rule,EBD
 
+
+
+参考::
+ * [EbDecissionRule EBD:饿狼决策委员会筹备]
+
+
+= EBD-005:修正案 加速决策速度的对策 =
 
 当投票数超过了决议门槛后，决议就通过，不需要等剩下的委员投完所有票
 
