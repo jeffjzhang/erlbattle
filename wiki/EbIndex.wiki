@@ -11,14 +11,15 @@
 == EB:社区 ==
 `EB 组织`
  * EbJoinnig            ~ EB:成员列表
-  * ZoomQuiet            ~ ZoomQuiet 个人维基入口
+  * ZoomQuiet           ~ ZoomQuiet 个人维基入口
+  * EvenTao             ~ 黑黑的小屋
  * ErlBattleTasks       ~ EB:开发任务列表
-  * EbTaskDoc            ~ EB:临时任务文档
+  * EbTaskDoc           ~ EB:临时任务文档
  * EbNowPath            ~ eb0:当前开发路径
 
 `EB 对战大赛`^EBR:Erl Battle Race^
- # EbrZhuLu              ~ EBR:逐鹿中原 对战大赛
- # EbrZhengFeng   ~ EBR:谁与争锋 比赛规则 
+ # EbrZhuLu             ~ EBR:逐鹿中原 对战大赛
+ # EbrZhengFeng         ~ EBR:谁与争锋 比赛规则 
  
 === EBD:决策委员会 ===
  * EbDecissionRule  ~ 饿狼决策委员会筹备
