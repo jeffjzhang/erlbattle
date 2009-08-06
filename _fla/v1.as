@@ -396,8 +396,85 @@ my_lv.onData = function(src:String) {
         return;
     }
 	_root.command = src.split("\r").join("").split("\n");
+	caculate_round();
     //trace(command.length);
 	//_root.next_step();
 };
 my_lv.load("warfield.txt", my_lv, "GET");
+
+var round_arr = new Array();
+function caculate_round(){
+	var old_round = -1;
+	for (var i = 0 ; i < command.length ; i++){
+		var step_com = command[i].split(",");	
+		if (step_com[0] == "plan"){
+			continue;
+		}
+		var round = Number(step_com[0]);
+		var action = step_com[1];
+		var xtile = step_com[2];
+		var ytile = step_com[3];
+		var id = step_com[4];
+		var dir = step_com[5];
+		var blood = Number(step_com[6]);
+		var del_blood = Number(step_com[7]);
+		if (old_round < round){
+			if (old_round == -1){
+				round_arr.push(create_empty());
+			}else{
+				round_arr.push(copy_array());
+			}
+			old_round = round;
+			
+			round_list.addItem({label:"round" + round, data:(round_arr.length - 1)+":"+i});
+		}
+		var len = round_arr.length - 1;
+		round_arr[len][id-1][0] = id;
+		round_arr[len][id-1][1] = xtile;
+		round_arr[len][id-1][2] = ytile;
+		round_arr[len][id-1][3] = dir;
+		round_arr[len][id-1][4] = blood;
+	}
+
+}
+function copy_array(){
+	var len = round_arr.length - 1;
+	var r_arr = new Array();
+	for (var i = 0 ; i < round_arr[len].length ; i++){
+		r_arr.push([round_arr[len][i][0],round_arr[len][i][1],round_arr[len][i][2],round_arr[len][i][3],round_arr[len][i][4]]);
+	}
+	return r_arr
+}
+function create_empty(){
+	var r_arr = new Array();
+	for (var i = 0 ; i < 20 ; i++){
+		r_arr.push([0,0,0,"w",100]);
+	}
+	return r_arr
+}
+var listenerObject:Object = new Object();
+listenerObject.change = function(eventObject:Object) {
+    var vt = (round_list.selectedItem.data).split(":");
+    var len = Number(vt[0]);
+    pt = Number(vt[1]);
+	for(var i = 0 ; i < sprit.length ; i++){
+		sprit[i].clip._x = -10000;
+	}
+
+	for (var i = 0 ; i < round_arr[len].length; i++){
+		var ob = null;
+		for(var j = 0 ; j < sprit.length ; j++){
+			if (sprit[j].id == Number(round_arr[len][i][0])){
+				ob = sprit[j];					
+			}
+		}
+		ob.xtile = round_arr[len][i][1];
+		ob.ytile = round_arr[len][i][2];
+		set_to_current_place(ob)
+		ob.clip.mc.gotoAndPlay("stand" + round_arr[len][i][3]);
+		ob.clip.blood.gotoAndStop(round_arr[len][i][4]);
+	}
+};
+round_list.addEventListener("change", listenerObject)
+
 stop();
