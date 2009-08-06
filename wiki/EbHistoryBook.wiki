@@ -80,3 +80,25 @@
 = SEE =
  * [EbWhatItIs EB:是什么?]
  * [EbBattle EB:释名]
+
+== erl中国背景 ==
+erlang 在中国的公开资源情况基本是:
+
+`网站:`
+ * erlang-china.org ~ jackyz 拥有并维护
+ * ecug.org  ~ xushiwei 拥有并维护
+ * erlang.org.cn ~ cnxiner 拥有域名 ZoomQuiet 运营(准备中)
+
+`列表:`
+ * http://groups.google.com/group/ecug       ECUG 公开列表,ZoomQuiet 管理
+     * http://groups.google.com/group/ecug-core  ECUG 内部事务列表
+ * http://groups.google.com/group/erlang-china   管理员消失,只有EB团队在用 
+ * http://groups.google.com/group/erlbattle       老范创建的最新列表
+ * `死亡状态:`
+    * http://groups.google.com/group/erlangcn
+    * http://groups.google.com/group/erlangdatastructures
+    * http://groups.google.com/group/Erlang-workshop
+
+`项目:`
+在 code.google 中有近10个,但是成员超过5人的,只有 EB
+
