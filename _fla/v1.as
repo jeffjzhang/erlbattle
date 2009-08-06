@@ -471,7 +471,26 @@ listenerObject.change = function(eventObject:Object) {
 		ob.xtile = round_arr[len][i][1];
 		ob.ytile = round_arr[len][i][2];
 		set_to_current_place(ob)
-		ob.clip.mc.gotoAndPlay("stand" + round_arr[len][i][3]);
+		switch(round_arr[len][i][3]){
+			case "s":
+				ob.dir = "_l";
+				ob.clip.mc._xscale = -80;
+				break;
+			case "e":
+				ob.dir = "_d";
+				ob.clip.mc._xscale = -80;
+				break;
+			case "n":
+				ob.dir = "_d";
+				ob.clip.mc._xscale = 80;
+				break;
+			case "w":
+				ob.dir = "_l";
+				ob.clip.mc._xscale = 80;
+				break;
+		}
+
+		ob.clip.mc.gotoAndPlay("stand" + ob.dir);
 		ob.clip.blood.gotoAndStop(round_arr[len][i][4]);
 	}
 };
