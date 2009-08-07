@@ -33,19 +33,19 @@ start(Master, Phone, ID, AI) when is_record(Phone, phone) ->
 
 loop(One, Phone) ->
 	case soldier(One#data.id) of
-		none -> exit({killed, One});
+		none -> exit({killed, One});  %%如果自己已经死了，进程自杀
 		Soldier ->
 			Master = One#data.master,
 			NewOne = One#data{soldier = Soldier},
 			receive
 				{'EXIT', Master, finish} -> ok;
 
-				{set, Master, AI} ->
+				{set, Master, AI} -> % 根据主程序指令，更换当前计划
 					free_play(NewOne#data{ai=AI}, Phone);
 
 				_ -> loop(NewOne, Phone)
 			after 1 ->
-				free_play(NewOne, Phone)
+				free_play(NewOne, Phone)  %没指令的话，就按原定计划战斗
 			end
 	end.
 
@@ -78,6 +78,8 @@ get_fm_dest(One, Phone) when is_record(Phone, phone) ->
 
 		[{fm_pos, PosList}|_] -> get_fm_dest(One, PosList)
 	end;
+%% 如果目标列表中有指名是自己的目标的话，就选择改目标
+%% 否则从目标位置列表中挑到一个离自己最近的位置作为自己移动的目标； 
 get_fm_dest(One, PosList) ->
 	Soldier = One#data.soldier,
 	SID = soldier_id(One),
@@ -169,7 +171,7 @@ soldier(ID) ->
 move_attack(One, Phone) ->
 	Soldier = One#data.soldier,
 	case touch_forward(Soldier, Phone) of
-		none -> purse_enemy(One, Phone);
+		none -> purse_enemy(One, Phone);   %如果周边没有任何敌人，就追击敌人
 		Other ->
 			cmd(One, Phone, Other),
 			loop(One, Phone)
@@ -203,6 +205,9 @@ touch_forward(Soldier, Phone) ->
 
 
 %%获取周边目标，决定是否转身
+%%使用touch_around 前已经确定了在正面没有直接接触的敌人
+%%此时在身边找有没有接触的敌人。 如果有，挑面向自己的一个敌人（应为这个敌人最危险）；如果没有，就随便转向一个敌人
+%%如果没有任何敌人就返回none
 touch_around(Soldier, _) ->
 	L = .lists:flatmap(
 		fun(Facing) ->
@@ -231,7 +236,7 @@ touch_around(Soldier, _) ->
 %%追击敌人
 purse_enemy(One, Phone) ->
 	case .ets:lookup(Phone#phone.info, {pursue, One#data.id}) of
-		[] -> army_forward(One, Phone);
+		[] -> army_forward(One, Phone); %没有追击指令，就恢复朝对方阵地前景
 		_ -> search_enemy(One, Phone)
 	end.
 

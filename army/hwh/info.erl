@@ -11,6 +11,7 @@ start(Master, Side) ->
 	Master ! {grid, Tb},
 	loop(Tb, Side, Master).
 
+%%战场被分为3*3 一共九个战区
 init(Tb) ->
 	Grids = [{0,0}, {0,1}, {0,2},
 		 {1,0}, {1,1}, {1,2},
@@ -32,7 +33,7 @@ loop(Tb, Side, Master) ->
 	after 1 -> loop(Tb, Side, Master)
 	end.
 
-
+%% 更新每个战区内的敌我情形
 update_grid(Tb, Soldiers, Key) ->
 	.lists:foreach(
 		fun(S) ->
@@ -45,6 +46,7 @@ update_grid(Tb, Soldiers, Key) ->
 		Soldiers).
 
 
+%% 清空战区信息		
 reset(Tb) ->
 	Grids = [{0,0}, {0,1}, {0,2},
 		 {1,0}, {1,1}, {1,2},

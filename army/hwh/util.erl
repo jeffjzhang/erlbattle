@@ -134,16 +134,16 @@ road_blocking(Pos) ->
 	}
 ).
 
-
+%% 深度优先寻路算法
 astar(Pos, Pos, _) -> stop;
 astar(Src, Dest, Facing) ->
 	FirstOpn = #opn
 	{
-		pos = Src,
-		parent = [],
-		fcos = 0,
-		gcos = dist(Src, Dest),
-		facing = Facing
+		pos = Src,                %当前位置
+		parent = [],              %走到当前位置前面经历的节点
+		fcos = 0,                 %走到当前位置的开销（含转身）
+		gcos = dist(Src, Dest),   %已知开销+理论开销； 这个值用于评估方案的优劣
+		facing = Facing           %当前朝向
 	},
 	astar_i(Dest, [FirstOpn], []).
 

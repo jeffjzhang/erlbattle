@@ -14,10 +14,12 @@ loop(Master, Y, Phone) ->
 	FriendCnt = length(Friend),
 	EnemyCnt = length(Enemy),
 	if
+		%% 在带状战区上，敌方没有部队，我方有部队，则下令本行的我军追击敌军
 		EnemyCnt =:= 0 andalso FriendCnt > 0 -> scatter(Master, Friend, Phone);
 		
 		EnemyCnt =:= 0 -> none;
 
+		%% 我方两倍于敌人，则下令本行的我军追击敌军
 		(FriendCnt / EnemyCnt) >= 2 -> scatter(Master, Friend, Phone);
 
 		true -> none
@@ -30,7 +32,7 @@ loop(Master, Y, Phone) ->
 	end.
 
 
-%%检查每一行上的敌我数量
+%%检查每一行上的敌我数量(这里所谓的行是指3*3战区的一行战区)
 row_soldier(Y, Phone) ->
 	{row_soldier(Y, Phone, #grid_info.friend), row_soldier(Y, Phone, #grid_info.enemy)}.
 row_soldier(Y, Phone, Key) ->
@@ -46,6 +48,7 @@ row_soldier(Y, Phone, Key) ->
 
 %%下令本行的我军追击敌军
 scatter(Master, IDs, Phone) ->
+	%%从战场表中取出所有还活着的战士对象
 	Soldiers = .lists:flatmap(
 		fun(ID) ->
 			case hwh.one:soldier(ID) of
@@ -57,6 +60,7 @@ scatter(Master, IDs, Phone) ->
 	Info = Phone#phone.info,
 	.lists:foreach(
 		fun(Soldier) ->
+			%% 看看当前战士有没有在追击敌人，如果没有就向主程序发送追击指令
 			case .ets:lookup(Info, {pursue, Soldier#soldier.id}) of
 				[] -> Master ! {pursue, self(), Soldier#soldier.id};
 				_ -> none
