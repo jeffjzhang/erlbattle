@@ -31,7 +31,30 @@
  在砖块环境中，从一点移动到另外一点，简单有效的直线算法，就是Bresenham算法了。
  [http://erlbattle.googlecode.com/files/ai.7z 这里]做了一个简单的实现。
 
+== A*算法 ==
+ A*算法是个适用范围很广泛的寻路算法。它可以很好的处理途中遇见的障碍物，从而得到一条最好的路线。注意，找到的路线只是所有最好路线中的一条，但是可以保证不会有更好的路线没找到。
+ A*算法是把Dijkstra算法和BFS算法结合的产物。它在搜索过程中像BFS一样使用启发式函数引导搜索过程。在从起点走向终点的过程中，A*会检查f(n)值最小的节点，其中f(n)=g(n)+h(n)。这里，g(n)就是起点到任意节点n的代价，h(n)是任意节点n到终点的评估代价。
+ g(n)很容易得到，所有的信息都保存着。重要的是h(n)。在砖块环境中，最常用的h(n)就是曼哈顿距离：
+ h(n) = abs(n.x – goal.x) + abs(n.y – goal.y)
+ 很符合我们EB环境。哈哈~~
 
+ 按照书A的内容：实现了一个A*算法。在[http://erlbattle.googlecode.com/files/ai.7z这里]。
+ 伪码：
+ 
+ 起点加入open list
+ while open list 不空
+ {
+   当前节点 = open list中成本最低的节点
+   if 当前节点 = 终点 then
+    完成
+   else
+    当前节点加入closed list
+    for 每个相邻节点
+     if 该节点不在open list
+      and 不在closed list
+      and 不是障碍物
+        该节点加入open list，计算成本
+ }
 
 = 参考书籍 =
- * [http://groups.google.com/group/erlbattle/files 《游戏开发中的人工智能》]
+ * 书A：[http://groups.google.com/group/erlbattle/files 《游戏开发中的人工智能》]
