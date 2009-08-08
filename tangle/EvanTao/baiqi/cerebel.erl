@@ -47,7 +47,7 @@ loop(Soldier, ChannelProc, Mission_queue, Cmd_queue) ->
             %% 分析命令，制定计划
             parse_attack(Soldier, SoldierEnemy, Mission_queue, Cmd_queue),
             %% 检查计划
-            revise_plan(Soldier, Mission_queue, Cmd_queue),
+            %revise_plan(Soldier, Mission_queue, Cmd_queue),
             %% 执行计划
             self() ! 'ActionDone',
             
@@ -58,11 +58,11 @@ loop(Soldier, ChannelProc, Mission_queue, Cmd_queue) ->
             {SoldierId, _Side} = Soldier#soldier.id;
 
         _Other ->
-            revise_plan(Soldier, Mission_queue, Cmd_queue),
+            %revise_plan(Soldier, Mission_queue, Cmd_queue),
             loop(Soldier, ChannelProc, Mission_queue, Cmd_queue)
 
-    after 50 ->
-        revise_plan(Soldier, Mission_queue, Cmd_queue),
+    after 10 ->
+        %revise_plan(Soldier, Mission_queue, Cmd_queue),
         loop(Soldier, ChannelProc, Mission_queue, Cmd_queue)
     end.
 
@@ -320,42 +320,30 @@ check_cmd(Soldier, Cmd, Mission_queue, Cmd_queue) ->
     
     %Cmd_in_queue = baiqi_tools:get_soldier_cmd(SoldierId, ),
     
-    %% 判断目标格子是否会有障碍
+    %% 得到前面的格子
     {Xt, Yt} = get_future_pos(Cmd, Facing, {Xo, Yo}),
     
-    %% 得到{Xo, Yo}目标{Xt, Yt}周围的其他3个格子
-    L_round_pos = get_around_pos({Xo, Yo}, {Xt, Yt}),
-    %io:format("ori=~p, des=~p~nround=~p~n", [{Xo, Yo}, {Xt, Yt}, L_round_pos]),
-    %io:format("round = ~p~n", [length(L_round_pos)]),
+    %% 跟前的格子是否有敌人
+    Soldier_enemy = baiqi_tools:get_soldier_by_position({Xt, Yt}),
+    if
+        %% 前面没人，预测
+        Soldier_enemy == none ->
+            %% 判断目标格子是否会有障碍
+            
+            %% 得到{Xo, Yo}目标{Xt, Yt}周围的其他3个格子
+            L_round_pos = get_around_pos({Xo, Yo}, {Xt, Yt}),
+            %io:format("ori=~p, des=~p~nround=~p~n", [{Xo, Yo}, {Xt, Yt}, L_round_pos]),
+            %io:format("ori=~p, des=~p, penemy=~p~n", [{Xo, Yo}, {Xt, Yt}]),
+            %io:format("round = ~p~n", [length(L_round_pos)]),
 
-    %L_future_facing = check_future_pos({Xt, Yt}, Soldier_we#soldier.act_effect_time, L_round_pos),
-    L_future_facing = [],
-    lists:foreach(
-                fun({Xl, Yl}) ->
-                    SoldierE = baiqi_tools:get_soldier_by_position({Xl, Yl}),
-                    if 
-                        SoldierE == none ->
-                            none;
-                        
-                        %% 有人就检查他的目标格是否就是我们要去的格子
-                        %% 生效时间要比我们的时间早
-                        true ->
-                            if
-                                Soldier_we#soldier.act_effect_time =< SoldierE#soldier.act_effect_time ->
-                                    {X, Y} = get_future_pos(SoldierE#soldier.action,
-                                                            SoldierE#soldier.facing,
-                                                            SoldierE#soldier.position),
-                                    if
-                                        {X, Y} == {Xt, Yt} -> [SoldierE#soldier.facing|L_future_facing];
-                                        true -> none
-                                    end;
-                                    
-                                true ->
-                                    none
-                            end
-                    end
-                end,
-                L_round_pos),
+            L_future_facing = check_future_pos({Xt, Yt}, Soldier_we#soldier.act_effect_time, L_round_pos);
+            %io:format("L_future_facing=~p~n", [L_future_facing]),
+            
+        true ->
+            FacingEnemy = Soldier_enemy#soldier.facing,
+            %L_future_facing = [Soldier_enemy#soldier.facing]
+            L_future_facing = [FacingEnemy]
+    end, 
     
     %% 如果目标格有人，且不是面对面，就攻击，否则绕路
     %% 如果没人，就前进(攻击则改成重新寻找目标)
@@ -364,20 +352,28 @@ check_cmd(Soldier, Cmd, Mission_queue, Cmd_queue) ->
         %% 有一个人则攻击？
         EnemyCount == 1 ->
             [FacingFuture] = L_future_facing,
+            Is_face2face = is_face2face(FacingFuture, Facing),
             if
                 %% 面对面就绕路
-                FacingFuture == Facing -> 'detour';
+                Is_face2face == true -> Ret = 'detour';
                 %% 否则攻击
-                true -> 'attack'
+                true -> Ret = 'attack'
             end;
 
         %% 没人或者多人就走人
         true ->
             if
-                Cmd == "attack" -> 'search';
-                true -> 'none'
+                Cmd == "attack" -> Ret = 'search';
+                true -> Ret = 'none'
             end
-    end.
+    end,
+    Ret.
+
+is_face2face(Face1, Face2) ->
+    {Face1, Face2} == {"east", "west"} orelse
+    {Face1, Face2} == {"west", "east"} orelse
+    {Face1, Face2} == {"south", "north"} orelse
+    {Face1, Face2} == {"north", "south"}.
 
 %% 得到由{Xo, Yo}出发的下一个格子位置
 get_future_pos(Cmd, Facing, {Xo, Yo}) ->
@@ -395,41 +391,45 @@ get_future_pos(Cmd, Facing, {Xo, Yo}) ->
     
 %% 检查每个格子的预期情况
 %% 在T时间时是否有人到达/离开、朝向等
-check_future_pos({Xt, Yt}, TimeFuture, [H|T]) ->
-    check_future_pos({Xt, Yt}, TimeFuture, [H|T], []).
+check_future_pos({Xt, Yt}, TimeFuture, L_round_pos) ->
+    %io:format("L_round_pos:~p~n", [L_round_pos]),
+    check_future_pos({Xt, Yt}, TimeFuture, L_round_pos, []).
+    
 check_future_pos({_X, _Y}, _TimeFuture, [], Result) ->
     Result;
 check_future_pos({Xt, Yt}, TimeFuture, [H|T], Result) ->
     %% 目标格有人？
-    if
-        H == [] -> check_future_pos({Xt, Yt}, TimeFuture, [], Result);
-        true -> none
-    end,
-    io:format("H=~p~n", [H]),
+    %io:format("H=~p~n", [H]),
     Soldier = baiqi_tools:get_soldier_by_position(H),
+    
     if 
         Soldier == none ->
-            none;
+            Ret = false;
         
         %% 有人就检查他的目标格是否就是我们要去的格子
         %% 生效时间要比我们的时间早
         true ->
+            %io:format("des=~p, penemy=~p~n", [{Xt, Yt}, Soldier#soldier.position]),
             if
                 TimeFuture =< Soldier#soldier.act_effect_time ->
                     {X, Y} = get_future_pos(Soldier#soldier.action,
                                             Soldier#soldier.facing,
                                             Soldier#soldier.position),
                     if
-                        {X, Y} == {Xt, Yt} -> [Soldier#soldier.facing|Result];
-                        true -> none
+                        {X, Y} == {Xt, Yt} -> Ret = true;
+                        true -> Ret = false
                     end;
                     
                 true ->
-                    none
+                    Ret = false
             end
     end,
     
-    check_future_pos({Xt, Yt}, TimeFuture, [T], Result).
+    if
+        Ret == true -> check_future_pos({Xt, Yt}, TimeFuture, T, [Soldier#soldier.facing|Result]);
+        Ret == false -> check_future_pos({Xt, Yt}, TimeFuture, T, Result)
+    end.
+    
 
 %% 检查格子是否有人
 %% 有人 true
@@ -508,22 +508,23 @@ revise_plan(Soldier, Mission_queue, Cmd_queue) ->
     %% 判断队列中将要执行的命令是否能成功，否则换个路线
     Cmd_we = view_next_cmd(Mission_queue, Cmd_queue),
     
-    %io:format("check_cmd~n"),
     case check_cmd(Soldier, Cmd_we, Mission_queue, Cmd_queue) of
         %% 单人面对面或者多人，就绕路
         'detour' ->
             modify_soldier_cmd_queue("attack", Cmd_queue);
+            %Cmd_next = view_next_cmd(Mission_queue, Cmd_queue),
+            %io:format("Cmd_next=~p~n", [Cmd_next]);
             
         %% 单人但是不是面对面，则攻击
         'attack' ->
             modify_soldier_cmd_queue("attack", Cmd_queue);
+            %Cmd_next = view_next_cmd(Mission_queue, Cmd_queue),
+            %io:format("Cmd_next=~p~n", [Cmd_next]);
             
-        
         %% 攻击时没人，则搜索敌人
         'search' ->
             re_gen_plan(Soldier_we, Soldier_enemy, Cmd_queue);
             
-        
         %% 没人继续原来
         'none' ->
             re_gen_plan(Soldier_we, Soldier_enemy, Cmd_queue)
@@ -537,6 +538,7 @@ re_gen_plan(Soldier, Soldier_enemy, Cmd_queue) ->
 %% 修改命令队列的最先一条
 modify_soldier_cmd_queue(Cmd, Cmd_queue) ->
     Key = ets:first(Cmd_queue),
+    %io:format("Key = ~p, Cmd = ~p~n", [Key, Cmd]),
     if
         Key == '$end_of_table' ->
             Soldier_cmd = #soldier_cmd{
@@ -547,7 +549,10 @@ modify_soldier_cmd_queue(Cmd, Cmd_queue) ->
             ets:insert(Cmd_queue, Soldier_cmd);
             
         true ->
-            ets:update_element(Cmd_queue, Key, [{3, Cmd}])
+            ets:update_element(Cmd_queue, Key, [{4, Cmd}])
+            %K = ets:first(Cmd_queue),
+            %C = lists:nth(1, ets:select(Cmd_queue, [{#soldier_cmd{id = Key, mission='_', name='_'}, [], ['$_']}])),
+            %io:format("Key2 = ~p, Cmd2 = ~p~n", [K, C])
     end.
 
 

@@ -22,7 +22,7 @@ loop(CarebelProc, Soldier, CmdQueue) ->
         _Other ->
             loop(CarebelProc, Soldier, CmdQueue)
             
-    after 50 ->
+    after 10 ->
         loop(CarebelProc, Soldier, CmdQueue)
     end.
 
