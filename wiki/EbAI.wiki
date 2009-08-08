@@ -38,7 +38,7 @@
  h(n) = abs(n.x – goal.x) + abs(n.y – goal.y)
  很符合我们EB环境。哈哈~~
 
- 按照书A的内容：实现了一个A*算法。在 [http://erlbattle.googlecode.com/files/ai.7z这里]。
+ 按照书A的内容：实现了一个A*算法。在[http://erlbattle.googlecode.com/files/ai.7z 这里]。
  伪码：
 
 {{{ 
