@@ -13,9 +13,8 @@
 
 *1. 报名：*
 
- 希望参加的朋友可以在这两个报名贴 [http://groups.google.com/group/erlang-china/browse_thread/thread/6ff22669bd1cb6d6 ERLANG CHINA报名] [http://groups.google.com/group/ecug/browse_thread/thread/6ff22669bd1cb6d6 ECUG报名] 任意一个中回帖应战。
-
- 或者在本文的参赛战队中直接添加. 或者在本文后跟帖。
+  有权限的朋友在本文的参赛战队中直接添加
+  没有权限的朋友在本文后跟帖，我们会给你增加权限
 
 
 *2. 参赛*
