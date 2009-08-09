@@ -126,7 +126,7 @@ loop(BlueSide, RedSide, BlueQueue, RedQueue, Context) ->
 							record({?LogCmdResult, "no army win the battle!!"});
 						{winner,Winner} ->
 							io:format("~p army win the battle!! ~n", [Winner]),
-							record({?LogCmdResult, Winner ++ " army win the battle!!"});
+							record({?LogCmdResult, atom_to_list(Winner) ++ " army win the battle!!"});
 						_ELSE -> none
 					end,
 					
