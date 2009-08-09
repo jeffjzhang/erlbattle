@@ -18,12 +18,12 @@ run(Pid, Seq) ->
 
 	receive
 		%% 退出时输出所有缓冲消息
-		{'EXIT', Pid , _Msg} ->  
+		{'EXIT', Pid , _Msg} -> 
 			recordBattle();	
-		{Pid,Record} ->
+		{Pid,Record} -> 
 			ets:insert(battle_record, {Seq, Record} ),
 			run(Pid, Seq + 1);
-		_ ->
+		_ -> 
 			run(Pid,Seq)   %% 其他非法消息扔掉
 	end.
 
