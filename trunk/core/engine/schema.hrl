@@ -89,3 +89,5 @@
 	}).
 	
 
+%% 关于日志记录器的内容
+-include("ebLogger.hrl").
