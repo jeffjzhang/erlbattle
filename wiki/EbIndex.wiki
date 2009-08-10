@@ -19,6 +19,10 @@
 
 `EB 对战大赛`^EBR:Erl Battle Race^
  # EbrZhuLu             ~ EBR:逐鹿中原 对战大赛
+  * 分析
+   # [EbrZhuLuHwhTriple EBR:triple 的核心指挥艺术]
+   # [EbrZhuLuTripleNeoe EBR:战胜triple 的neoe]
+   # [EbrZhuLuTripleRandomArmy EBR:平triple 的randomArmy]
  # EbrZhengFeng         ~ EBR:谁与争锋 比赛规则 
  
 === EBD:决策委员会 ===
