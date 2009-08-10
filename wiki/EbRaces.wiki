@@ -16,4 +16,7 @@
  * 战果: hwh 的 *triple* 为冠军
  * 评论:
   * 从比赛得分看来， 各种战法之间有一定的相克关系。 其中triple 遥遥领先，但是和randomArmy 战成平手（1胜1负1平）
-  * 分析: [EbrZhuLuHwhTriple EBR:triple 的核心指挥艺术]
+  * `分析`: 
+   # [EbrZhuLuHwhTriple EBR:triple 的核心指挥艺术]
+   # [EbrZhuLuTripleNeoe EBR:战胜triple 的neoe]
+   # [EbrZhuLuTripleRandomArmy EBR:平triple 的randomArmy]
