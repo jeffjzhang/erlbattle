@@ -489,7 +489,11 @@ listenerObject.change = function(eventObject:Object) {
 				ob.clip.mc._xscale = 80;
 				break;
 		}
-
+		if (round_arr[len][i][4] == 0){
+			ob.clip._visible = false;
+		}else{
+			ob.clip._visible = true;
+		}
 		ob.clip.mc.gotoAndPlay("stand" + ob.dir);
 		ob.clip.blood.gotoAndStop(round_arr[len][i][4]);
 	}
