@@ -41,6 +41,17 @@ c("laofan/abc").
 == 如何开发第一个指挥程序 ==
 [http://groups.google.com/group/ecug/browse_thread/thread/3f382d7b7b3cf6aa 饿狼战役：如何开发第一个指挥程序] ^- ECUG~erlang中文用户组 | Google 网上论坛^
 
+== 如何应对erl 的程序缓冲? ==
+`现象`:
+ * 老范:今天改erlbattle 一个小bug， 改了老半天都没效果； 后来发现把erlang 的console 关掉，重新打开就好了。 竟然是erlbattle 程序被缓冲了， 新的修改不生效！以前调试的时候重来没这个问题， 差别在于原来在源码目录里编译，并运行。 现在用nmake 编译， 在ebin 目录中运行。   是会这样的吗？
+
+`对策`:
+ * Evan Tao:我用的是make:all([load])。这样应该自动执行了code:load_file/1
+  * erlang 不会自动加载编译后产生新的beam文件，要用code:load_file/1手工加载
+
+
+
+
 === 问题 ===
 ZoomQuiet::  比如说，老范是如何从无到有开发 MadDog 的？
  * - 如何先自行调试,组合行动指挥的?
