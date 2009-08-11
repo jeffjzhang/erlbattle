@@ -48,6 +48,7 @@ c("laofan/abc").
 `对策`:
  * Evan Tao:我用的是make:all([load])。这样应该自动执行了code:load_file/1
   * erlang 不会自动加载编译后产生新的beam文件，要用code:load_file/1手工加载
+  * 在shell里面使用c/1也可以达到同样的目的。不过make:all/1可以使用emakefile编译多个文件，相比起来c/1没那么方便。
 
 
 
@@ -89,4 +90,3 @@ erlbattle 接口非常非常简单。
 
 = Discuss =
 `常见其它开发/语法/理解问题...`
-
