@@ -9,13 +9,16 @@
  * EbIndex              ~ 本文
 
 == EB:社区 ==
-`EB 组织`
+`EB 组织`:
  * EbJoinnig            ~ EB:成员列表
   * ZoomQuiet           ~ ZoomQuiet 个人维基入口
   * EvenTao             ~ 黑黑的小屋
  * ErlBattleTasks       ~ EB:开发任务列表
   * EbTaskDoc           ~ EB:临时任务文档
  * EbNowPath            ~ eb0:当前开发路径
+
+`EB 活动`:
+ * EbBjFb               ~ 首次EB北京FB聚会
 
 `EB 对战大赛`^EBR:Erl Battle Race^
  # EbrZhuLu             ~ EBR:逐鹿中原 对战大赛
