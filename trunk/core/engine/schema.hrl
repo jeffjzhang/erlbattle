@@ -1,3 +1,6 @@
+%% 关于日志记录器的内容
+-include("core/engine/ebLogger.hrl").
+
 %% 战场最多运行的次数 
 -define(MaxEBTurn, 1000).   
 
@@ -89,5 +92,4 @@
 	}).
 	
 
-%% 关于日志记录器的内容
--include("ebLogger.hrl").
+
