@@ -1,7 +1,7 @@
 -module(hwh.scatter).
 -compile(export_all).
+-include("hwh_schema.hrl").
 -include("schema.hrl").
--include("engine/schema.hrl").
 
 
 start(Master, Y, Phone) ->

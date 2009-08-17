@@ -1,6 +1,6 @@
 -module(hwh.triple).
 -compile(export_all).
--include("schema.hrl").
+-include("hwh_schema.hrl").
 
 
 %%指挥总表
