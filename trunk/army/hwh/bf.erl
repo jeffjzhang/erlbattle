@@ -1,6 +1,6 @@
 -module(hwh.bf).
 -compile(export_all).
--include("engine/schema.hrl").
+-include("schema.hrl").
 
 
 get_soldier_by_position(Position) ->

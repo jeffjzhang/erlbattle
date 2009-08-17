@@ -1,6 +1,6 @@
 -module(hwh.util).
 -compile(export_all).
--include("engine/schema.hrl").
+-include("schema.hrl").
 
 
 enemy(?BlueSide) -> ?RedSide;

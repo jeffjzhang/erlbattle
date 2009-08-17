@@ -1,6 +1,4 @@
 
-
-
 -record(phone,
 	{
 		channel,

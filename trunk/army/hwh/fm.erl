@@ -1,7 +1,7 @@
 -module(hwh.fm).
 -compile(export_all).
+-include("hwh_schema.hrl").
 -include("schema.hrl").
--include("engine/schema.hrl").
 
 -record(data, {poslist}).
 
