@@ -39,7 +39,7 @@
 
 {'army/hwh/*',
 	[
-	{i, "core"},
+	{i, "core/engine"},
 	{outdir, "ebin/hwh"}
 	]
 }.
