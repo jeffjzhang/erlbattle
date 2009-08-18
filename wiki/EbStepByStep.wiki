@@ -4,27 +4,36 @@
  
 最快的开始...^假设你已经安装了erl 环境，并且会用svn, 使用M$ 或者 linux 环境^
 
-= erl v5.7.2(R13B1) =
-*ERLANG 环境： 5.7.2  （部分语法老版本不支持，需要用这个版本以上）* ^这是缺憾,修订中...^
- * 1. [http://erlbattle.googlecode.com/files/war-2.zip 播放器和战斗录像下载]^内有readme.txt^
- * 2. 观看录像，获得饿狼战役战斗的直观感觉
- * 3. 用svn下载代码到你的机器上。 http://erlbattle.googlecode.com/svn/trunk
- * 4. 在命令行中输入`erl`进入Erlang shell 环境
- * 5. 编译代码: `make:all([load]).`
- * 6. 启动游戏: `erlbattle:start().`^记得增加ebin到搜索路径，否则找不到执行文件。^
-  * 有3种启动模式:
-   # erlbattle:start().   这个是默认启法， 系统默认是【英格兰卫兵】 和【恐惧的农民】 对砍，每拍时间由系统自己测速决定。  适合第一次玩eb 的朋友使用。
-   # erlbattle:start(兰队, 红队).   这个是比赛标准启法。启动对应的部队进行比赛，每拍时间由系统自己测速决定。 
-    * 例如： `erlbattle:start(englandArmy, englandArmy).`
-   # erlbattle:start(兰队, 红队, 毫秒)   这个是让大家人工控制每拍执行速度， 主要用于调试，观察每拍的情况。 
-    * 例如： `erlbattle:start(englandArmy, englandArmy,5000).`   每拍5秒。
- * 7. 系统就启动了. 并且在你反应过来之前就结束了。 
- * 8. 这是你观看的第一场战斗，发生在feardFarmers【恐惧的农民】 和englandArmy【英格兰卫兵】 之间的战斗。
- * 9. 用第一步下载的播放器播放这个战斗
- * 10. 尝试运行 erlbattle:start(englandArmy,englandArmy)  让两个【英格兰卫兵】比赛
- * 11. 把输出的 erlbattle.warlog 文件改名为warfield.txt。 用第一步下载的播放器播放这个战斗
- * 12. 阅读战场程序代码，或者动手编写你的第一个指挥程序。。。。enjoy it. 
+=== 首次战斗体验 ===
+ 1. [http://erlbattle.googlecode.com/files/war-2.zip 播放器和战斗录像下载]^内有readme.txt^
 
- 参考::
-  * *[EbInterface EB:接口定义]*^玩家指挥程序编写指南^
-  * *[EbStepByStepInUbuntu EB:在Ubuntu中一步步来]* ^为自由OS系统的用户提供详细指引^
+ 2. 观看录像，获得饿狼战役战斗的直观感觉
+
+=== 开始安装和编译 ===
+ 1. 按装 erl v5.7.2(R13B1) 
+
+ 2. 用svn下载代码到你的机器上。 http://erlbattle.googlecode.com/svn/trunk
+
+ 3. 在/erlbattle 目录下， 进入Erlang shell
+
+ 4. 编译代码: `make:all([load]).`
+
+ 5. 启动游戏: `erlbattle:start().`
+
+ 6. 系统就启动了. 并且在你反应过来之前就结束了。 
+
+ 7. 这是你观看的第一场战斗，发生在feardFarmers【恐惧的农民】 和englandArmy【英格兰卫兵】 之间的战斗。
+
+ 8. 把输出的 warfield.txt用第一步下载的播放器播放这个战斗
+
+ 9. 尝试运行 erlbattle:start(englandArmy,englandArmy)  让两个【英格兰卫兵】比赛
+
+ 10. 把输出的 warfield.txt用第一步下载的播放器播放这个战斗
+
+ 11. 阅读战场程序代码，或者动手编写你的第一个指挥程序
+
+ 。。。。enjoy it. 
+
+=== 开始深入学习 ===
+  **[EbInterface EB:接口定义]*^玩家指挥程序编写指南^
+
