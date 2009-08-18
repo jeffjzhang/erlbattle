@@ -11,8 +11,6 @@
       ]
 }.
 
-
-
 %% 各个战队
 %% 自带例子
 {'army/example_army/*',
@@ -58,7 +56,14 @@
 	]
 }.
 
-{'army/laofan/*',
+{'army/laofan/soldierGo',
+	[
+	{i, "core/engine"},
+	{outdir, "ebin"}
+	]
+}.
+
+{'army/laofan/ft',
 	[
 	{i, "core/engine"},
 	{outdir, "ebin"}
