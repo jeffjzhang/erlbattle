@@ -11,7 +11,7 @@
  * 3. 用svn下载代码到你的机器上。 http://erlbattle.googlecode.com/svn/trunk
  * 4. 在命令行中输入`erl`进入Erlang shell 环境
  * 5. 编译代码: `make:all([load]).`
- * 6. 启动游戏: `erlbattle:start().`^记得增加ebin到搜索路径，否则找不到执行文件。
+ * 6. 启动游戏: `erlbattle:start().`^记得增加ebin到搜索路径，否则找不到执行文件。^
   * 有3种启动模式:
    # erlbattle:start().   这个是默认启法， 系统默认是【英格兰卫兵】 和【恐惧的农民】 对砍，每拍时间由系统自己测速决定。  适合第一次玩eb 的朋友使用。
    # erlbattle:start(兰队, 红队).   这个是比赛标准启法。启动对应的部队进行比赛，每拍时间由系统自己测速决定。 
