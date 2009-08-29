@@ -63,17 +63,16 @@
 	]
 }.
 
-{'army/laofan/ft',
+{'army/zoomquiet/*',
 	[
 	{i, "core/engine"},
 	{outdir, "ebin"}
 	]
 }.
 
-
-{'army/zoomquiet/*',
+{'army/h1/*',
 	[
 	{i, "core/engine"},
-	{outdir, "ebin"}
+	{outdir, "ebin/h1"}
 	]
 }.
