@@ -56,7 +56,7 @@ loop(Channel, Side, Queue,N) ->
                                                                                   %%io:format("--N = ~p", [N]), 
                                                                           %%Channel!{command,?ActionAttack,Soldier,0,random:uniform(5)},
 						  		          %%Channel!{command,?ActionForward,Soldier,0,Soldier}
-                                                                                  %%tools:sleep(70),
+                                                                                  %%tools:sleep(70), 
                                                                                   Channel!{command,?ActionAttack,Soldier,0,Soldier}
 							             end
                                                     end%%none
