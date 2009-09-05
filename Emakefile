@@ -56,7 +56,7 @@
 	]
 }.
 
-{'army/laofan/soldierGo',
+{'army/laofan/*',
 	[
 	{i, "core/engine"},
 	{outdir, "ebin"}
