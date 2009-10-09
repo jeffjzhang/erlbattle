@@ -1,7 +1,7 @@
 #summary EB:史书
-#labels FAQ Book
+#labels FAQBook
 
-<wiki"toc/>
+<wiki:toc/>
 
 = EB:史纪 =
 跟踪记述,分析,整理 ErlBattle 社区成长的故事,以此为实例,期望:
@@ -101,4 +101,3 @@ erlang 在中国的公开资源情况基本是:
 
 `项目:`
 在 code.google 中有近10个,但是成员超过5人的,只有 EB
-
