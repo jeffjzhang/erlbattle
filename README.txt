@@ -1,14 +1,12 @@
-erlbattle
-=========
+# erlbattle
 
 erlbattle, ¶ñÀÇÕ½ÒÛ, ¼ò³ÆEB, ÔçÆÚÔÚgooglecodeÉÏ·¢Õ¹ÆğÀ´µÄ¿ªÔ´ÏîÄ¿, ÊÇ»ùÓÚErlangÓïÑÔµÄÊµÊ±¼¼ÊõÑ§Ï°Æ½Ì¨
 
 ![image](https://raw.githubusercontent.com/jeffjzhang/erlbattle/master/doc/image/replay-pic-s.png)
 
-´úÂëÄ¿Â¼Ê¹ÓÃËµÃ÷
-----------------
+## ´úÂëÄ¿Â¼Ê¹ÓÃËµÃ÷
 
-/ (http://erlbattle.googlecode.com/svn/trunk/)
+/ (https://github.com/jeffjzhang/erlbattle/)
 ©À©¤doc             ÎÄµµÄ¿Â¼
 ©À©¤core             ºËĞÄ×é¼ş
 ©¦  ©À©¤engine         ÒıÇæÄ¿Â¼|
@@ -23,18 +21,15 @@ erlbattle, ¶ñÀÇÕ½ÒÛ, ¼ò³ÆEB, ÔçÆÚÔÚgooglecodeÉÏ·¢Õ¹ÆğÀ´µÄ¿ªÔ´ÏîÄ¿, ÊÇ»ùÓÚErlangÓ
 ©À©¤priv            erlangÅäÖÃÎÄ¼şÒÔ¼°£¬Ò»Ğ©ÃüÁîĞĞ½Å±¾
 ©¸©¤_fla            flashÑİÊ¾¹¤¾ß
 
-°²×°ºÍÔËĞĞ
-----------
+## °²×°ºÍÔËĞĞ
 
-ĞèÒª: erl-otp_R11B-5 ÒÔÉÏ£¬ ÏÂÔØµØÖ·[http://www.erlang.org/download.html]
-
-1¡¢°²×°erl
-2¡¢ÔÚ/erlbattle Ä¿Â¼ÏÂ£¬ ½øÈëErlang shell
-3¡¢±àÒë´úÂë: make:all([load]).
-4¡¢Æô¶¯ÓÎÏ·: erlbattle:start().
-5¡¢ÏµÍ³¾ÍÆô¶¯ÁË. ²¢ÇÒÔÚÄã·´Ó¦¹ıÀ´Ö®Ç°¾Í½áÊøÁË¡£
-6¡¢ÕâÊÇÄã¹Û¿´µÄµÚÒ»³¡Õ½¶·£¬·¢ÉúÔÚfeardFarmers¡¾¿Ö¾åµÄÅ©Ãñ¡¿ ºÍenglandArmy¡¾Ó¢¸ñÀ¼ÎÀ±ø¡¿ Ö®¼äµÄÕ½¶·¡£
-7¡¢°ÑÊä³öµÄ warfield.txtÓÃµÚÒ»²½ÏÂÔØµÄ²¥·ÅÆ÷²¥·ÅÕâ¸öÕ½¶·
-8¡¢³¢ÊÔÔËĞĞ erlbattle:start(englandArmy,englandArmy) ÈÃÁ½¸ö¡¾Ó¢¸ñÀ¼ÎÀ±ø¡¿±ÈÈü
-9¡¢°ÑÊä³öµÄ warfield.txtÓÃµÚÒ»²½ÏÂÔØµÄ²¥·ÅÆ÷²¥·ÅÕâ¸öÕ½¶·
+1. °²×°erl, ĞèÒª: erl-otp_R11B-5 ÒÔÉÏ£¬ ÏÂÔØµØÖ·[http://www.erlang.org/download.html]
+2. ÔÚ/erlbattle Ä¿Â¼ÏÂ£¬ ½øÈëErlang shell
+3. ±àÒë´úÂë: make:all([load]).
+4. Æô¶¯ÓÎÏ·: erlbattle:start().
+5. ÏµÍ³¾ÍÆô¶¯ÁË. ²¢ÇÒÔÚÄã·´Ó¦¹ıÀ´Ö®Ç°¾Í½áÊøÁË¡£
+6. ÕâÊÇÄã¹Û¿´µÄµÚÒ»³¡Õ½¶·£¬·¢ÉúÔÚfeardFarmers¡¾¿Ö¾åµÄÅ©Ãñ¡¿ ºÍenglandArmy¡¾Ó¢¸ñÀ¼ÎÀ±ø¡¿ Ö®¼äµÄÕ½¶·¡£
+7. °ÑÊä³öµÄ warfield.txtÓÃµÚÒ»²½ÏÂÔØµÄ²¥·ÅÆ÷²¥·ÅÕâ¸öÕ½¶·
+8. ³¢ÊÔÔËĞĞ erlbattle:start(englandArmy,englandArmy) ÈÃÁ½¸ö¡¾Ó¢¸ñÀ¼ÎÀ±ø¡¿±ÈÈü
+9. °ÑÊä³öµÄ warfield.txtÓÃµÚÒ»²½ÏÂÔØµÄ²¥·ÅÆ÷²¥·ÅÕâ¸öÕ½¶·
 
