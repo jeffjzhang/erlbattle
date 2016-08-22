@@ -1,35 +1,33 @@
-# erlbattle
+## erlbattle
 
-erlbattle, ¶ñÀÇÕ½ÒÛ, ¼ò³ÆEB, ÔçÆÚÔÚgooglecodeÉÏ·¢Õ¹ÆğÀ´µÄ¿ªÔ´ÏîÄ¿, ÊÇ»ùÓÚErlangÓïÑÔµÄÊµÊ±¼¼ÊõÑ§Ï°Æ½Ì¨
-
+erlbattle, æ¶ç‹¼æˆ˜å½¹, ç®€ç§°EB, æ—©æœŸåœ¨googlecodeä¸Šå‘å±•èµ·æ¥çš„å¼€æºé¡¹ç›®, æ˜¯åŸºäºErlangè¯­è¨€çš„å®æ—¶æŠ€æœ¯å­¦ä¹ å¹³å°
 ![image](https://raw.githubusercontent.com/jeffjzhang/erlbattle/master/doc/image/replay-pic-s.png)
 
-## ´úÂëÄ¿Â¼Ê¹ÓÃËµÃ÷
+## ä»£ç ç›®å½•ä½¿ç”¨è¯´æ˜
 
 / (https://github.com/jeffjzhang/erlbattle/)
-©À©¤doc             ÎÄµµÄ¿Â¼
-©À©¤core             ºËĞÄ×é¼ş
-©¦  ©À©¤engine         ÒıÇæÄ¿Â¼|
-©À©¤army             Õ½¶Ó´úÂëÄ¿Â¼; ³ıÁËerlangÔ´´úÂëºÍMakefileÖ®Íâ£¬²»Òª·ÅÈëÆäËûÈÎºÎÎÄ¼ş
-©¦  ©À©¤evan.tao     ÒÔÏÂÊÇ¸÷ÈËAIÄ¿Â¼£¬Èç¹ûÄãÒªĞÂ½¨ÖĞAI£¬½¨Ò»¸öÄ¿Â¼£¬Ğ´Ò»¸öMakefile
-©¦  ©À©¤example_army
-©¦  ©À©¤hwh
-©¦  ©À©¤laofan
-©¦  ©À©¤maddog
-©¦  ©¸©¤neoedmund
-©À©¤ebin            beamÊä³öÄ¿Â¼
-©À©¤priv            erlangÅäÖÃÎÄ¼şÒÔ¼°£¬Ò»Ğ©ÃüÁîĞĞ½Å±¾
-©¸©¤_fla            flashÑİÊ¾¹¤¾ß
+â”œâ”€doc             æ–‡æ¡£ç›®å½•
+â”œâ”€core             æ ¸å¿ƒç»„ä»¶
+â”‚  â”œâ”€engine         å¼•æ“ç›®å½•|
+â”œâ”€army             æˆ˜é˜Ÿä»£ç ç›®å½•; é™¤äº†erlangæºä»£ç å’ŒMakefileä¹‹å¤–ï¼Œä¸è¦æ”¾å…¥å…¶ä»–ä»»ä½•æ–‡ä»¶
+â”‚  â”œâ”€evan.tao     ä»¥ä¸‹æ˜¯å„äººAIç›®å½•ï¼Œå¦‚æœä½ è¦æ–°å»ºä¸­AIï¼Œå»ºä¸€ä¸ªç›®å½•ï¼Œå†™ä¸€ä¸ªMakefile
+â”‚  â”œâ”€example_army
+â”‚  â”œâ”€hwh
+â”‚  â”œâ”€laofan
+â”‚  â”œâ”€maddog
+â”‚  â””â”€neoedmund
+â”œâ”€ebin            beamè¾“å‡ºç›®å½•
+â”œâ”€priv            erlangé…ç½®æ–‡ä»¶ä»¥åŠï¼Œä¸€äº›å‘½ä»¤è¡Œè„šæœ¬
+â””â”€_fla            flashæ¼”ç¤ºå·¥å…·
 
-## °²×°ºÍÔËĞĞ
+## å®‰è£…å’Œè¿è¡Œ
 
-1. °²×°erl, ĞèÒª: erl-otp_R11B-5 ÒÔÉÏ£¬ ÏÂÔØµØÖ·[http://www.erlang.org/download.html]
-2. ÔÚ/erlbattle Ä¿Â¼ÏÂ£¬ ½øÈëErlang shell
-3. ±àÒë´úÂë: make:all([load]).
-4. Æô¶¯ÓÎÏ·: erlbattle:start().
-5. ÏµÍ³¾ÍÆô¶¯ÁË. ²¢ÇÒÔÚÄã·´Ó¦¹ıÀ´Ö®Ç°¾Í½áÊøÁË¡£
-6. ÕâÊÇÄã¹Û¿´µÄµÚÒ»³¡Õ½¶·£¬·¢ÉúÔÚfeardFarmers¡¾¿Ö¾åµÄÅ©Ãñ¡¿ ºÍenglandArmy¡¾Ó¢¸ñÀ¼ÎÀ±ø¡¿ Ö®¼äµÄÕ½¶·¡£
-7. °ÑÊä³öµÄ warfield.txtÓÃµÚÒ»²½ÏÂÔØµÄ²¥·ÅÆ÷²¥·ÅÕâ¸öÕ½¶·
-8. ³¢ÊÔÔËĞĞ erlbattle:start(englandArmy,englandArmy) ÈÃÁ½¸ö¡¾Ó¢¸ñÀ¼ÎÀ±ø¡¿±ÈÈü
-9. °ÑÊä³öµÄ warfield.txtÓÃµÚÒ»²½ÏÂÔØµÄ²¥·ÅÆ÷²¥·ÅÕâ¸öÕ½¶·
-
+1. å®‰è£…erl, éœ€è¦: erl-otp_R11B-5 ä»¥ä¸Šï¼Œ ä¸‹è½½åœ°å€[http://www.erlang.org/download.html]
+2. åœ¨/erlbattle ç›®å½•ä¸‹ï¼Œ è¿›å…¥Erlang shell
+3. ç¼–è¯‘ä»£ç : make:all([load]).
+4. å¯åŠ¨æ¸¸æˆ: erlbattle:start().
+5. ç³»ç»Ÿå°±å¯åŠ¨äº†. å¹¶ä¸”åœ¨ä½ ååº”è¿‡æ¥ä¹‹å‰å°±ç»“æŸäº†ã€‚
+6. è¿™æ˜¯ä½ è§‚çœ‹çš„ç¬¬ä¸€åœºæˆ˜æ–—ï¼Œå‘ç”Ÿåœ¨feardFarmersã€ææƒ§çš„å†œæ°‘ã€‘ å’ŒenglandArmyã€è‹±æ ¼å…°å«å…µã€‘ ä¹‹é—´çš„æˆ˜æ–—ã€‚
+7. æŠŠè¾“å‡ºçš„ warfield.txtç”¨ç¬¬ä¸€æ­¥ä¸‹è½½çš„æ’­æ”¾å™¨æ’­æ”¾è¿™ä¸ªæˆ˜æ–—
+8. å°è¯•è¿è¡Œ erlbattle:start(englandArmy,englandArmy) è®©ä¸¤ä¸ªã€è‹±æ ¼å…°å«å…µã€‘æ¯”èµ›
+9. æŠŠè¾“å‡ºçš„ warfield.txtç”¨ç¬¬ä¸€æ­¥ä¸‹è½½çš„æ’­æ”¾å™¨æ’­æ”¾è¿™ä¸ªæˆ˜æ–—
