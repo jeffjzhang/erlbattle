@@ -1,10 +1,12 @@
-## erlbattle
+# erlbattle
 
 erlbattle, 恶狼战役, 简称EB, 早期在googlecode上发展起来的开源项目, 是基于Erlang语言的实时技术学习平台
+
 ![image](https://raw.githubusercontent.com/jeffjzhang/erlbattle/master/doc/image/replay-pic-s.png)
 
-## 代码目录使用说明
 
+## 代码目录使用说明
+```
 / (https://github.com/jeffjzhang/erlbattle/)
 ├─doc             文档目录
 ├─core             核心组件
@@ -19,6 +21,7 @@ erlbattle, 恶狼战役, 简称EB, 早期在googlecode上发展起来的开源�
 ├─ebin            beam输出目录
 ├─priv            erlang配置文件以及，一些命令行脚本
 └─_fla            flash演示工具
+```
 
 ## 安装和运行
 
